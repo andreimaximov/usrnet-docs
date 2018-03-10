@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["AddrLease","Represents a borrow of a socket address to ensure sockets are binded to unique addresses."],["Bindings","A set of socket bindings."],["SocketAddr","An IPv4 + port binding for TCP, UDP, etc. sockets."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["eth_addr_for_ip","Tries to retrieve the Ethernet address for an IPv4 address."],["recv_packet","Receives an ARP packet from an interface."],["send_packet","Sends an ARP packet via an interface."]]});

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Interface` struct in crate `usrnet`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Interface">
+
+    <title>usrnet::core::service::Interface - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Struct Interface</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.dev">dev</a><a href="#structfield.arp_cache">arp_cache</a><a href="#structfield.ethernet_addr">ethernet_addr</a><a href="#structfield.ipv4_addr">ipv4_addr</a><a href="#structfield.default_gateway">default_gateway</a></div></div><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>core</a>::<wbr><a href='index.html'>service</a></p><script>window.sidebarCurrent = {name: 'Interface', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>core</a>::<wbr><a href='index.html'>service</a>::<wbr><a class="struct" href=''>Interface</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/usrnet/core/service/mod.rs.html#22-34' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Interface {
+    pub dev: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="trait" href="../../../usrnet/core/dev/trait.Device.html" title="trait usrnet::core::dev::Device">Device</a>&gt;,
+    pub arp_cache: <a class="struct" href="../../../usrnet/core/arp_cache/struct.ArpCache.html" title="struct usrnet::core::arp_cache::ArpCache">ArpCache</a>,
+    pub ethernet_addr: <a class="struct" href="../../../usrnet/core/repr/ethernet/struct.Address.html" title="struct usrnet::core::repr::ethernet::Address">EthernetAddress</a>,
+    pub ipv4_addr: <a class="struct" href="../../../usrnet/core/repr/ipv4/struct.AddressCidr.html" title="struct usrnet::core::repr::ipv4::AddressCidr">Ipv4AddressCidr</a>,
+    pub default_gateway: <a class="struct" href="../../../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a>,
+}</pre><div class='docblock'><p>An interface for sending and receiving network packets.</p>
+</div><h2 id='fields' class='fields small-section-header'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.dev" class="structfield small-section-header">
+                           <a href="#structfield.dev" class="anchor field"></a>
+                           <span id="dev.v" class='invisible'>
+                           <code>dev: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="trait" href="../../../usrnet/core/dev/trait.Device.html" title="trait usrnet::core::dev::Device">Device</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Device for sending and receiving raw Ethernet frames.</p>
+</div><span id="structfield.arp_cache" class="structfield small-section-header">
+                           <a href="#structfield.arp_cache" class="anchor field"></a>
+                           <span id="arp_cache.v" class='invisible'>
+                           <code>arp_cache: <a class="struct" href="../../../usrnet/core/arp_cache/struct.ArpCache.html" title="struct usrnet::core::arp_cache::ArpCache">ArpCache</a></code>
+                           </span></span><div class='docblock'><p>Cache for IPv4/Ethernet address translations.</p>
+</div><span id="structfield.ethernet_addr" class="structfield small-section-header">
+                           <a href="#structfield.ethernet_addr" class="anchor field"></a>
+                           <span id="ethernet_addr.v" class='invisible'>
+                           <code>ethernet_addr: <a class="struct" href="../../../usrnet/core/repr/ethernet/struct.Address.html" title="struct usrnet::core::repr::ethernet::Address">EthernetAddress</a></code>
+                           </span></span><div class='docblock'><p>Ethernet address for the interface.</p>
+</div><span id="structfield.ipv4_addr" class="structfield small-section-header">
+                           <a href="#structfield.ipv4_addr" class="anchor field"></a>
+                           <span id="ipv4_addr.v" class='invisible'>
+                           <code>ipv4_addr: <a class="struct" href="../../../usrnet/core/repr/ipv4/struct.AddressCidr.html" title="struct usrnet::core::repr::ipv4::AddressCidr">Ipv4AddressCidr</a></code>
+                           </span></span><div class='docblock'><p>IPv4 address for the interface.</p>
+</div><span id="structfield.default_gateway" class="structfield small-section-header">
+                           <a href="#structfield.default_gateway" class="anchor field"></a>
+                           <span id="default_gateway.v" class='invisible'>
+                           <code>default_gateway: <a class="struct" href="../../../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a></code>
+                           </span></span><div class='docblock'><p>Default gateway for IPv4 packets not on the interface subnet. This
+should be on the same subnet as ipv4_addr!</p>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "usrnet";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

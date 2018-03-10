@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["recv_packet","Receives an ICMP packet from an interface."],["send_packet","Send an ICMP packet via the interface."]]});

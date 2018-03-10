@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["ipv4_addr_route","Returns the next hop for a packet destined to a specified address."],["recv_packet","Receives an ICMP packet from an interface."],["send_packet_raw","Send a raw IPv4 packet via the interface."],["send_packet_with_repr","Sends an IPv4 packet via ther interface."]]});

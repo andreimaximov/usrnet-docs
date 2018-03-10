@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["internet_checksum","Calculates the Internet Checksum from RFC1071."]],"struct":[["ByteOrderIter","An iterator that inteprets a sequence of bytes as a sequence of network byte order u16's."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["MockEnv","An environment that provides a configurable time."],["SystemEnv","An environment that provides system based time."]],"trait":[["Env","An environment that provides the current time."]]});
