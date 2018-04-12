@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Packet","View of a byte buffer as a UDP packet."],["Repr","Safe representation of a UDP header."]]});
+initSidebarItems({"struct":[["Packet","View of a byte buffer as a UDP packet."],["Repr","A UDP header."]]});

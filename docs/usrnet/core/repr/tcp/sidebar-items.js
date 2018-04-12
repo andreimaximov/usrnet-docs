@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["TcpOption","A TCP option."]],"struct":[["Packet","View of a byte buffer as a TCP packet."],["Repr","A TCP header."],["TcpOptionIter","An iterator that produces TcpOptions from a buffer."]]});

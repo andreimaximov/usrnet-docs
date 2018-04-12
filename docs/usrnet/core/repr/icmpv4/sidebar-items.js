@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["DestinationUnreachable",""],["Repr","Safe representation of an ICMP header."],["TimeExceeded",""]],"struct":[["Packet","View of a byte buffer as an ICMP packet."]]});
+initSidebarItems({"enum":[["DestinationUnreachable",""],["Message",""],["TimeExceeded",""]],"struct":[["Packet","View of a byte buffer as an ICMP packet."],["Repr","An ICMP header."]]});

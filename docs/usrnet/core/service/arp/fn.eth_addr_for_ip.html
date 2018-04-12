@@ -10,8 +10,11 @@
     <title>usrnet::core::service::arp::eth_addr_for_ip - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <script src="../../../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'><a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>service</a>::<wbr><a href='index.html'>arp</a></p><script>window.sidebarCurrent = {name: 'eth_addr_for_ip', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,7 +61,6 @@
                    </a>
                </span><a class='srclink' href='../../../../src/usrnet/core/service/arp.rs.html#76-96' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn eth_addr_for_ip(<br>&nbsp;&nbsp;&nbsp;&nbsp;interface: &amp;mut <a class="struct" href="../../../../usrnet/core/service/struct.Interface.html" title="struct usrnet::core::service::Interface">Interface</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;ipv4_addr: <a class="struct" href="../../../../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a><br>) -&gt; <a class="type" href="../../../../usrnet/type.Result.html" title="type usrnet::Result">Result</a>&lt;<a class="struct" href="../../../../usrnet/core/repr/ethernet/struct.Address.html" title="struct usrnet::core::repr::ethernet::Address">EthernetAddress</a>&gt;</pre><div class='docblock'><p>Tries to retrieve the Ethernet address for an IPv4 address.</p>
-
 <p>The IP address may not have an Ethernet mapping yet, in which case an ARP
 request is dispatched and an error returned. The ARP response (if the IP
 address exists on the network) will be processed by <code>recv_packet(...)</code> and
@@ -69,20 +78,22 @@ update the ARP cache.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

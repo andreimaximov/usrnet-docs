@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Op",""]],"mod":[["hw_types","https://www.iana.org/assignments/arp-parameters/arp-parameters.xhtml#arp-parameters-2"],["proto_types","https://www.iana.org/assignments/arp-parameters/arp-parameters.xhtml#arp-parameters-3"]],"struct":[["Arp",""]]});
+initSidebarItems({"enum":[["Op",""]],"mod":[["hw_types","https://www.iana.org/assignments/arp-parameters/arp-parameters.xhtml#arp-parameters-2"],["proto_types","https://www.iana.org/assignments/arp-parameters/arp-parameters.xhtml#arp-parameters-3"]],"struct":[["Arp","An ARP packet."]]});

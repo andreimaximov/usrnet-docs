@@ -10,8 +10,11 @@
     <title>traceroute.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -251,7 +261,6 @@
 <span id="205">205</span>
 <span id="206">206</span>
 <span id="207">207</span>
-<span id="208">208</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::{
     <span class="ident">Duration</span>,
@@ -263,6 +272,7 @@
 <span class="kw">use</span> <span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
     <span class="ident">Icmpv4DestinationUnreachable</span>,
+    <span class="ident">Icmpv4Message</span>,
     <span class="ident">Icmpv4Packet</span>,
     <span class="ident">Icmpv4Repr</span>,
     <span class="ident">Icmpv4TimeExceeded</span>,
@@ -350,7 +360,7 @@
         <span class="ident">length</span>: (<span class="number">8</span> <span class="op">+</span> <span class="ident">payload_len</span>) <span class="kw">as</span> <span class="ident">u16</span>,
     };
 
-    <span class="kw">let</span> <span class="ident">ip_repr</span> <span class="op">=</span> <span class="ident">Ipv4Repr</span> {
+    <span class="kw">let</span> <span class="ident">ipv4_repr</span> <span class="op">=</span> <span class="ident">Ipv4Repr</span> {
         <span class="ident">src_addr</span>: <span class="kw-2">*</span><span class="ident">interface</span>.<span class="ident">ipv4_addr</span>,
         <span class="ident">dst_addr</span>: <span class="ident">socket_addr</span>.<span class="ident">addr</span>,
         <span class="ident">protocol</span>: <span class="ident">Ipv4Protocol</span>::<span class="ident">UDP</span>,
@@ -361,23 +371,23 @@
     <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(_) <span class="op">=</span> <span class="ident">socket_set</span>
         .<span class="ident">socket</span>(<span class="ident">raw_handle</span>)
         .<span class="ident">as_raw_socket</span>()
-        .<span class="ident">send</span>(<span class="ident">ip_repr</span>.<span class="ident">buffer_len</span>())
+        .<span class="ident">send</span>(<span class="ident">ipv4_repr</span>.<span class="ident">buffer_len</span>())
         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">ip_buffer</span><span class="op">|</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ip_packet</span> <span class="op">=</span> <span class="ident">Ipv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">ip_buffer</span>).<span class="ident">unwrap</span>();
-            <span class="ident">ip_repr</span>.<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ip_packet</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ipv4_packet</span> <span class="op">=</span> <span class="ident">Ipv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">ip_buffer</span>).<span class="ident">unwrap</span>();
+            <span class="ident">ipv4_repr</span>.<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ipv4_packet</span>);
 
             <span class="comment">// We need to update the checksum manually if we set a custom TTL,</span>
             <span class="comment">// or any header field.</span>
-            <span class="ident">ip_packet</span>.<span class="ident">set_ttl</span>(<span class="ident">ttl</span> <span class="kw">as</span> <span class="ident">u8</span>);
-            <span class="ident">ip_packet</span>.<span class="ident">set_header_checksum</span>(<span class="number">0</span>);
-            <span class="kw">let</span> <span class="ident">checksum</span> <span class="op">=</span> <span class="ident">ip_packet</span>.<span class="ident">gen_header_checksum</span>();
-            <span class="ident">ip_packet</span>.<span class="ident">set_header_checksum</span>(<span class="ident">checksum</span>);
+            <span class="ident">ipv4_packet</span>.<span class="ident">set_ttl</span>(<span class="ident">ttl</span> <span class="kw">as</span> <span class="ident">u8</span>);
+            <span class="ident">ipv4_packet</span>.<span class="ident">set_header_checksum</span>(<span class="number">0</span>);
+            <span class="kw">let</span> <span class="ident">checksum</span> <span class="op">=</span> <span class="ident">ipv4_packet</span>.<span class="ident">gen_header_checksum</span>();
+            <span class="ident">ipv4_packet</span>.<span class="ident">set_header_checksum</span>(<span class="ident">checksum</span>);
 
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">udp_packet</span> <span class="op">=</span> <span class="ident">UdpPacket</span>::<span class="ident">try_new</span>(<span class="ident">ip_packet</span>.<span class="ident">payload_mut</span>()).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">udp_packet</span> <span class="op">=</span> <span class="ident">UdpPacket</span>::<span class="ident">try_new</span>(<span class="ident">ipv4_packet</span>.<span class="ident">payload_mut</span>()).<span class="ident">unwrap</span>();
             <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">payload_len</span> {
                 <span class="ident">udp_packet</span>.<span class="ident">payload_mut</span>()[<span class="ident">i</span>] <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">random</span>::<span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>();
             }
-            <span class="ident">udp_repr</span>.<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">udp_packet</span>, <span class="kw-2">&amp;</span><span class="ident">ip_repr</span>);
+            <span class="ident">udp_repr</span>.<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">udp_packet</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>);
         }) {
         <span class="ident">env</span>::<span class="ident">tick</span>(<span class="ident">interface</span>, <span class="ident">socket_set</span>);
     }
@@ -404,47 +414,45 @@
             .<span class="ident">as_raw_socket</span>()
             .<span class="ident">recv</span>()
             .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">ip_buffer</span><span class="op">|</span> {
-                <span class="kw">let</span> <span class="ident">ip_packet</span> <span class="op">=</span> <span class="ident">Ipv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">ip_buffer</span>)<span class="question-mark">?</span>;
-                <span class="kw">if</span> <span class="ident">ip_packet</span>.<span class="ident">protocol</span>() <span class="op">!=</span> <span class="ident">ipv4_protocols</span>::<span class="ident">ICMP</span>
-                    <span class="op">||</span> <span class="ident">ip_packet</span>.<span class="ident">dst_addr</span>() <span class="op">!=</span> <span class="kw-2">*</span><span class="ident">interface</span>.<span class="ident">ipv4_addr</span>
+                <span class="kw">let</span> <span class="ident">ipv4_packet</span> <span class="op">=</span> <span class="ident">Ipv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">ip_buffer</span>)<span class="question-mark">?</span>;
+                <span class="kw">if</span> <span class="ident">ipv4_packet</span>.<span class="ident">protocol</span>() <span class="op">!=</span> <span class="ident">ipv4_protocols</span>::<span class="ident">ICMP</span>
+                    <span class="op">||</span> <span class="ident">ipv4_packet</span>.<span class="ident">dst_addr</span>() <span class="op">!=</span> <span class="kw-2">*</span><span class="ident">interface</span>.<span class="ident">ipv4_addr</span>
                 {
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">NoOp</span>);
                 }
 
-                <span class="kw">let</span> <span class="ident">response_addr</span> <span class="op">=</span> <span class="ident">ip_packet</span>.<span class="ident">src_addr</span>();
+                <span class="kw">let</span> <span class="ident">response_addr</span> <span class="op">=</span> <span class="ident">ipv4_packet</span>.<span class="ident">src_addr</span>();
 
                 <span class="comment">// We care only about two cases of ICMP messages:</span>
                 <span class="comment">//</span>
                 <span class="comment">// 1. Destination Unreachable =&gt; If the UDP packet reached the final host.</span>
                 <span class="comment">// 2. Time Exceeded           =&gt; If the UDP packet was dropped by a router.</span>
-                <span class="kw">let</span> <span class="ident">icmp_packet</span> <span class="op">=</span> <span class="ident">Icmpv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">ip_packet</span>.<span class="ident">payload</span>())<span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="ident">icmp_packet</span> <span class="op">=</span> <span class="ident">Icmpv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">ipv4_packet</span>.<span class="ident">payload</span>())<span class="question-mark">?</span>;
                 <span class="ident">icmp_packet</span>.<span class="ident">check_encoding</span>()<span class="question-mark">?</span>;
                 <span class="kw">let</span> <span class="ident">icmp_repr</span> <span class="op">=</span> <span class="ident">Icmpv4Repr</span>::<span class="ident">deserialize</span>(<span class="kw-2">&amp;</span><span class="ident">icmp_packet</span>)<span class="question-mark">?</span>;
-                <span class="kw">let</span> <span class="ident">ip_packet</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">icmp_repr</span> {
-                    <span class="ident">Icmpv4Repr</span>::<span class="ident">DestinationUnreachable</span> {
-                        <span class="ident">reason</span>: <span class="ident">Icmpv4DestinationUnreachable</span>::<span class="ident">PortUnreachable</span>,
-                        ..
-                    } <span class="op">=&gt;</span> <span class="ident">Ipv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">icmp_packet</span>.<span class="ident">payload</span>())<span class="question-mark">?</span>,
-                    <span class="ident">Icmpv4Repr</span>::<span class="ident">TimeExceeded</span> {
-                        <span class="ident">reason</span>: <span class="ident">Icmpv4TimeExceeded</span>::<span class="ident">TTLExpired</span>,
-                        ..
-                    } <span class="op">=&gt;</span> <span class="ident">Ipv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">icmp_packet</span>.<span class="ident">payload</span>())<span class="question-mark">?</span>,
+                <span class="kw">let</span> <span class="ident">ipv4_packet</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">icmp_repr</span>.<span class="ident">message</span> {
+                    <span class="ident">Icmpv4Message</span>::<span class="ident">DestinationUnreachable</span>(
+                        <span class="ident">Icmpv4DestinationUnreachable</span>::<span class="ident">PortUnreachable</span>,
+                    ) <span class="op">=&gt;</span> <span class="ident">Ipv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">icmp_packet</span>.<span class="ident">payload</span>())<span class="question-mark">?</span>,
+                    <span class="ident">Icmpv4Message</span>::<span class="ident">TimeExceeded</span>(<span class="ident">Icmpv4TimeExceeded</span>::<span class="ident">TTLExpired</span>) <span class="op">=&gt;</span> {
+                        <span class="ident">Ipv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">icmp_packet</span>.<span class="ident">payload</span>())<span class="question-mark">?</span>
+                    }
                     _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">NoOp</span>),
                 };
 
                 <span class="comment">// So I&#39;m not 100% sure about this, but let&#39;s check the (1) destination address</span>
                 <span class="comment">// and (2) transport protocol only since source address, checksum, etc. can get</span>
                 <span class="comment">// modified by a NAT.</span>
-                <span class="kw">if</span> <span class="ident">ip_packet</span>.<span class="ident">dst_addr</span>() <span class="op">!=</span> <span class="ident">socket_addr</span>.<span class="ident">addr</span>
-                    <span class="op">||</span> <span class="ident">ip_packet</span>.<span class="ident">protocol</span>() <span class="op">!=</span> <span class="ident">ipv4_protocols</span>::<span class="ident">UDP</span>
+                <span class="kw">if</span> <span class="ident">ipv4_packet</span>.<span class="ident">dst_addr</span>() <span class="op">!=</span> <span class="ident">socket_addr</span>.<span class="ident">addr</span>
+                    <span class="op">||</span> <span class="ident">ipv4_packet</span>.<span class="ident">protocol</span>() <span class="op">!=</span> <span class="ident">ipv4_protocols</span>::<span class="ident">UDP</span>
                 {
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">NoOp</span>);
                 }
 
                 <span class="comment">// We only have a portion of the original IP packet, so let&#39;s be careful parsing</span>
                 <span class="comment">// the payload...</span>
-                <span class="kw">let</span> <span class="ident">ip_header_len</span> <span class="op">=</span> (<span class="ident">ip_packet</span>.<span class="ident">header_len</span>() <span class="op">*</span> <span class="number">4</span>) <span class="kw">as</span> <span class="ident">usize</span>;
-                <span class="kw">let</span> <span class="ident">ip_payload</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">ip_packet</span>.<span class="ident">as_ref</span>()[<span class="ident">ip_header_len</span> ..];
+                <span class="kw">let</span> <span class="ident">ip_header_len</span> <span class="op">=</span> (<span class="ident">ipv4_packet</span>.<span class="ident">header_len</span>() <span class="op">*</span> <span class="number">4</span>) <span class="kw">as</span> <span class="ident">usize</span>;
+                <span class="kw">let</span> <span class="ident">ip_payload</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">ipv4_packet</span>.<span class="ident">as_ref</span>()[<span class="ident">ip_header_len</span> ..];
                 <span class="kw">let</span> <span class="ident">udp_packet</span> <span class="op">=</span> <span class="ident">UdpPacket</span>::<span class="ident">try_new</span>(<span class="ident">ip_payload</span>)<span class="question-mark">?</span>;
 
                 <span class="comment">// Likewise, let&#39;s inspect the destination port only since the source port might</span>
@@ -475,20 +483,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["arp",""],["ethernet",""],["icmpv4",""],["ipv4",""],["socket",""],["udp",""]],"struct":[["Interface","An interface for sending and receiving network packets."]]});
+initSidebarItems({"mod":[["arp",""],["ethernet",""],["icmpv4",""],["ipv4",""],["socket",""],["tcp",""],["udp",""]],"struct":[["Interface","An interface for sending and receiving network packets."]]});
