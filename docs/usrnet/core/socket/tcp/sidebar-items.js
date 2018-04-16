@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["TcpSocket","A TCP socket."]]});
+initSidebarItems({"mod":[["state",""]],"struct":[["TcpSocket","A TCP socket."]]});

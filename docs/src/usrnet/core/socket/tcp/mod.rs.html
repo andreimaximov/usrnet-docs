@@ -155,17 +155,17 @@
 <span id="99"> 99</span>
 <span id="100">100</span>
 </pre><pre class="rust ">
-<span class="kw">mod</span> <span class="ident">state</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">state</span>;
 
 <span class="kw">use</span> <span class="prelude-ty">Result</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::{
-    <span class="ident">AddrLease</span>,
     <span class="ident">Packet</span>,
     <span class="ident">Socket</span>,
     <span class="ident">SocketAddr</span>,
+    <span class="ident">SocketAddrLease</span>,
 };
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::{
-    <span class="ident">Env</span>,
+    <span class="ident">Env</span> <span class="kw">as</span> <span class="ident">TimeEnv</span>,
     <span class="ident">SystemEnv</span>,
 };
 
@@ -178,13 +178,13 @@
 
 <span class="doccomment">/// A TCP socket.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Env</span> <span class="op">=</span> <span class="ident">SystemEnv</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpSocket</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span> <span class="op">=</span> <span class="ident">SystemEnv</span><span class="op">&gt;</span> {
     <span class="comment">// Use an Option to implement consumable states behind a mutable socket</span>
     <span class="comment">// abstraction.</span>
-    <span class="ident">inner</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">inner</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Env</span><span class="op">&gt;</span> <span class="ident">Socket</span> <span class="kw">for</span> <span class="ident">TcpSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> <span class="ident">Socket</span> <span class="kw">for</span> <span class="ident">TcpSocket</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">send_forward</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">Packet</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
@@ -203,9 +203,9 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Env</span><span class="op">&gt;</span> <span class="ident">TcpSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> <span class="ident">TcpSocket</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a new TCP socket.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">binding</span>: <span class="ident">AddrLease</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">time_env</span>: <span class="ident">T</span>, <span class="ident">interface_mtu</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">TcpSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">binding</span>: <span class="ident">SocketAddrLease</span>, <span class="ident">time_env</span>: <span class="ident">T</span>, <span class="ident">interface_mtu</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">TcpSocket</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">TcpContext</span> {
             <span class="ident">binding</span>,
             <span class="ident">time_env</span>,
@@ -221,10 +221,10 @@
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Causes a panic if the connection is not in the closed state!</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">addr</span>: <span class="ident">SocketAddr</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">socket_addr</span>: <span class="ident">SocketAddr</span>) {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">take</span>() {
             <span class="prelude-val">Some</span>(<span class="ident">TcpState</span>::<span class="ident">Closed</span>(<span class="ident">closed</span>)) <span class="op">=&gt;</span> {
-                <span class="self">self</span>.<span class="ident">inner</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">TcpState</span>::<span class="ident">from</span>(<span class="ident">closed</span>.<span class="ident">to_syn_sent</span>(<span class="ident">addr</span>)))
+                <span class="self">self</span>.<span class="ident">inner</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">TcpState</span>::<span class="ident">from</span>(<span class="ident">closed</span>.<span class="ident">to_syn_sent</span>(<span class="ident">socket_addr</span>)))
             }
             _ <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;TcpSocket::connect(...) requires a closed socket!&quot;</span>),
         }

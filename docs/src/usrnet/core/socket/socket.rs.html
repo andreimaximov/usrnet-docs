@@ -93,8 +93,19 @@
 <span id="37">37</span>
 <span id="38">38</span>
 <span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="prelude-ty">Result</span>;
+<span class="kw">use</span> {
+    <span class="ident">Error</span>,
+    <span class="prelude-ty">Result</span>,
+};
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
     <span class="ident">Ipv4Repr</span>,
     <span class="ident">TcpRepr</span>,
@@ -119,9 +130,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// An Error::Exhausted error occurs if the socket has no pending packets</span>
     <span class="doccomment">/// or another error if f returns an error.</span>
-    <span class="kw">fn</span> <span class="ident">send_forward</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">send_forward</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">Packet</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>;
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">Packet</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
+    {
+        <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Exhausted</span>)
+    }
 
     <span class="doccomment">/// Provides a packet which the socket **MAY** enqueue for dequeueing in the</span>
     <span class="doccomment">/// future. The packet may be ignored for reasons including an exhausted buffer</span>
@@ -131,7 +145,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// An Error::Exhausted error occurs if the socket buffer is full or Error::NoOp</span>
     <span class="doccomment">/// if the packet was ignored.</span>
-    <span class="kw">fn</span> <span class="ident">recv_forward</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">packet</span>: <span class="kw-2">&amp;</span><span class="ident">Packet</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">recv_forward</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_packet</span>: <span class="kw-2">&amp;</span><span class="ident">Packet</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">NoOp</span>)
+    }
 }
 </pre>
 </section>

@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Slice","Represents ownership of a T's buffer. Based on ideas from https://github.com/m-labs/rust-managed."]]});
+initSidebarItems({"struct":[["Slice","Owned slice which acts a resizable view over a non-resizable buffer."]]});

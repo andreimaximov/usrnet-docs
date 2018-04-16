@@ -158,20 +158,20 @@
     <span class="prelude-ty">Result</span>,
 };
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::{
-    <span class="ident">AddrLease</span>,
     <span class="ident">Packet</span>,
+    <span class="ident">SocketAddrLease</span>,
 };
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">Env</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">Env</span> <span class="kw">as</span> <span class="ident">TimeEnv</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">closed</span>::<span class="ident">TcpClosed</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">established</span>::<span class="ident">TcpEstablished</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">syn_sent</span>::<span class="ident">TcpSynSent</span>;
 
 <span class="doccomment">/// A generic interface for implementing TCP state behavior and transitions.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Tcp</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Env</span><span class="op">&gt;</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Tcp</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> {
     <span class="doccomment">/// Similar to Socket::send_forward(...). In addition to the result of f,</span>
     <span class="doccomment">/// the next state (or same but updated state) of the TCP FSM is returned.</span>
-    <span class="kw">fn</span> <span class="ident">send_forward</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="self">self</span>, _: <span class="ident">F</span>) <span class="op">-&gt;</span> (<span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>)
+    <span class="kw">fn</span> <span class="ident">send_forward</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="self">self</span>, _: <span class="ident">F</span>) <span class="op">-&gt;</span> (<span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>)
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">Packet</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
     {
@@ -181,39 +181,39 @@
     <span class="doccomment">/// Similar to Socket::recv_forward(...). In addition to a packet processing</span>
     <span class="doccomment">/// result, the next state (or same but updated state) of the TCP FSM is</span>
     <span class="doccomment">/// returned.</span>
-    <span class="kw">fn</span> <span class="ident">recv_forward</span>(<span class="self">self</span>, _: <span class="kw-2">&amp;</span><span class="ident">Packet</span>) <span class="op">-&gt;</span> (<span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">recv_forward</span>(<span class="self">self</span>, _: <span class="kw-2">&amp;</span><span class="ident">Packet</span>) <span class="op">-&gt;</span> (<span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>) {
         (<span class="self">self</span>.<span class="ident">into</span>(), <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">NoOp</span>))
     }
 }
 
 <span class="doccomment">/// One of several TCP states.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Env</span><span class="op">&gt;</span> {
-    <span class="ident">Closed</span>(<span class="ident">TcpClosed</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>),
-    <span class="ident">SynSent</span>(<span class="ident">TcpSynSent</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>),
-    <span class="ident">Established</span>(<span class="ident">TcpEstablished</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>),
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> {
+    <span class="ident">Closed</span>(<span class="ident">TcpClosed</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>),
+    <span class="ident">SynSent</span>(<span class="ident">TcpSynSent</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>),
+    <span class="ident">Established</span>(<span class="ident">TcpEstablished</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>),
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Env</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">TcpClosed</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">closed</span>: <span class="ident">TcpClosed</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">TcpClosed</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">closed</span>: <span class="ident">TcpClosed</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">TcpState</span>::<span class="ident">Closed</span>(<span class="ident">closed</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Env</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">TcpSynSent</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">syn_sent</span>: <span class="ident">TcpSynSent</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">TcpSynSent</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">syn_sent</span>: <span class="ident">TcpSynSent</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">TcpState</span>::<span class="ident">SynSent</span>(<span class="ident">syn_sent</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Env</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">TcpEstablished</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">established</span>: <span class="ident">TcpEstablished</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">TcpEstablished</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">established</span>: <span class="ident">TcpEstablished</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">TcpState</span>::<span class="ident">Established</span>(<span class="ident">established</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Env</span><span class="op">&gt;</span> <span class="ident">Tcp</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">send_forward</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> (<span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> <span class="ident">Tcp</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">send_forward</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> (<span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>)
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">Packet</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
     {
@@ -224,7 +224,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">recv_forward</span>(<span class="self">self</span>, <span class="ident">packet</span>: <span class="kw-2">&amp;</span><span class="ident">Packet</span>) <span class="op">-&gt;</span> (<span class="ident">TcpState</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">recv_forward</span>(<span class="self">self</span>, <span class="ident">packet</span>: <span class="kw-2">&amp;</span><span class="ident">Packet</span>) <span class="op">-&gt;</span> (<span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>) {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="ident">TcpState</span>::<span class="ident">Closed</span>(<span class="ident">closed</span>) <span class="op">=&gt;</span> <span class="ident">closed</span>.<span class="ident">recv_forward</span>(<span class="ident">packet</span>),
             <span class="ident">TcpState</span>::<span class="ident">SynSent</span>(<span class="ident">syn_sent</span>) <span class="op">=&gt;</span> <span class="ident">syn_sent</span>.<span class="ident">recv_forward</span>(<span class="ident">packet</span>),
@@ -235,11 +235,11 @@
 
 <span class="doccomment">/// Shared information across TCP states.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpContext</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpContext</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Env</span>,
+    <span class="ident">T</span>: <span class="ident">TimeEnv</span>,
 {
-    <span class="kw">pub</span> <span class="ident">binding</span>: <span class="ident">AddrLease</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">binding</span>: <span class="ident">SocketAddrLease</span>,
     <span class="kw">pub</span> <span class="ident">interface_mtu</span>: <span class="ident">usize</span>,
     <span class="kw">pub</span> <span class="ident">time_env</span>: <span class="ident">T</span>,
 }

@@ -189,13 +189,13 @@
 
 <span class="doccomment">/// Socket for sending and receiving raw ethernet or IP packets.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RawSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RawSocket</span> {
     <span class="ident">raw_type</span>: <span class="ident">RawType</span>,
-    <span class="ident">send_buffer</span>: <span class="ident">Ring</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">u8</span><span class="op">&gt;&gt;</span>,
-    <span class="ident">recv_buffer</span>: <span class="ident">Ring</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">u8</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">send_buffer</span>: <span class="ident">Ring</span><span class="op">&lt;</span><span class="ident">Slice</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">recv_buffer</span>: <span class="ident">Ring</span><span class="op">&lt;</span><span class="ident">Slice</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Socket</span> <span class="kw">for</span> <span class="ident">RawSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">Socket</span> <span class="kw">for</span> <span class="ident">RawSocket</span> {
     <span class="kw">fn</span> <span class="ident">send_forward</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">Packet</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
@@ -241,13 +241,13 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">RawSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">RawSocket</span> {
     <span class="doccomment">/// Creates a socket with the provided send and receive buffers.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
         <span class="ident">raw_type</span>: <span class="ident">RawType</span>,
-        <span class="ident">send_buffer</span>: <span class="ident">Ring</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">u8</span><span class="op">&gt;&gt;</span>,
-        <span class="ident">recv_buffer</span>: <span class="ident">Ring</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">u8</span><span class="op">&gt;&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">RawSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">send_buffer</span>: <span class="ident">Ring</span><span class="op">&lt;</span><span class="ident">Slice</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>,
+        <span class="ident">recv_buffer</span>: <span class="ident">Ring</span><span class="op">&lt;</span><span class="ident">Slice</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">RawSocket</span> {
         <span class="ident">RawSocket</span> {
             <span class="ident">raw_type</span>,
             <span class="ident">send_buffer</span>,

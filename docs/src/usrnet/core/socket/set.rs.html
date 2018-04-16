@@ -130,6 +130,7 @@
 <span id="74">74</span>
 <span id="75">75</span>
 <span id="76">76</span>
+<span id="77">77</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">Iterator</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">slice</span>::<span class="ident">IterMut</span> <span class="kw">as</span> <span class="ident">SliceIterMut</span>;
@@ -139,21 +140,22 @@
     <span class="prelude-ty">Result</span>,
 };
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::<span class="ident">TaggedSocket</span>;
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">storage</span>::<span class="ident">Slice</span>;
 
-<span class="doccomment">/// A set of sockets with integral handles...</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SocketSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">sockets</span>: <span class="ident">Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TaggedSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
+<span class="doccomment">/// A set of sockets with stable integral handles.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SocketSet</span> {
+    <span class="ident">sockets</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TaggedSocket</span><span class="op">&gt;&gt;</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="ident">SocketSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Creates a socket set.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">sockets</span>: <span class="ident">Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TaggedSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">SocketSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
-        <span class="ident">SocketSet</span> { <span class="ident">sockets</span>: <span class="ident">sockets</span> }
+<span class="kw">impl</span> <span class="ident">SocketSet</span> {
+    <span class="doccomment">/// Creates a socket set supporting a maximum number of sockets.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">socket_capacity</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">SocketSet</span> {
+        <span class="ident">SocketSet</span> {
+            <span class="ident">sockets</span>: (<span class="number">0</span> .. <span class="ident">socket_capacity</span>).<span class="ident">map</span>(<span class="op">|</span>_<span class="op">|</span> <span class="prelude-val">None</span>).<span class="ident">collect</span>(),
+        }
     }
 
     <span class="doccomment">/// Adds a socket and returns a stable handle.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_socket</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">socket</span>: <span class="ident">TaggedSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_socket</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">socket</span>: <span class="ident">TaggedSocket</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> {
             (<span class="number">0</span> .. <span class="self">self</span>.<span class="ident">sockets</span>.<span class="ident">len</span>())
                 .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">sockets</span>[<span class="kw-2">*</span><span class="ident">i</span>].<span class="ident">is_none</span>())
@@ -171,7 +173,7 @@
 
     <span class="doccomment">/// Returns a reference to a socket with the specified handle. Causes a panic</span>
     <span class="doccomment">/// if the handle is not in use.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">socket</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">socket_handle</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">TaggedSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">socket</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">socket_handle</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">TaggedSocket</span> {
         <span class="kw">if</span> <span class="ident">socket_handle</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">sockets</span>.<span class="ident">len</span>() {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Socket handle is not in use.&quot;</span>)
         } <span class="kw">else</span> {
@@ -183,21 +185,21 @@
     }
 
     <span class="doccomment">/// Returns an iterator over all of the sockets in the set.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">SocketIter</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">SocketIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">SocketIter</span> {
             <span class="ident">slice_iter</span>: <span class="self">self</span>.<span class="ident">sockets</span>.<span class="ident">iter_mut</span>(),
         }
     }
 }
 
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SocketIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">slice_iter</span>: <span class="ident">SliceIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TaggedSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SocketIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">slice_iter</span>: <span class="ident">SliceIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TaggedSocket</span><span class="op">&gt;&gt;</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;c</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">SocketIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">TaggedSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">SocketIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">TaggedSocket</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">TaggedSocket</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">TaggedSocket</span><span class="op">&gt;</span> {
         <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">socket_option</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">slice_iter</span>.<span class="ident">next</span>() {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">socket</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">socket_option</span> {
                 <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">socket</span>);

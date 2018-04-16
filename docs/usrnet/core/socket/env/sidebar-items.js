@@ -1,0 +1,1 @@
+initSidebarItems({"static":[["RAW_SOCKET_PACKETS","Default number of packets a raw socket can buffer."],["UDP_SOCKET_PACKETS","Default number of packets a UDP socket can buffer."]],"struct":[["SocketEnv","An environment for creating sockets configured for a particular interface."]]});

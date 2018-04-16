@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["AddrLease","Represents a borrow of a socket address to ensure sockets are binded to unique addresses."],["Bindings","A set of socket bindings."],["SocketAddr","An IPv4 + port binding for TCP, UDP, etc. sockets."]]});
+initSidebarItems({"struct":[["Bindings","An allocator for socket address leases."],["SocketAddr","An IPv4 + port socket address."],["SocketAddrLease","A socket address which has been reserved, and is freed for reallocation by the owning Bindings instance once dropped."]]});

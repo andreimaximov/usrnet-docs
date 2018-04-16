@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `RAW_SOCKET_BUFFER_LEN` static in crate `usrnet`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, RAW_SOCKET_BUFFER_LEN">
+    <meta name="description" content="API documentation for the Rust `socket_env` fn in crate `usrnet`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, socket_env">
 
-    <title>usrnet::examples::env::RAW_SOCKET_BUFFER_LEN - Rust</title>
+    <title>usrnet::examples::env::socket_env - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
@@ -20,7 +20,7 @@
     
     
 </head>
-<body class="rustdoc static">
+<body class="rustdoc fn">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -33,7 +33,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>examples</a>::<wbr><a href='index.html'>env</a></p><script>window.sidebarCurrent = {name: 'RAW_SOCKET_BUFFER_LEN', ty: 'static', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>examples</a>::<wbr><a href='index.html'>env</a></p><script>window.sidebarCurrent = {name: 'socket_env', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <div class="theme-picker">
@@ -55,12 +55,12 @@
     </nav>
 
     <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Static <a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>examples</a>::<wbr><a href='index.html'>env</a>::<wbr><a class="static" href=''>RAW_SOCKET_BUFFER_LEN</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>examples</a>::<wbr><a href='index.html'>env</a>::<wbr><a class="fn" href=''>socket_env</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/usrnet/examples/env.rs.html#41' title='goto source code'>[src]</a></span></h1>
-<pre class='rust static'>pub static RAW_SOCKET_BUFFER_LEN: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a><code> = </code><code>128</code></pre><div class='docblock'><p>Default number of packets a raw socket can buffer.</p>
+               </span><a class='srclink' href='../../../src/usrnet/examples/env.rs.html#102-104' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn socket_env(interface: &amp;mut <a class="struct" href="../../../usrnet/core/service/struct.Interface.html" title="struct usrnet::core::service::Interface">Interface</a>) -&gt; <a class="struct" href="../../../usrnet/core/socket/env/struct.SocketEnv.html" title="struct usrnet::core::socket::env::SocketEnv">SocketEnv</a>&lt;<a class="struct" href="../../../usrnet/core/time/struct.SystemEnv.html" title="struct usrnet::core::time::SystemEnv">SystemEnv</a>&gt;</pre><div class='docblock'><p>Creates a socket environment.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
