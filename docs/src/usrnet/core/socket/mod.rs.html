@@ -86,6 +86,9 @@
 <span id="30">30</span>
 <span id="31">31</span>
 <span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Communication between endpoints.</span>
 <span class="doccomment">//!</span>
@@ -96,7 +99,6 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">env</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">raw</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">set</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">socket</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">tagged</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">tcp</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">udp</span>;
@@ -112,12 +114,16 @@
     <span class="ident">RawType</span>,
 };
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">set</span>::<span class="ident">SocketSet</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">socket</span>::{
-    <span class="ident">Packet</span>,
-    <span class="ident">Socket</span>,
-};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">tagged</span>::<span class="ident">TaggedSocket</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">tcp</span>::<span class="ident">TcpSocket</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">tcp</span>::{
+    <span class="ident">Tcp</span>,
+    <span class="ident">TcpClosed</span>,
+    <span class="ident">TcpContext</span>,
+    <span class="ident">TcpEstablished</span>,
+    <span class="ident">TcpSocket</span>,
+    <span class="ident">TcpState</span>,
+    <span class="ident">TcpSynSent</span>,
+};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">udp</span>::<span class="ident">UdpSocket</span>;
 </pre>
 </section>

@@ -59,7 +59,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../../src/usrnet/core/service/ethernet.rs.html#37-67' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../../src/usrnet/core/service/ethernet.rs.html#37-79' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn recv_frame(<br>&nbsp;&nbsp;&nbsp;&nbsp;interface: &amp;mut <a class="struct" href="../../../../usrnet/core/service/struct.Interface.html" title="struct usrnet::core::service::Interface">Interface</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;eth_buffer: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;socket_set: &amp;mut <a class="struct" href="../../../../usrnet/core/socket/set/struct.SocketSet.html" title="struct usrnet::core::socket::set::SocketSet">SocketSet</a><br>) -&gt; <a class="type" href="../../../../usrnet/type.Result.html" title="type usrnet::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</pre><div class='docblock'><p>Receives an Ethernet frame from an interface.</p>
 <p>The Ethernet frame is parsed, forwarded to any sockets, and propagated up
 the network stack.</p>

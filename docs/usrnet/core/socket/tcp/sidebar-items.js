@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["state",""]],"struct":[["TcpSocket","A TCP socket."]]});
+initSidebarItems({"enum":[["TcpState","One of several TCP states."]],"struct":[["TcpClosed","The TCP CLOSED state."],["TcpContext","Shared information across TCP states."],["TcpEstablished","The TCP ESTABLISHED state."],["TcpSocket","A TCP socket."],["TcpSynSent","The TCP SYN_SENT state."]],"trait":[["Tcp","A generic interface for implementing TCP state behavior and transitions."]]});

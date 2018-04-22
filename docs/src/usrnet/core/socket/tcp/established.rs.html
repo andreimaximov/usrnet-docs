@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src/core/socket/tcp/state/established.rs`.">
+    <meta name="description" content="Source to the Rust file `src/core/socket/tcp/established.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>established.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../../../rustdoc.css" id="mainThemeStyle">
     
-    <link rel="stylesheet" type="text/css" href="../../../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../../../main.css" id="themeStyle">
-    <script src="../../../../../../storage.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../../../main.css" id="themeStyle">
+    <script src="../../../../../storage.js"></script>
     
 
     
@@ -38,11 +38,11 @@
 
     <div class="theme-picker">
         <button id="theme-picker" aria-label="Pick another theme!">
-            <img src="../../../../../../brush.svg" width="18" alt="Pick another theme!">
+            <img src="../../../../../brush.svg" width="18" alt="Pick another theme!">
         </button>
         <div id="theme-choices"></div>
     </div>
-    <script src="../../../../../../theme.js"></script>
+    <script src="../../../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -129,19 +129,6 @@
 <span id="73">73</span>
 <span id="74">74</span>
 <span id="75">75</span>
-<span id="76">76</span>
-<span id="77">77</span>
-<span id="78">78</span>
-<span id="79">79</span>
-<span id="80">80</span>
-<span id="81">81</span>
-<span id="82">82</span>
-<span id="83">83</span>
-<span id="84">84</span>
-<span id="85">85</span>
-<span id="86">86</span>
-<span id="87">87</span>
-<span id="88">88</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> {
     <span class="ident">Error</span>,
@@ -153,33 +140,29 @@
     <span class="ident">TcpRepr</span>,
 };
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::{
-    <span class="ident">Packet</span>,
     <span class="ident">SocketAddr</span>,
-};
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::<span class="ident">tcp</span>::<span class="ident">state</span>::{
     <span class="ident">Tcp</span>,
     <span class="ident">TcpContext</span>,
     <span class="ident">TcpState</span>,
 };
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">Env</span> <span class="kw">as</span> <span class="ident">TimeEnv</span>;
 
 <span class="doccomment">/// The TCP ESTABLISHED state.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpEstablished</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpEstablished</span> {
     <span class="kw">pub</span> <span class="ident">connected_to</span>: <span class="ident">SocketAddr</span>,
     <span class="kw">pub</span> <span class="ident">ack_num</span>: <span class="ident">u32</span>,
     <span class="kw">pub</span> <span class="ident">ack_sent</span>: <span class="ident">bool</span>,
     <span class="kw">pub</span> <span class="ident">seq_num</span>: <span class="ident">u32</span>,
-    <span class="kw">pub</span> <span class="ident">context</span>: <span class="ident">TcpContext</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">context</span>: <span class="ident">TcpContext</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> <span class="ident">Tcp</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TcpEstablished</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">send_forward</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> (<span class="ident">TcpState</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>)
+<span class="kw">impl</span> <span class="ident">Tcp</span> <span class="kw">for</span> <span class="ident">TcpEstablished</span> {
+    <span class="kw">fn</span> <span class="ident">send_dequeue</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TcpState</span><span class="op">&gt;</span>, <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>)
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">Packet</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>, <span class="kw-2">&amp;</span><span class="ident">TcpRepr</span>, <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
     {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">ack_sent</span> {
-            <span class="kw">return</span> (<span class="self">self</span>.<span class="ident">into</span>(), <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Exhausted</span>));
+            <span class="kw">return</span> (<span class="prelude-val">None</span>, <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Exhausted</span>));
         }
 
         <span class="comment">// Send one ACK for now, retransmissions will be implemented later.</span>
@@ -203,30 +186,21 @@
             <span class="ident">payload_len</span>: <span class="ident">tcp_repr</span>.<span class="ident">header_len</span>() <span class="kw">as</span> <span class="ident">u16</span>,
         };
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">payload</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">0</span>];
-        <span class="kw">let</span> <span class="ident">packet</span> <span class="op">=</span> <span class="ident">Packet</span>::<span class="ident">Tcp</span>((<span class="ident">ipv4_repr</span>, <span class="ident">tcp_repr</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">payload</span>[..]));
-
-        <span class="kw">match</span> <span class="ident">f</span>(<span class="ident">packet</span>) {
+        <span class="kw">match</span> <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="kw-2">&amp;</span>[<span class="number">0</span>; <span class="number">0</span>]) {
             <span class="prelude-val">Ok</span>(<span class="ident">res</span>) <span class="op">=&gt;</span> {
                 <span class="macro">debug</span><span class="macro">!</span>(
                     <span class="string">&quot;TCP socket {:?} sent ACK for SEQ_NUM {:?}.&quot;</span>,
                     <span class="self">self</span>, <span class="self">self</span>.<span class="ident">ack_num</span>
                 );
-                <span class="kw">let</span> <span class="ident">established</span> <span class="op">=</span> <span class="ident">TcpEstablished</span> {
-                    <span class="ident">connected_to</span>: <span class="self">self</span>.<span class="ident">connected_to</span>,
-                    <span class="ident">ack_num</span>: <span class="self">self</span>.<span class="ident">ack_num</span>,
-                    <span class="ident">ack_sent</span>: <span class="bool-val">true</span>,
-                    <span class="ident">seq_num</span>: <span class="self">self</span>.<span class="ident">seq_num</span>,
-                    <span class="ident">context</span>: <span class="self">self</span>.<span class="ident">context</span>,
-                };
-                (<span class="ident">TcpState</span>::<span class="ident">from</span>(<span class="ident">established</span>), <span class="prelude-val">Ok</span>(<span class="ident">res</span>))
+                <span class="self">self</span>.<span class="ident">ack_sent</span> <span class="op">=</span> <span class="bool-val">true</span>;
+                (<span class="prelude-val">None</span>, <span class="prelude-val">Ok</span>(<span class="ident">res</span>))
             }
             <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
                 <span class="macro">debug</span><span class="macro">!</span>(
                     <span class="string">&quot;TCP socket {:?} encountered {:?} when sending ACK for SEQ_NUM {:?}.&quot;</span>,
                     <span class="self">self</span>, <span class="ident">err</span>, <span class="self">self</span>.<span class="ident">ack_num</span>
                 );
-                (<span class="self">self</span>.<span class="ident">into</span>(), <span class="prelude-val">Err</span>(<span class="ident">err</span>))
+                (<span class="prelude-val">None</span>, <span class="prelude-val">Err</span>(<span class="ident">err</span>))
             }
         }
     }
@@ -290,10 +264,10 @@
     
 
     <script>
-        window.rootPath = "../../../../../../";
+        window.rootPath = "../../../../../";
         window.currentCrate = "usrnet";
     </script>
-    <script src="../../../../../../main.js"></script>
-    <script defer src="../../../../../../search-index.js"></script>
+    <script src="../../../../../main.js"></script>
+    <script defer src="../../../../../search-index.js"></script>
 </body>
 </html>

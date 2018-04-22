@@ -33,7 +33,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module socket</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li></ul></div><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>core</a></p><script>window.sidebarCurrent = {name: 'socket', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+        <p class='location'>Module socket</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>core</a></p><script>window.sidebarCurrent = {name: 'socket', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -59,12 +59,12 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/usrnet/core/socket/mod.rs.html#1-32' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../src/usrnet/core/socket/mod.rs.html#1-35' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Communication between endpoints.</p>
 <p>The <code>socket</code> module provides abstractions for buffering, sending, and
 receiving data between network endpoints.</p>
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
-<table><tr><td><code>pub use self::bindings::<a class="struct" href="../../../usrnet/core/socket/bindings/struct.Bindings.html" title="struct usrnet::core::socket::bindings::Bindings">Bindings</a>;</code></td></tr><tr><td><code>pub use self::bindings::<a class="struct" href="../../../usrnet/core/socket/bindings/struct.SocketAddr.html" title="struct usrnet::core::socket::bindings::SocketAddr">SocketAddr</a>;</code></td></tr><tr><td><code>pub use self::bindings::<a class="struct" href="../../../usrnet/core/socket/bindings/struct.SocketAddrLease.html" title="struct usrnet::core::socket::bindings::SocketAddrLease">SocketAddrLease</a>;</code></td></tr><tr><td><code>pub use self::env::<a class="struct" href="../../../usrnet/core/socket/env/struct.SocketEnv.html" title="struct usrnet::core::socket::env::SocketEnv">SocketEnv</a>;</code></td></tr><tr><td><code>pub use self::raw::<a class="struct" href="../../../usrnet/core/socket/raw/struct.RawSocket.html" title="struct usrnet::core::socket::raw::RawSocket">RawSocket</a>;</code></td></tr><tr><td><code>pub use self::raw::<a class="enum" href="../../../usrnet/core/socket/raw/enum.RawType.html" title="enum usrnet::core::socket::raw::RawType">RawType</a>;</code></td></tr><tr><td><code>pub use self::set::<a class="struct" href="../../../usrnet/core/socket/set/struct.SocketSet.html" title="struct usrnet::core::socket::set::SocketSet">SocketSet</a>;</code></td></tr><tr><td><code>pub use self::socket::<a class="enum" href="../../../usrnet/core/socket/socket/enum.Packet.html" title="enum usrnet::core::socket::socket::Packet">Packet</a>;</code></td></tr><tr><td><code>pub use self::socket::<a class="trait" href="../../../usrnet/core/socket/socket/trait.Socket.html" title="trait usrnet::core::socket::socket::Socket">Socket</a>;</code></td></tr><tr><td><code>pub use self::tagged::<a class="enum" href="../../../usrnet/core/socket/tagged/enum.TaggedSocket.html" title="enum usrnet::core::socket::tagged::TaggedSocket">TaggedSocket</a>;</code></td></tr><tr><td><code>pub use self::tcp::<a class="struct" href="../../../usrnet/core/socket/tcp/struct.TcpSocket.html" title="struct usrnet::core::socket::tcp::TcpSocket">TcpSocket</a>;</code></td></tr><tr><td><code>pub use self::udp::<a class="struct" href="../../../usrnet/core/socket/udp/struct.UdpSocket.html" title="struct usrnet::core::socket::udp::UdpSocket">UdpSocket</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table><tr><td><code>pub use self::bindings::<a class="struct" href="../../../usrnet/core/socket/bindings/struct.Bindings.html" title="struct usrnet::core::socket::bindings::Bindings">Bindings</a>;</code></td></tr><tr><td><code>pub use self::bindings::<a class="struct" href="../../../usrnet/core/socket/bindings/struct.SocketAddr.html" title="struct usrnet::core::socket::bindings::SocketAddr">SocketAddr</a>;</code></td></tr><tr><td><code>pub use self::bindings::<a class="struct" href="../../../usrnet/core/socket/bindings/struct.SocketAddrLease.html" title="struct usrnet::core::socket::bindings::SocketAddrLease">SocketAddrLease</a>;</code></td></tr><tr><td><code>pub use self::env::<a class="struct" href="../../../usrnet/core/socket/env/struct.SocketEnv.html" title="struct usrnet::core::socket::env::SocketEnv">SocketEnv</a>;</code></td></tr><tr><td><code>pub use self::raw::<a class="struct" href="../../../usrnet/core/socket/raw/struct.RawSocket.html" title="struct usrnet::core::socket::raw::RawSocket">RawSocket</a>;</code></td></tr><tr><td><code>pub use self::raw::<a class="enum" href="../../../usrnet/core/socket/raw/enum.RawType.html" title="enum usrnet::core::socket::raw::RawType">RawType</a>;</code></td></tr><tr><td><code>pub use self::set::<a class="struct" href="../../../usrnet/core/socket/set/struct.SocketSet.html" title="struct usrnet::core::socket::set::SocketSet">SocketSet</a>;</code></td></tr><tr><td><code>pub use self::tagged::<a class="enum" href="../../../usrnet/core/socket/tagged/enum.TaggedSocket.html" title="enum usrnet::core::socket::tagged::TaggedSocket">TaggedSocket</a>;</code></td></tr><tr><td><code>pub use self::udp::<a class="struct" href="../../../usrnet/core/socket/udp/struct.UdpSocket.html" title="struct usrnet::core::socket::udp::UdpSocket">UdpSocket</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class="mod" href="bindings/index.html"
@@ -95,13 +95,6 @@ receiving data between network endpoints.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="mod" href="socket/index.html"
-                                  title='mod usrnet::core::socket::socket'>socket</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class="mod" href="tagged/index.html"
                                   title='mod usrnet::core::socket::tagged'>tagged</a></td>
                            <td class='docblock-short'>
@@ -120,6 +113,65 @@ receiving data between network endpoints.</p>
                                   title='mod usrnet::core::socket::udp'>udp</a></td>
                            <td class='docblock-short'>
                                 
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpClosed.html"
+                                  title='struct usrnet::core::socket::TcpClosed'>TcpClosed</a></td>
+                           <td class='docblock-short'>
+                                <p>The TCP CLOSED state.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpContext.html"
+                                  title='struct usrnet::core::socket::TcpContext'>TcpContext</a></td>
+                           <td class='docblock-short'>
+                                <p>Shared information across TCP states.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpEstablished.html"
+                                  title='struct usrnet::core::socket::TcpEstablished'>TcpEstablished</a></td>
+                           <td class='docblock-short'>
+                                <p>The TCP ESTABLISHED state.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpSocket.html"
+                                  title='struct usrnet::core::socket::TcpSocket'>TcpSocket</a></td>
+                           <td class='docblock-short'>
+                                <p>A TCP socket.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpSynSent.html"
+                                  title='struct usrnet::core::socket::TcpSynSent'>TcpSynSent</a></td>
+                           <td class='docblock-short'>
+                                <p>The TCP SYN_SENT state.</p>
+
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.TcpState.html"
+                                  title='enum usrnet::core::socket::TcpState'>TcpState</a></td>
+                           <td class='docblock-short'>
+                                <p>One of several TCP states.</p>
+
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.Tcp.html"
+                                  title='trait usrnet::core::socket::Tcp'>Tcp</a></td>
+                           <td class='docblock-short'>
+                                <p>A generic interface for implementing TCP state behavior and transitions.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

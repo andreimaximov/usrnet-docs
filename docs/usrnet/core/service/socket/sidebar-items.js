@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["recv","Reads frames from an interface and forwards packets to the appropriate sockets."],["send","Sends out any packets enqueued in the sockets via an interface."]]});
+initSidebarItems({"fn":[["recv","Reads frames from an interface and forwards packets to the appropriate sockets."],["send","Sends out as many socket enqueued packets as possible via an interface."]]});

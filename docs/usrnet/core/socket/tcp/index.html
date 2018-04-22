@@ -33,7 +33,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module tcp</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>socket</a></p><script>window.sidebarCurrent = {name: 'tcp', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+        <p class='location'>Module tcp</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>socket</a></p><script>window.sidebarCurrent = {name: 'tcp', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -59,22 +59,64 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../../src/usrnet/core/socket/tcp/mod.rs.html#1-100' title='goto source code'>[src]</a></span></h1>
-<h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+               </span><a class='srclink' href='../../../../src/usrnet/core/socket/tcp/mod.rs.html#1-15' title='goto source code'>[src]</a></span></h1>
+<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="mod" href="state/index.html"
-                                  title='mod usrnet::core::socket::tcp::state'>state</a></td>
+                           <td><a class="struct" href="struct.TcpClosed.html"
+                                  title='struct usrnet::core::socket::tcp::TcpClosed'>TcpClosed</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>The TCP CLOSED state.</p>
+
                            </td>
-                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpContext.html"
+                                  title='struct usrnet::core::socket::tcp::TcpContext'>TcpContext</a></td>
+                           <td class='docblock-short'>
+                                <p>Shared information across TCP states.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpEstablished.html"
+                                  title='struct usrnet::core::socket::tcp::TcpEstablished'>TcpEstablished</a></td>
+                           <td class='docblock-short'>
+                                <p>The TCP ESTABLISHED state.</p>
+
+                           </td>
+                       </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.TcpSocket.html"
                                   title='struct usrnet::core::socket::tcp::TcpSocket'>TcpSocket</a></td>
                            <td class='docblock-short'>
                                 <p>A TCP socket.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpSynSent.html"
+                                  title='struct usrnet::core::socket::tcp::TcpSynSent'>TcpSynSent</a></td>
+                           <td class='docblock-short'>
+                                <p>The TCP SYN_SENT state.</p>
+
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.TcpState.html"
+                                  title='enum usrnet::core::socket::tcp::TcpState'>TcpState</a></td>
+                           <td class='docblock-short'>
+                                <p>One of several TCP states.</p>
+
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.Tcp.html"
+                                  title='trait usrnet::core::socket::tcp::Tcp'>Tcp</a></td>
+                           <td class='docblock-short'>
+                                <p>A generic interface for implementing TCP state behavior and transitions.</p>
 
                            </td>
                        </tr></table></section>

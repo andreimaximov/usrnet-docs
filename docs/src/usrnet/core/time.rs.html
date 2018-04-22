@@ -107,7 +107,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Instant</span>;
 
 <span class="doccomment">/// An environment that provides the current time.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Env</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Debug</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Env</span>: <span class="ident">Debug</span> {
     <span class="doccomment">/// Returns an instance corresponding to &quot;now&quot;.</span>
     <span class="kw">fn</span> <span class="ident">now_instant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Instant</span>;
 }

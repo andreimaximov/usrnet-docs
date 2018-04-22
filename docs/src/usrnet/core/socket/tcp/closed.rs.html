@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src/core/socket/tcp/state/closed.rs`.">
+    <meta name="description" content="Source to the Rust file `src/core/socket/tcp/closed.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>closed.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../../../rustdoc.css" id="mainThemeStyle">
     
-    <link rel="stylesheet" type="text/css" href="../../../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../../../main.css" id="themeStyle">
-    <script src="../../../../../../storage.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../../../main.css" id="themeStyle">
+    <script src="../../../../../storage.js"></script>
     
 
     
@@ -38,11 +38,11 @@
 
     <div class="theme-picker">
         <button id="theme-picker" aria-label="Pick another theme!">
-            <img src="../../../../../../brush.svg" width="18" alt="Pick another theme!">
+            <img src="../../../../../brush.svg" width="18" alt="Pick another theme!">
         </button>
         <div id="theme-choices"></div>
     </div>
-    <script src="../../../../../../theme.js"></script>
+    <script src="../../../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -86,38 +86,36 @@
 <span id="30">30</span>
 <span id="31">31</span>
 <span id="32">32</span>
-<span id="33">33</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>;
 
 <span class="kw">use</span> <span class="ident">rand</span>;
 
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::<span class="ident">SocketAddr</span>;
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::<span class="ident">tcp</span>::<span class="ident">state</span>::{
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::{
+    <span class="ident">SocketAddr</span>,
     <span class="ident">Tcp</span>,
     <span class="ident">TcpContext</span>,
     <span class="ident">TcpSynSent</span>,
 };
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">Env</span> <span class="kw">as</span> <span class="ident">TimeEnv</span>;
 
 <span class="doccomment">/// The TCP CLOSED state.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpClosed</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="ident">context</span>: <span class="ident">TcpContext</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpClosed</span> {
+    <span class="kw">pub</span> <span class="ident">context</span>: <span class="ident">TcpContext</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> <span class="ident">Tcp</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TcpClosed</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
+<span class="kw">impl</span> <span class="ident">Tcp</span> <span class="kw">for</span> <span class="ident">TcpClosed</span> {}
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span><span class="op">&gt;</span> <span class="ident">TcpClosed</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">TcpClosed</span> {
     <span class="doccomment">/// Transitions from CLOSED to SYN_SENT in an attempt to establish a</span>
     <span class="doccomment">/// connection with the specified endpoint.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_syn_sent</span>(<span class="self">self</span>, <span class="ident">socket_addr</span>: <span class="ident">SocketAddr</span>) <span class="op">-&gt;</span> <span class="ident">TcpSynSent</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_syn_sent</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">socket_addr</span>: <span class="ident">SocketAddr</span>) <span class="op">-&gt;</span> <span class="ident">TcpSynSent</span> {
         <span class="ident">TcpSynSent</span> {
             <span class="ident">sent_syn_at</span>: <span class="prelude-val">None</span>,
             <span class="ident">seq_num</span>: <span class="ident">rand</span>::<span class="ident">random</span>::<span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>(),
             <span class="ident">connecting_to</span>: <span class="ident">socket_addr</span>,
-            <span class="ident">retransmit_timeout</span>: <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">500</span>),
-            <span class="ident">context</span>: <span class="self">self</span>.<span class="ident">context</span>,
+            <span class="ident">retransmit_timeout</span>: <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>),
+            <span class="ident">context</span>: <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">clone</span>(),
         }
     }
 }
@@ -180,10 +178,10 @@
     
 
     <script>
-        window.rootPath = "../../../../../../";
+        window.rootPath = "../../../../../";
         window.currentCrate = "usrnet";
     </script>
-    <script src="../../../../../../main.js"></script>
-    <script defer src="../../../../../../search-index.js"></script>
+    <script src="../../../../../main.js"></script>
+    <script defer src="../../../../../search-index.js"></script>
 </body>
 </html>
