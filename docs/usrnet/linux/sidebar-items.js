@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["dev",""],["libc",""]]});
+initSidebarItems({"mod":[["libc",""],["tap",""]]});

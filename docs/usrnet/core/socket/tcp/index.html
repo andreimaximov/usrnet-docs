@@ -59,7 +59,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../../src/usrnet/core/socket/tcp/mod.rs.html#1-15' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../../src/usrnet/core/socket/tcp/mod.rs.html#1-19' title='goto source code'>[src]</a></span></h1>
 <h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -87,10 +87,28 @@
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpListen.html"
+                                  title='struct usrnet::core::socket::tcp::TcpListen'>TcpListen</a></td>
+                           <td class='docblock-short'>
+                                <p>The TCP LISTENING state.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.TcpSocket.html"
                                   title='struct usrnet::core::socket::tcp::TcpSocket'>TcpSocket</a></td>
                            <td class='docblock-short'>
-                                <p>A TCP socket.</p>
+                                <p>A TCP socket for reliable stream transfers created. Sockets can be created
+by (1) opening client connections to a server or (2) dequeueing established
+connections with accept(...).</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpSynRecv.html"
+                                  title='struct usrnet::core::socket::tcp::TcpSynRecv'>TcpSynRecv</a></td>
+                           <td class='docblock-short'>
+                                <p>The TCP SYN_RECV state.</p>
 
                            </td>
                        </tr>

@@ -33,7 +33,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Enum Error</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.Address">Address</a><a href="#variant.InUse">InUse</a><a href="#variant.Exhausted">Exhausted</a><a href="#variant.Malformed">Malformed</a><a href="#variant.Checksum">Checksum</a><a href="#variant.NoOp">NoOp</a><a href="#variant.IO">IO</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-From%3CIOError%3E">From&lt;IOError&gt;</a></div></div><p class='location'><a href='index.html'>usrnet</a></p><script>window.sidebarCurrent = {name: 'Error', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+        <p class='location'>Enum Error</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.MacResolution">MacResolution</a><a href="#variant.BindingInUse">BindingInUse</a><a href="#variant.Exhausted">Exhausted</a><a href="#variant.Ignored">Ignored</a><a href="#variant.Device">Device</a><a href="#variant.Malformed">Malformed</a><a href="#variant.Checksum">Checksum</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a></div></div><p class='location'><a href='index.html'>usrnet</a></p><script>window.sidebarCurrent = {name: 'Error', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -59,34 +59,34 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/usrnet/lib.rs.html#23-38' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/usrnet/lib.rs.html#26-44' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Error {
-    Address,
-    InUse,
+    MacResolution(<a class="struct" href="../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a>),
+    BindingInUse(<a class="struct" href="../usrnet/core/socket/bindings/struct.SocketAddr.html" title="struct usrnet::core::socket::bindings::SocketAddr">SocketAddr</a>),
     Exhausted,
+    Ignored,
+    Device(<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">IOError</a>&gt;),
     Malformed,
     Checksum,
-    NoOp,
-    IO(<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">IOError</a>),
 }</pre><h2 id='variants' class='variants small-section-header'>
                    Variants<a href='#variants' class='anchor'></a></h2>
-<span id="variant.Address" class="variant small-section-header"><a href="#variant.Address" class="anchor field"></a><span id='Address.v' class='invisible'><code>Address</code></span></span><div class='docblock'><p>Indicates an error where an address could not be resolved.</p>
-</div><span id="variant.InUse" class="variant small-section-header"><a href="#variant.InUse" class="anchor field"></a><span id='InUse.v' class='invisible'><code>InUse</code></span></span><div class='docblock'><p>Indicates an error where a socket binding has already been assigned.</p>
-</div><span id="variant.Exhausted" class="variant small-section-header"><a href="#variant.Exhausted" class="anchor field"></a><span id='Exhausted.v' class='invisible'><code>Exhausted</code></span></span><div class='docblock'><p>Indicates an error where a buffer, device, etc. is full or empty.</p>
+<span id="variant.MacResolution" class="variant small-section-header"><a href="#variant.MacResolution" class="anchor field"></a><span id='MacResolution.v' class='invisible'><code>MacResolution(<a class="struct" href="../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a>)</code></span></span><div class='docblock'><p>Indicates an error where a MAC address could not be resolved for an IPV4
+address.</p>
+</div><span id="variant.BindingInUse" class="variant small-section-header"><a href="#variant.BindingInUse" class="anchor field"></a><span id='BindingInUse.v' class='invisible'><code>BindingInUse(<a class="struct" href="../usrnet/core/socket/bindings/struct.SocketAddr.html" title="struct usrnet::core::socket::bindings::SocketAddr">SocketAddr</a>)</code></span></span><div class='docblock'><p>Indicates an error where a socket binding has already been assigned.</p>
+</div><span id="variant.Exhausted" class="variant small-section-header"><a href="#variant.Exhausted" class="anchor field"></a><span id='Exhausted.v' class='invisible'><code>Exhausted</code></span></span><div class='docblock'><p>Indicates an error where a socket buffer is full or empty, depending on the
+operation being performed.</p>
+</div><span id="variant.Ignored" class="variant small-section-header"><a href="#variant.Ignored" class="anchor field"></a><span id='Ignored.v' class='invisible'><code>Ignored</code></span></span><div class='docblock'><p>Indicates an error where a an incoming packet was ignored.</p>
+</div><span id="variant.Device" class="variant small-section-header"><a href="#variant.Device" class="anchor field"></a><span id='Device.v' class='invisible'><code>Device(<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">IOError</a>&gt;)</code></span></span><div class='docblock'><p>Indicates an error with a device/interface. This includes situations such as
+writes to a busy device or attempting reads on a device with no Ethernet frames.</p>
 </div><span id="variant.Malformed" class="variant small-section-header"><a href="#variant.Malformed" class="anchor field"></a><span id='Malformed.v' class='invisible'><code>Malformed</code></span></span><div class='docblock'><p>Indicates an error where a packet or frame is malformed.</p>
 </div><span id="variant.Checksum" class="variant small-section-header"><a href="#variant.Checksum" class="anchor field"></a><span id='Checksum.v' class='invisible'><code>Checksum</code></span></span><div class='docblock'><p>Indicates an error where a checksum is invalid.</p>
-</div><span id="variant.NoOp" class="variant small-section-header"><a href="#variant.NoOp" class="anchor field"></a><span id='NoOp.v' class='invisible'><code>NoOp</code></span></span><div class='docblock'><p>Indicates an error where the operation was not performed.</p>
-</div><span id="variant.IO" class="variant small-section-header"><a href="#variant.IO" class="anchor field"></a><span id='IO.v' class='invisible'><code>IO(<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">IOError</a>)</code></span></span><div class='docblock'><p>Indicates a generic IO error.</p>
 </div>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>
             </h2>
-        <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="enum" href="../usrnet/enum.Error.html" title="enum usrnet::Error">Error</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/usrnet/lib.rs.html#22' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/usrnet/lib.rs.html#22' title='goto source code'>[src]</a></span></h4>
+        <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="enum" href="../usrnet/enum.Error.html" title="enum usrnet::Error">Error</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/usrnet/lib.rs.html#25' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/usrnet/lib.rs.html#25' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
-</div></div><h3 id='impl-From%3CIOError%3E' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">IOError</a>&gt; for <a class="enum" href="../usrnet/enum.Error.html" title="enum usrnet::Error">Error</a></code><a href='#impl-From%3CIOError%3E' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/usrnet/lib.rs.html#40-44' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.from' class="method"><span id='from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(err: <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">IOError</a>) -&gt; <a class="enum" href="../usrnet/enum.Error.html" title="enum usrnet::Error">Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/usrnet/lib.rs.html#41-43' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Performs the conversion.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 

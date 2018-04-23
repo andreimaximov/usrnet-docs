@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `dev` mod in crate `usrnet`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, dev">
+    <meta name="description" content="API documentation for the Rust `tcp_echo` mod in crate `usrnet`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, tcp_echo">
 
-    <title>usrnet::linux::dev - Rust</title>
+    <title>usrnet::examples::tcp_echo - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
@@ -33,7 +33,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module dev</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>linux</a></p><script>window.sidebarCurrent = {name: 'dev', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+        <p class='location'>Module tcp_echo</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>examples</a></p><script>window.sidebarCurrent = {name: 'tcp_echo', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -55,19 +55,18 @@
     </nav>
 
     <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>linux</a>::<wbr><a class="mod" href=''>dev</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>examples</a>::<wbr><a class="mod" href=''>tcp_echo</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/usrnet/linux/dev.rs.html#1-126' title='goto source code'>[src]</a></span></h1>
-<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+               </span><a class='srclink' href='../../../src/usrnet/examples/tcp_echo.rs.html#1-21' title='goto source code'>[src]</a></span></h1>
+<h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Tap.html"
-                                  title='struct usrnet::linux::dev::Tap'>Tap</a></td>
+                           <td><a class="fn" href="fn.tcp_echo.html"
+                                  title='fn usrnet::examples::tcp_echo::tcp_echo'>tcp_echo</a></td>
                            <td class='docblock-short'>
-                                <p><a href="https://www.kernel.org/doc/Documentation/networking/tuntap.txt">TAP interface</a>
-for sending and receiving raw ethernet frames.</p>
+                                <p>Runs a TCP echo server as long as f returns true.</p>
 
                            </td>
                        </tr></table></section>

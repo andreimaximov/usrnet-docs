@@ -296,7 +296,7 @@
         <span class="self">self</span>.<span class="ident">recv_buffer</span>
             .<span class="ident">enqueue_maybe</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> (<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">buffer</span>, <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">addr</span>)<span class="op">|</span> {
                 <span class="kw">if</span> <span class="ident">ipv4_repr</span>.<span class="ident">dst_addr</span> <span class="op">!=</span> <span class="ident">binding</span>.<span class="ident">addr</span> <span class="op">||</span> <span class="ident">udp_repr</span>.<span class="ident">dst_port</span> <span class="op">!=</span> <span class="ident">binding</span>.<span class="ident">port</span> {
-                    <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">NoOp</span>)
+                    <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ignored</span>)
                 } <span class="kw">else</span> {
                     <span class="ident">buffer</span>.<span class="ident">try_resize</span>(<span class="ident">payload</span>.<span class="ident">len</span>(), <span class="number">0</span>)<span class="question-mark">?</span>;
                     <span class="ident">buffer</span>.<span class="ident">copy_from_slice</span>(<span class="ident">payload</span>);

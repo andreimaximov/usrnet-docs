@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["arping",""],["env",""],["ping",""],["traceroute",""],["udp_echo",""]]});
+initSidebarItems({"mod":[["arping",""],["env",""],["ping",""],["tcp_echo",""],["traceroute",""],["udp_echo",""]]});

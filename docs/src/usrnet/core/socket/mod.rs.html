@@ -89,6 +89,9 @@
 <span id="33">33</span>
 <span id="34">34</span>
 <span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Communication between endpoints.</span>
 <span class="doccomment">//!</span>
@@ -107,6 +110,7 @@
     <span class="ident">Bindings</span>,
     <span class="ident">SocketAddr</span>,
     <span class="ident">SocketAddrLease</span>,
+    <span class="ident">TaggedSocketAddr</span>,
 };
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">env</span>::<span class="ident">SocketEnv</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">raw</span>::{
@@ -120,8 +124,10 @@
     <span class="ident">TcpClosed</span>,
     <span class="ident">TcpContext</span>,
     <span class="ident">TcpEstablished</span>,
+    <span class="ident">TcpListen</span>,
     <span class="ident">TcpSocket</span>,
     <span class="ident">TcpState</span>,
+    <span class="ident">TcpSynRecv</span>,
     <span class="ident">TcpSynSent</span>,
 };
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">udp</span>::<span class="ident">UdpSocket</span>;
