@@ -189,70 +189,57 @@
 <span id="133">133</span>
 <span id="134">134</span>
 <span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> {
-    <span class="ident">Error</span>,
-    <span class="prelude-ty">Result</span>,
-};
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::<span class="ident">Ipv4Packet</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">service</span>::{
     <span class="ident">ethernet</span>,
+    <span class="ident">ipv4</span>,
     <span class="ident">tcp</span>,
     <span class="ident">udp</span>,
     <span class="ident">Interface</span>,
-    <span class="ident">ipv4</span>,
 };
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::{
     <span class="ident">RawSocket</span>,
     <span class="ident">RawType</span>,
     <span class="ident">SocketSet</span>,
     <span class="ident">TaggedSocket</span>,
-    <span class="ident">TcpSocket</span>,
+    <span class="ident">TcpListener</span>,
+    <span class="ident">TcpStream</span>,
     <span class="ident">UdpSocket</span>,
+};
+<span class="kw">use</span> {
+    <span class="ident">Error</span>,
+    <span class="prelude-ty">Result</span>,
 };
 
 <span class="doccomment">/// Sends out as many socket enqueued packets as possible via an interface.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send</span>(<span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>, <span class="ident">socket_set</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">SocketSet</span>) {
-    <span class="comment">// Iterate over the sockets in round robin fashion (to avoid starvation) and</span>
-    <span class="comment">// try to send a packet for each socket. Stop sending packets once we encounter</span>
-    <span class="comment">// an error for each socket. This implies either (1) all the sockets have been</span>
-    <span class="comment">// exhausted or (2) the device is busy.</span>
-    <span class="kw">loop</span> {
-        <span class="kw">let</span> <span class="ident">sockets</span> <span class="op">=</span> <span class="ident">socket_set</span>.<span class="ident">count</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">errors</span> <span class="op">=</span> <span class="number">0</span>;
+    <span class="kw">for</span> <span class="ident">socket</span> <span class="kw">in</span> <span class="ident">socket_set</span>.<span class="ident">iter_mut</span>() {
+        <span class="kw">let</span> <span class="ident">ok_or_err</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">socket</span> {
+            <span class="ident">TaggedSocket</span>::<span class="ident">Raw</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">socket</span>) <span class="op">=&gt;</span> <span class="ident">send_raw_socket</span>(<span class="ident">interface</span>, <span class="ident">socket</span>),
+            <span class="ident">TaggedSocket</span>::<span class="ident">TcpListener</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">listener</span>) <span class="op">=&gt;</span> <span class="ident">send_tcp_listener</span>(<span class="ident">interface</span>, <span class="ident">listener</span>),
+            <span class="ident">TaggedSocket</span>::<span class="ident">TcpStream</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=&gt;</span> <span class="ident">send_tcp_stream</span>(<span class="ident">interface</span>, <span class="ident">stream</span>),
+            <span class="ident">TaggedSocket</span>::<span class="ident">Udp</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">socket</span>) <span class="op">=&gt;</span> <span class="ident">send_udp_socket</span>(<span class="ident">interface</span>, <span class="ident">socket</span>),
+        };
 
-        <span class="kw">for</span> <span class="ident">socket</span> <span class="kw">in</span> <span class="ident">socket_set</span>.<span class="ident">iter_mut</span>() {
-            <span class="kw">let</span> <span class="ident">ok_or_err</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">socket</span> {
-                <span class="ident">TaggedSocket</span>::<span class="ident">Raw</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">socket</span>) <span class="op">=&gt;</span> <span class="ident">send_raw_socket</span>(<span class="ident">interface</span>, <span class="ident">socket</span>),
-                <span class="ident">TaggedSocket</span>::<span class="ident">Tcp</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">socket</span>) <span class="op">=&gt;</span> <span class="ident">send_tcp_socket</span>(<span class="ident">interface</span>, <span class="ident">socket</span>),
-                <span class="ident">TaggedSocket</span>::<span class="ident">Udp</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">socket</span>) <span class="op">=&gt;</span> <span class="ident">send_udp_socket</span>(<span class="ident">interface</span>, <span class="ident">socket</span>),
-            };
-
-            <span class="kw">match</span> <span class="ident">ok_or_err</span> {
-                <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> {}
-                <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Device</span>(<span class="ident">err</span>)) <span class="op">=&gt;</span> {
-                    <span class="macro">debug</span><span class="macro">!</span>(
-                        <span class="string">&quot;Device has encountered an error, probably exhausted {:?}.&quot;</span>,
-                        <span class="ident">err</span>
-                    );
-                    <span class="comment">// Force exit from outer loop.</span>
-                    <span class="ident">errors</span> <span class="op">=</span> <span class="ident">sockets</span>;
-                    <span class="kw">break</span>;
-                }
-                <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Exhausted</span>) <span class="op">=&gt;</span> {
-                    <span class="comment">// These occur when the sockets are empty, let&#39;s not make our log useless</span>
-                    <span class="comment">// with a flood of these errors.</span>
-                    <span class="ident">errors</span> <span class="op">+=</span> <span class="number">1</span>;
-                }
-                <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
-                    <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Error sending packet with {:?}.&quot;</span>, <span class="ident">err</span>);
-                    <span class="ident">errors</span> <span class="op">+=</span> <span class="number">1</span>;
-                }
+        <span class="kw">match</span> <span class="ident">ok_or_err</span> {
+            <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> {}
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Device</span>(<span class="ident">err</span>)) <span class="op">=&gt;</span> {
+                <span class="macro">debug</span><span class="macro">!</span>(
+                    <span class="string">&quot;Device has encountered an error, probably exhausted {:?}.&quot;</span>,
+                    <span class="ident">err</span>
+                );
+                <span class="kw">break</span>;
             }
-        }
-
-        <span class="kw">if</span> <span class="ident">errors</span> <span class="op">&gt;=</span> <span class="ident">sockets</span> {
-            <span class="kw">break</span>;
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Exhausted</span>) <span class="op">=&gt;</span> {
+                <span class="comment">// These occur when the sockets are empty, let&#39;s not make our log useless</span>
+                <span class="comment">// with a flood of these errors.</span>
+            }
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
+                <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Error sending packet with {:?}.&quot;</span>, <span class="ident">err</span>);
+            }
         }
     }
 }
@@ -286,8 +273,25 @@
     }
 }
 
-<span class="kw">fn</span> <span class="ident">send_tcp_socket</span>(<span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>, <span class="ident">socket</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">TcpSocket</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="ident">socket</span>.<span class="ident">send_dequeue</span>(<span class="op">|</span><span class="ident">ipv4_repr</span>, <span class="ident">tcp_repr</span>, <span class="ident">payload</span><span class="op">|</span> {
+<span class="kw">fn</span> <span class="ident">send_tcp_listener</span>(<span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>, <span class="ident">listener</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">TcpListener</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="ident">listener</span>.<span class="ident">send_dequeue</span>(<span class="op">|</span><span class="ident">ipv4_repr</span>, <span class="ident">tcp_repr</span>, <span class="ident">payload</span><span class="op">|</span> {
+        <span class="kw">let</span> <span class="ident">ok_or_err</span> <span class="op">=</span> <span class="ident">tcp</span>::<span class="ident">send_packet</span>(<span class="ident">interface</span>, <span class="ident">ipv4_repr</span>, <span class="ident">tcp_repr</span>, <span class="op">|</span><span class="ident">payload_</span><span class="op">|</span> {
+            <span class="ident">payload_</span>.<span class="ident">copy_from_slice</span>(<span class="ident">payload</span>);
+        });
+
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">ok_or_err</span> {
+            <span class="macro">warn</span><span class="macro">!</span>(
+                <span class="string">&quot;Error sending packet for a TCP listener child with {:?}.&quot;</span>,
+                <span class="ident">err</span>
+            );
+        }
+    });
+
+    <span class="prelude-val">Ok</span>(())
+}
+
+<span class="kw">fn</span> <span class="ident">send_tcp_stream</span>(<span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>, <span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">TcpStream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="ident">stream</span>.<span class="ident">send_dequeue</span>(<span class="op">|</span><span class="ident">ipv4_repr</span>, <span class="ident">tcp_repr</span>, <span class="ident">payload</span><span class="op">|</span> {
         <span class="ident">tcp</span>::<span class="ident">send_packet</span>(<span class="ident">interface</span>, <span class="ident">ipv4_repr</span>, <span class="ident">tcp_repr</span>, <span class="op">|</span><span class="ident">payload_</span><span class="op">|</span> {
             <span class="ident">payload_</span>.<span class="ident">copy_from_slice</span>(<span class="ident">payload</span>);
         })

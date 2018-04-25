@@ -155,10 +155,6 @@
 <span id="99"> 99</span>
 <span id="100">100</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> {
-    <span class="ident">Error</span>,
-    <span class="prelude-ty">Result</span>,
-};
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
     <span class="ident">eth_types</span>,
     <span class="ident">Arp</span>,
@@ -170,6 +166,10 @@
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">service</span>::{
     <span class="ident">ethernet</span>,
     <span class="ident">Interface</span>,
+};
+<span class="kw">use</span> {
+    <span class="ident">Error</span>,
+    <span class="prelude-ty">Result</span>,
 };
 
 <span class="doccomment">/// Sends an ARP packet via an interface.</span>

@@ -186,10 +186,6 @@
 <span id="130">130</span>
 <span id="131">131</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> {
-    <span class="ident">Error</span>,
-    <span class="prelude-ty">Result</span>,
-};
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
     <span class="ident">Ipv4Protocol</span>,
     <span class="ident">Ipv4Repr</span>,
@@ -203,6 +199,10 @@
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">storage</span>::{
     <span class="ident">Ring</span>,
     <span class="ident">Slice</span>,
+};
+<span class="kw">use</span> {
+    <span class="ident">Error</span>,
+    <span class="prelude-ty">Result</span>,
 };
 
 <span class="doccomment">/// A UDP socket.</span>

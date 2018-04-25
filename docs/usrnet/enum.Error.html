@@ -59,7 +59,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/usrnet/lib.rs.html#26-44' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/usrnet/lib.rs.html#26-45' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Error {
     MacResolution(<a class="struct" href="../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a>),
     BindingInUse(<a class="struct" href="../usrnet/core/socket/bindings/struct.SocketAddr.html" title="struct usrnet::core::socket::bindings::SocketAddr">SocketAddr</a>),
@@ -73,11 +73,12 @@
 <span id="variant.MacResolution" class="variant small-section-header"><a href="#variant.MacResolution" class="anchor field"></a><span id='MacResolution.v' class='invisible'><code>MacResolution(<a class="struct" href="../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a>)</code></span></span><div class='docblock'><p>Indicates an error where a MAC address could not be resolved for an IPV4
 address.</p>
 </div><span id="variant.BindingInUse" class="variant small-section-header"><a href="#variant.BindingInUse" class="anchor field"></a><span id='BindingInUse.v' class='invisible'><code>BindingInUse(<a class="struct" href="../usrnet/core/socket/bindings/struct.SocketAddr.html" title="struct usrnet::core::socket::bindings::SocketAddr">SocketAddr</a>)</code></span></span><div class='docblock'><p>Indicates an error where a socket binding has already been assigned.</p>
-</div><span id="variant.Exhausted" class="variant small-section-header"><a href="#variant.Exhausted" class="anchor field"></a><span id='Exhausted.v' class='invisible'><code>Exhausted</code></span></span><div class='docblock'><p>Indicates an error where a socket buffer is full or empty, depending on the
-operation being performed.</p>
+</div><span id="variant.Exhausted" class="variant small-section-header"><a href="#variant.Exhausted" class="anchor field"></a><span id='Exhausted.v' class='invisible'><code>Exhausted</code></span></span><div class='docblock'><p>Indicates an error where a socket buffer is full or empty, depending on
+the operation being performed.</p>
 </div><span id="variant.Ignored" class="variant small-section-header"><a href="#variant.Ignored" class="anchor field"></a><span id='Ignored.v' class='invisible'><code>Ignored</code></span></span><div class='docblock'><p>Indicates an error where a an incoming packet was ignored.</p>
-</div><span id="variant.Device" class="variant small-section-header"><a href="#variant.Device" class="anchor field"></a><span id='Device.v' class='invisible'><code>Device(<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">IOError</a>&gt;)</code></span></span><div class='docblock'><p>Indicates an error with a device/interface. This includes situations such as
-writes to a busy device or attempting reads on a device with no Ethernet frames.</p>
+</div><span id="variant.Device" class="variant small-section-header"><a href="#variant.Device" class="anchor field"></a><span id='Device.v' class='invisible'><code>Device(<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">IOError</a>&gt;)</code></span></span><div class='docblock'><p>Indicates an error with a device/interface. This includes situations
+such as writes to a busy device or attempting reads on a device
+with no Ethernet frames.</p>
 </div><span id="variant.Malformed" class="variant small-section-header"><a href="#variant.Malformed" class="anchor field"></a><span id='Malformed.v' class='invisible'><code>Malformed</code></span></span><div class='docblock'><p>Indicates an error where a packet or frame is malformed.</p>
 </div><span id="variant.Checksum" class="variant small-section-header"><a href="#variant.Checksum" class="anchor field"></a><span id='Checksum.v' class='invisible'><code>Checksum</code></span></span><div class='docblock'><p>Indicates an error where a checksum is invalid.</p>
 </div>

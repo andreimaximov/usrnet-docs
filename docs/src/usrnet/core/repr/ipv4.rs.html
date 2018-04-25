@@ -743,6 +743,7 @@
 <span id="687">687</span>
 <span id="688">688</span>
 <span id="689">689</span>
+<span id="690">690</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{
     <span class="ident">Display</span>,
@@ -761,11 +762,11 @@
     <span class="ident">WriteBytesExt</span>,
 };
 
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">check</span>::<span class="ident">internet_checksum</span>;
 <span class="kw">use</span> {
     <span class="ident">Error</span>,
     <span class="prelude-ty">Result</span>,
 };
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">check</span>::<span class="ident">internet_checksum</span>;
 
 <span class="doccomment">/// [IPv4 address](https://en.wikipedia.org/wiki/IPv4) in network byte order.</span>
 <span class="doccomment">/// See [this](https://en.wikipedia.org/wiki/Classful_network) for a description</span>
@@ -926,7 +927,8 @@
     <span class="ident">ICMP</span> <span class="op">=</span> <span class="ident">protocols</span>::<span class="ident">ICMP</span>,
     <span class="ident">UDP</span> <span class="op">=</span> <span class="ident">protocols</span>::<span class="ident">UDP</span>,
     <span class="ident">TCP</span> <span class="op">=</span> <span class="ident">protocols</span>::<span class="ident">TCP</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span> <span class="ident">__Nonexhaustive</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="ident">__Nonexhaustive</span>,
 }
 
 <span class="doccomment">/// An IPv4 header.</span>
@@ -1071,8 +1073,8 @@
 
     <span class="doccomment">/// Tries to create an IPv4 packet from a byte buffer.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// NOTE: Use check_encoding() before operating on the packet if the provided</span>
-    <span class="doccomment">/// buffer originates from a untrusted source such as a link.</span>
+    <span class="doccomment">/// NOTE: Use check_encoding() before operating on the packet if the</span>
+    <span class="doccomment">/// provided buffer originates from a untrusted source such as a link.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_new</span>(<span class="ident">buffer</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Packet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> {
         <span class="kw">if</span> <span class="ident">buffer</span>.<span class="ident">as_ref</span>().<span class="ident">len</span>() <span class="op">&lt;</span> <span class="self">Self</span>::<span class="ident">MIN_HEADER_LEN</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Exhausted</span>)
@@ -1086,8 +1088,8 @@
         <span class="number">20</span> <span class="op">+</span> <span class="ident">payload_len</span>
     }
 
-    <span class="doccomment">/// Checks if the packet has a valid encoding. This may include checksum, field</span>
-    <span class="doccomment">/// consistency, etc. checks.</span>
+    <span class="doccomment">/// Checks if the packet has a valid encoding. This may include checksum,</span>
+    <span class="doccomment">/// field consistency, etc. checks.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_encoding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">packet_len</span>() <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">as_ref</span>().<span class="ident">len</span>()
             <span class="op">||</span> ((<span class="self">self</span>.<span class="ident">header_len</span>() <span class="op">*</span> <span class="number">4</span>) <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;</span> <span class="self">Self</span>::<span class="ident">MIN_HEADER_LEN</span>

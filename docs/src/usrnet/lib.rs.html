@@ -100,6 +100,7 @@
 <span id="44">44</span>
 <span id="45">45</span>
 <span id="46">46</span>
+<span id="47">47</span>
 </pre><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
@@ -132,13 +133,14 @@
     <span class="ident">MacResolution</span>(<span class="ident">Ipv4Address</span>),
     <span class="doccomment">/// Indicates an error where a socket binding has already been assigned.</span>
     <span class="ident">BindingInUse</span>(<span class="ident">SocketAddr</span>),
-    <span class="doccomment">/// Indicates an error where a socket buffer is full or empty, depending on the</span>
-    <span class="doccomment">/// operation being performed.</span>
+    <span class="doccomment">/// Indicates an error where a socket buffer is full or empty, depending on</span>
+    <span class="doccomment">/// the operation being performed.</span>
     <span class="ident">Exhausted</span>,
     <span class="doccomment">/// Indicates an error where a an incoming packet was ignored.</span>
     <span class="ident">Ignored</span>,
-    <span class="doccomment">/// Indicates an error with a device/interface. This includes situations such as</span>
-    <span class="doccomment">/// writes to a busy device or attempting reads on a device with no Ethernet frames.</span>
+    <span class="doccomment">/// Indicates an error with a device/interface. This includes situations</span>
+    <span class="doccomment">/// such as writes to a busy device or attempting reads on a device</span>
+    <span class="doccomment">/// with no Ethernet frames.</span>
     <span class="ident">Device</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">IOError</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Indicates an error where a packet or frame is malformed.</span>
     <span class="ident">Malformed</span>,

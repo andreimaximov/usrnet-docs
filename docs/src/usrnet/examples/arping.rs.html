@@ -141,7 +141,6 @@
     <span class="ident">Instant</span>,
 };
 
-<span class="kw">use</span> <span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
     <span class="ident">eth_types</span>,
     <span class="ident">Arp</span>,
@@ -153,6 +152,7 @@
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">service</span>::<span class="ident">Interface</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::<span class="ident">SocketSet</span>;
 <span class="kw">use</span> <span class="ident">examples</span>::<span class="ident">env</span>;
+<span class="kw">use</span> <span class="ident">Error</span>;
 
 <span class="doccomment">/// Sends an ARP request for an IP address via a raw Ethernet socket.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">arping</span>(

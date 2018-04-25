@@ -69,11 +69,11 @@
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../../../../usrnet/core/socket/bindings/struct.Bindings.html" title="struct usrnet::core::socket::bindings::Bindings">Bindings</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../../src/usrnet/core/socket/bindings.rs.html#121-125' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a set of socket bindings.</p>
 </div><h4 id='method.bind_udp' class="method"><span id='bind_udp.v' class='invisible'><code>pub fn <a href='#method.bind_udp' class='fnname'>bind_udp</a>(&amp;self, socket_addr: <a class="struct" href="../../../../usrnet/core/socket/bindings/struct.SocketAddr.html" title="struct usrnet::core::socket::bindings::SocketAddr">SocketAddr</a>) -&gt; <a class="type" href="../../../../usrnet/type.Result.html" title="type usrnet::Result">Result</a>&lt;<a class="struct" href="../../../../usrnet/core/socket/bindings/struct.SocketAddrLease.html" title="struct usrnet::core::socket::bindings::SocketAddrLease">SocketAddrLease</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../../src/usrnet/core/socket/bindings.rs.html#129-131' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Tries to reserve the specified UDP socket address, returning an Error::InUse
-if the socket address is already in use.</p>
+<div class='docblock'><p>Tries to reserve the specified UDP socket address, returning an
+Error::InUse if the socket address is already in use.</p>
 </div><h4 id='method.bind_tcp' class="method"><span id='bind_tcp.v' class='invisible'><code>pub fn <a href='#method.bind_tcp' class='fnname'>bind_tcp</a>(&amp;self, socket_addr: <a class="struct" href="../../../../usrnet/core/socket/bindings/struct.SocketAddr.html" title="struct usrnet::core::socket::bindings::SocketAddr">SocketAddr</a>) -&gt; <a class="type" href="../../../../usrnet/type.Result.html" title="type usrnet::Result">Result</a>&lt;<a class="struct" href="../../../../usrnet/core/socket/bindings/struct.SocketAddrLease.html" title="struct usrnet::core::socket::bindings::SocketAddrLease">SocketAddrLease</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../../src/usrnet/core/socket/bindings.rs.html#135-137' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Tries to reserve the specified TCP socket address, returning an Error::InUse
-if the socket address is already in use.</p>
+<div class='docblock'><p>Tries to reserve the specified TCP socket address, returning an
+Error::InUse if the socket address is already in use.</p>
 </div></div>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>

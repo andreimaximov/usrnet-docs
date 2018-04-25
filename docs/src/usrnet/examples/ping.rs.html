@@ -164,8 +164,8 @@
     <span class="ident">Instant</span>,
 };
 
-<span class="kw">use</span> <span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
+    <span class="ident">ipv4_protocols</span>,
     <span class="ident">Icmpv4Message</span>,
     <span class="ident">Icmpv4Packet</span>,
     <span class="ident">Icmpv4Repr</span>,
@@ -173,11 +173,11 @@
     <span class="ident">Ipv4Packet</span>,
     <span class="ident">Ipv4Protocol</span>,
     <span class="ident">Ipv4Repr</span>,
-    <span class="ident">ipv4_protocols</span>,
 };
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">service</span>::<span class="ident">Interface</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::<span class="ident">SocketSet</span>;
 <span class="kw">use</span> <span class="ident">examples</span>::<span class="ident">env</span>;
+<span class="kw">use</span> <span class="ident">Error</span>;
 
 <span class="doccomment">/// Sends an ICMP ping request to a host via a raw IP socket.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ping</span>(

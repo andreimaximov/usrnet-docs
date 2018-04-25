@@ -128,10 +128,6 @@
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">swap</span>;
 
-<span class="kw">use</span> {
-    <span class="ident">Error</span>,
-    <span class="prelude-ty">Result</span>,
-};
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
     <span class="ident">Icmpv4Message</span>,
     <span class="ident">Icmpv4Packet</span>,
@@ -139,8 +135,12 @@
     <span class="ident">Ipv4Repr</span>,
 };
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">service</span>::{
-    <span class="ident">Interface</span>,
     <span class="ident">ipv4</span>,
+    <span class="ident">Interface</span>,
+};
+<span class="kw">use</span> {
+    <span class="ident">Error</span>,
+    <span class="prelude-ty">Result</span>,
 };
 
 <span class="doccomment">/// Send an ICMP packet via the interface.</span>

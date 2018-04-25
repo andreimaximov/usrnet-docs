@@ -134,23 +134,23 @@
 <span id="78">78</span>
 <span id="79">79</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> {
-    <span class="ident">Error</span>,
-    <span class="prelude-ty">Result</span>,
-};
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
     <span class="ident">eth_types</span>,
     <span class="ident">EthernetFrame</span>,
 };
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">service</span>::{
     <span class="ident">arp</span>,
-    <span class="ident">Interface</span>,
     <span class="ident">ipv4</span>,
+    <span class="ident">Interface</span>,
 };
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::{
     <span class="ident">RawType</span>,
     <span class="ident">SocketSet</span>,
     <span class="ident">TaggedSocket</span>,
+};
+<span class="kw">use</span> {
+    <span class="ident">Error</span>,
+    <span class="prelude-ty">Result</span>,
 };
 
 <span class="doccomment">/// Send an Ethernet frame via an interface.</span>

@@ -33,7 +33,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module socket</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>core</a></p><script>window.sidebarCurrent = {name: 'socket', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+        <p class='location'>Module socket</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>core</a></p><script>window.sidebarCurrent = {name: 'socket', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -59,7 +59,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/usrnet/core/socket/mod.rs.html#1-38' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../src/usrnet/core/socket/mod.rs.html#1-32' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Communication between endpoints.</p>
 <p>The <code>socket</code> module provides abstractions for buffering, sending, and
 receiving data between network endpoints.</p>
@@ -117,60 +117,19 @@ receiving data between network endpoints.</p>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpClosed.html"
-                                  title='struct usrnet::core::socket::TcpClosed'>TcpClosed</a></td>
+                           <td><a class="struct" href="struct.TcpListener.html"
+                                  title='struct usrnet::core::socket::TcpListener'>TcpListener</a></td>
                            <td class='docblock-short'>
-                                <p>The TCP CLOSED state.</p>
+                                <p>A TCP socket server, listening for connections.</p>
 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpContext.html"
-                                  title='struct usrnet::core::socket::TcpContext'>TcpContext</a></td>
+                           <td><a class="struct" href="struct.TcpStream.html"
+                                  title='struct usrnet::core::socket::TcpStream'>TcpStream</a></td>
                            <td class='docblock-short'>
-                                <p>Shared information across TCP states.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpEstablished.html"
-                                  title='struct usrnet::core::socket::TcpEstablished'>TcpEstablished</a></td>
-                           <td class='docblock-short'>
-                                <p>The TCP ESTABLISHED state.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpListen.html"
-                                  title='struct usrnet::core::socket::TcpListen'>TcpListen</a></td>
-                           <td class='docblock-short'>
-                                <p>The TCP LISTENING state.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpSocket.html"
-                                  title='struct usrnet::core::socket::TcpSocket'>TcpSocket</a></td>
-                           <td class='docblock-short'>
-                                <p>A TCP socket for reliable stream transfers created. Sockets can be created
-by (1) opening client connections to a server or (2) dequeueing established
-connections with accept(...).</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpSynRecv.html"
-                                  title='struct usrnet::core::socket::TcpSynRecv'>TcpSynRecv</a></td>
-                           <td class='docblock-short'>
-                                <p>The TCP SYN_RECV state.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpSynSent.html"
-                                  title='struct usrnet::core::socket::TcpSynSent'>TcpSynSent</a></td>
-                           <td class='docblock-short'>
-                                <p>The TCP SYN_SENT state.</p>
+                                <p>A TCP stream for reliable sequential transfers created by establishing new
+client side connections or accepting connections through a listener.</p>
 
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
@@ -180,15 +139,6 @@ connections with accept(...).</p>
                                   title='enum usrnet::core::socket::TcpState'>TcpState</a></td>
                            <td class='docblock-short'>
                                 <p>One of several TCP states.</p>
-
-                           </td>
-                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.Tcp.html"
-                                  title='trait usrnet::core::socket::Tcp'>Tcp</a></td>
-                           <td class='docblock-short'>
-                                <p>A generic interface for implementing TCP state behavior and transitions.</p>
 
                            </td>
                        </tr></table></section>
