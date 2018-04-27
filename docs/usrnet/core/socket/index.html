@@ -33,7 +33,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module socket</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>core</a></p><script>window.sidebarCurrent = {name: 'socket', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+        <p class='location'>Module socket</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>core</a></p><script>window.sidebarCurrent = {name: 'socket', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -59,7 +59,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/usrnet/core/socket/mod.rs.html#1-32' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../src/usrnet/core/socket/mod.rs.html#1-35' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Communication between endpoints.</p>
 <p>The <code>socket</code> module provides abstractions for buffering, sending, and
 receiving data between network endpoints.</p>
@@ -125,6 +125,22 @@ receiving data between network endpoints.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpMockSeqNum.html"
+                                  title='struct usrnet::core::socket::TcpMockSeqNum'>TcpMockSeqNum</a></td>
+                           <td class='docblock-short'>
+                                <p>A TCP sequence number generator for testing, returns a specified value.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpRngSeqNum.html"
+                                  title='struct usrnet::core::socket::TcpRngSeqNum'>TcpRngSeqNum</a></td>
+                           <td class='docblock-short'>
+                                <p>A random TCP sequence number generator.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.TcpStream.html"
                                   title='struct usrnet::core::socket::TcpStream'>TcpStream</a></td>
                            <td class='docblock-short'>
@@ -139,6 +155,15 @@ client side connections or accepting connections through a listener.</p>
                                   title='enum usrnet::core::socket::TcpState'>TcpState</a></td>
                            <td class='docblock-short'>
                                 <p>One of several TCP states.</p>
+
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.TcpDefaultSeqNum.html"
+                                  title='trait usrnet::core::socket::TcpDefaultSeqNum'>TcpDefaultSeqNum</a></td>
+                           <td class='docblock-short'>
+                                <p>A trait for generating sequence numbers for new TCP connections.</p>
 
                            </td>
                        </tr></table></section>

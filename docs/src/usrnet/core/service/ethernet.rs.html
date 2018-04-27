@@ -133,6 +133,16 @@
 <span id="77">77</span>
 <span id="78">78</span>
 <span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
     <span class="ident">eth_types</span>,
@@ -162,7 +172,17 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">eth_frame</span> <span class="op">=</span> <span class="ident">EthernetFrame</span>::<span class="ident">try_new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">eth_buffer</span>[..])<span class="question-mark">?</span>;
     <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">eth_frame</span>);
     <span class="ident">eth_frame</span>.<span class="ident">set_src_addr</span>(<span class="ident">interface</span>.<span class="ident">ethernet_addr</span>);
-    <span class="ident">interface</span>.<span class="ident">dev</span>.<span class="ident">send</span>(<span class="ident">eth_frame</span>.<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
+
+    <span class="kw">if</span> <span class="ident">eth_frame</span>.<span class="ident">dst_addr</span>() <span class="op">==</span> <span class="ident">interface</span>.<span class="ident">ethernet_addr</span> <span class="op">||</span> <span class="ident">eth_frame</span>.<span class="ident">dst_addr</span>().<span class="ident">is_broadcast</span>() {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">interface</span>.<span class="ident">loopback</span>.<span class="ident">copy_from_slice</span>(<span class="ident">eth_frame</span>.<span class="ident">as_ref</span>()) {
+            <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Error enqueueing frame for loopback with {:?}.&quot;</span>, <span class="ident">err</span>);
+        }
+    }
+
+    <span class="kw">if</span> <span class="ident">eth_frame</span>.<span class="ident">dst_addr</span>() <span class="op">!=</span> <span class="ident">interface</span>.<span class="ident">ethernet_addr</span> {
+        <span class="ident">interface</span>.<span class="ident">dev</span>.<span class="ident">send</span>(<span class="ident">eth_frame</span>.<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
+    }
+
     <span class="prelude-val">Ok</span>(())
 }
 

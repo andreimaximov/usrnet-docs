@@ -89,6 +89,9 @@
 <span id="33">33</span>
 <span id="34">34</span>
 <span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Packet processing services for different network layers.</span>
 <span class="doccomment">//!</span>
@@ -110,6 +113,7 @@
     <span class="ident">Ipv4Address</span>,
     <span class="ident">Ipv4AddressCidr</span>,
 };
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">storage</span>::<span class="ident">SliceBuf</span>;
 
 <span class="doccomment">/// An interface for sending and receiving network packets.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Interface</span> {
@@ -124,6 +128,8 @@
     <span class="doccomment">/// Default gateway for IPv4 packets not on the interface subnet. This</span>
     <span class="doccomment">/// should be on the same subnet as ipv4_addr!</span>
     <span class="kw">pub</span> <span class="ident">default_gateway</span>: <span class="ident">Ipv4Address</span>,
+    <span class="doccomment">/// A set of of Ethernet frames captured for sending back up the stack.</span>
+    <span class="kw">pub</span> <span class="ident">loopback</span>: <span class="ident">SliceBuf</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
 }
 </pre>
 </section>

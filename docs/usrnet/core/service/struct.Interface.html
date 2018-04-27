@@ -33,7 +33,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct Interface</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.dev">dev</a><a href="#structfield.arp_cache">arp_cache</a><a href="#structfield.ethernet_addr">ethernet_addr</a><a href="#structfield.ipv4_addr">ipv4_addr</a><a href="#structfield.default_gateway">default_gateway</a></div></div><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>core</a>::<wbr><a href='index.html'>service</a></p><script>window.sidebarCurrent = {name: 'Interface', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+        <p class='location'>Struct Interface</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.dev">dev</a><a href="#structfield.arp_cache">arp_cache</a><a href="#structfield.ethernet_addr">ethernet_addr</a><a href="#structfield.ipv4_addr">ipv4_addr</a><a href="#structfield.default_gateway">default_gateway</a><a href="#structfield.loopback">loopback</a></div></div><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>core</a>::<wbr><a href='index.html'>service</a></p><script>window.sidebarCurrent = {name: 'Interface', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -59,13 +59,14 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/usrnet/core/service/mod.rs.html#23-35' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../src/usrnet/core/service/mod.rs.html#24-38' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Interface {
     pub dev: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="trait" href="../../../usrnet/core/dev/trait.Device.html" title="trait usrnet::core::dev::Device">Device</a>&gt;,
     pub arp_cache: <a class="struct" href="../../../usrnet/core/arp_cache/struct.ArpCache.html" title="struct usrnet::core::arp_cache::ArpCache">ArpCache</a>,
     pub ethernet_addr: <a class="struct" href="../../../usrnet/core/repr/ethernet/struct.Address.html" title="struct usrnet::core::repr::ethernet::Address">EthernetAddress</a>,
     pub ipv4_addr: <a class="struct" href="../../../usrnet/core/repr/ipv4/struct.AddressCidr.html" title="struct usrnet::core::repr::ipv4::AddressCidr">Ipv4AddressCidr</a>,
     pub default_gateway: <a class="struct" href="../../../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a>,
+    pub loopback: <a class="struct" href="../../../usrnet/core/storage/slice_buf/struct.SliceBuf.html" title="struct usrnet::core::storage::slice_buf::SliceBuf">SliceBuf</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;,
 }</pre><div class='docblock'><p>An interface for sending and receiving network packets.</p>
 </div><h2 id='fields' class='fields small-section-header'>
                        Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.dev" class="structfield small-section-header">
@@ -94,6 +95,11 @@
                            <code>default_gateway: <a class="struct" href="../../../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a></code>
                            </span></span><div class='docblock'><p>Default gateway for IPv4 packets not on the interface subnet. This
 should be on the same subnet as ipv4_addr!</p>
+</div><span id="structfield.loopback" class="structfield small-section-header">
+                           <a href="#structfield.loopback" class="anchor field"></a>
+                           <span id="loopback.v" class='invisible'>
+                           <code>loopback: <a class="struct" href="../../../usrnet/core/storage/slice_buf/struct.SliceBuf.html" title="struct usrnet::core::storage::slice_buf::SliceBuf">SliceBuf</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code>
+                           </span></span><div class='docblock'><p>A set of of Ethernet frames captured for sending back up the stack.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 

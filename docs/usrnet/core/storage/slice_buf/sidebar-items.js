@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SliceBuf","A FIFO ordered sequence of slice buffers."]]});

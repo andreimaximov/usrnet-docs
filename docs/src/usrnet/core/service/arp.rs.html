@@ -154,6 +154,10 @@
 <span id="98"> 98</span>
 <span id="99"> 99</span>
 <span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
     <span class="ident">eth_types</span>,
@@ -238,6 +242,10 @@
     <span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>,
     <span class="ident">ipv4_addr</span>: <span class="ident">Ipv4Address</span>,
 ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">EthernetAddress</span><span class="op">&gt;</span> {
+    <span class="kw">if</span> <span class="ident">ipv4_addr</span> <span class="op">==</span> <span class="kw-2">*</span><span class="ident">interface</span>.<span class="ident">ipv4_addr</span> {
+        <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">interface</span>.<span class="ident">ethernet_addr</span>);
+    }
+
     <span class="kw">match</span> <span class="ident">interface</span>.<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4_addr</span>) {
         <span class="prelude-val">Some</span>(<span class="ident">eth_addr</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">eth_addr</span>),
         <span class="prelude-val">None</span> <span class="op">=&gt;</span> {

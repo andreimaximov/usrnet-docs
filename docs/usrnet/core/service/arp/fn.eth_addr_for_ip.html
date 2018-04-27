@@ -59,7 +59,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../../src/usrnet/core/service/arp.rs.html#80-100' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../../src/usrnet/core/service/arp.rs.html#80-104' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn eth_addr_for_ip(<br>&nbsp;&nbsp;&nbsp;&nbsp;interface: &amp;mut <a class="struct" href="../../../../usrnet/core/service/struct.Interface.html" title="struct usrnet::core::service::Interface">Interface</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;ipv4_addr: <a class="struct" href="../../../../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a><br>) -&gt; <a class="type" href="../../../../usrnet/type.Result.html" title="type usrnet::Result">Result</a>&lt;<a class="struct" href="../../../../usrnet/core/repr/ethernet/struct.Address.html" title="struct usrnet::core::repr::ethernet::Address">EthernetAddress</a>&gt;</pre><div class='docblock'><p>Tries to retrieve the Ethernet address for an IPv4 address.</p>
 <p>The IP address may not have an Ethernet mapping yet, in which case an ARP
 request is dispatched and an error returned. The ARP response (if the IP

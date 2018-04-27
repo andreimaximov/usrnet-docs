@@ -744,6 +744,14 @@
 <span id="688">688</span>
 <span id="689">689</span>
 <span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
+<span id="693">693</span>
+<span id="694">694</span>
+<span id="695">695</span>
+<span id="696">696</span>
+<span id="697">697</span>
+<span id="698">698</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{
     <span class="ident">Display</span>,
@@ -1259,8 +1267,16 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV4_TEST_ADDRESS_0</span>: <span class="ident">Address</span> <span class="op">=</span> <span class="ident">Address</span>([<span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV4_TEST_ADDRESS_1</span>: <span class="ident">Address</span> <span class="op">=</span> <span class="ident">Address</span>([<span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]);
+
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV4_TEST_ADDRESS_2</span>: <span class="ident">Address</span> <span class="op">=</span> <span class="ident">Address</span>([<span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>]);
+
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPV4_TEST_ADDRESS_3</span>: <span class="ident">Address</span> <span class="op">=</span> <span class="ident">Address</span>([<span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>]);
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_is_unicast</span>() {
