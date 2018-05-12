@@ -455,24 +455,166 @@
 <span id="399">399</span>
 <span id="400">400</span>
 <span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::{
-    <span class="ident">Duration</span>,
-    <span class="ident">Instant</span>,
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{
+    <span class="ident">Debug</span>,
+    <span class="ident">Formatter</span>,
+    <span class="prelude-ty">Result</span> <span class="kw">as</span> <span class="ident">FmtResult</span>,
 };
 
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
+    <span class="ident">Ipv4Packet</span>,
     <span class="ident">Ipv4Protocol</span>,
     <span class="ident">Ipv4Repr</span>,
+    <span class="ident">TcpControl</span>,
+    <span class="ident">TcpPacket</span>,
     <span class="ident">TcpRepr</span>,
+    <span class="ident">TcpSeqNum</span>,
 };
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::{
     <span class="ident">SocketAddr</span>,
-    <span class="ident">SocketAddrLease</span>,
-    <span class="ident">TcpDefaultSeqNum</span>,
+    <span class="ident">TcpContext</span>,
+    <span class="ident">TcpSeqNumRange</span>,
+    <span class="ident">TcpTimer</span>,
 };
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">Env</span> <span class="kw">as</span> <span class="ident">TimeEnv</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">storage</span>::<span class="ident">Ring</span>;
 <span class="kw">use</span> {
     <span class="ident">Error</span>,
     <span class="prelude-ty">Result</span>,
@@ -489,120 +631,141 @@
 
 <span class="doccomment">/// A TCP stream for reliable sequential transfers created by establishing new</span>
 <span class="doccomment">/// client side connections or accepting connections through a listener.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpStream</span> {
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">binding</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">SocketAddrLease</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The remote address for a connection. This should be a Some(...) in</span>
-    <span class="doccomment">/// all but the CLOSED or TIMED_WAIT states.</span>
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">remote_addr</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// How often to wait for a retransmission. This is temporary, and will</span>
-    <span class="doccomment">/// be refactored appropariately once I learn more.</span>
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">retransmit_timeout</span>: <span class="ident">Duration</span>,
-    <span class="doccomment">/// The next time to retransmit a packet. Like the above, this is temporary</span>
-    <span class="doccomment">/// and will be polished.</span>
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">retransmit_at</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Instant</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The sequence number we should use in our next packet.</span>
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">seq_num</span>: <span class="ident">u32</span>,
-    <span class="doccomment">/// The next sequence number we should ACK, one greater than the greatest</span>
-    <span class="doccomment">/// one we received. This should be a Some(...) in all but the CLOSED or</span>
-    <span class="doccomment">/// TIMED_WAIT states.</span>
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">ack_num</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">state</span>: <span class="ident">TcpState</span>,
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">time_env</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">TimeEnv</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">def_seq_num</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">TcpDefaultSeqNum</span><span class="op">&gt;</span>,
+    <span class="ident">handle</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+    <span class="ident">context</span>: <span class="ident">TcpContext</span>,
+    <span class="doccomment">/// The remote address for a connection.</span>
+    <span class="ident">remote_addr</span>: <span class="ident">SocketAddr</span>,
+    <span class="doccomment">/// The window size of the remote endpoint.</span>
+    <span class="ident">remote_window</span>: <span class="ident">u16</span>,
+    <span class="doccomment">/// The sequence number for the start of the outbound data stream.</span>
+    <span class="ident">seq_num</span>: <span class="ident">TcpSeqNum</span>,
+    <span class="doccomment">/// The highest sequence number we should ACK.</span>
+    <span class="ident">ack_num</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TcpSeqNum</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// One higher than the highest sequence number sent.</span>
+    <span class="ident">sent_seq_num</span>: <span class="ident">TcpSeqNum</span>,
+    <span class="doccomment">/// The current state of the stream.</span>
+    <span class="ident">state</span>: <span class="ident">TcpState</span>,
+    <span class="doccomment">/// A time for scheduling and checking for packet retransmissions.</span>
+    <span class="ident">timer</span>: <span class="ident">TcpTimer</span>,
+    <span class="doccomment">/// A circular buffer containing the outbound data stream.</span>
+    <span class="ident">send_buffer</span>: <span class="ident">Ring</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// A buffer for packetizing the outbound data stream in send_buffer.</span>
+    <span class="ident">packet_buffer</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">TcpStream</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">FmtResult</span> {
+        <span class="macro">write</span><span class="macro">!</span>(
+            <span class="ident">f</span>,
+            <span class="string">&quot;TcpStream {{ context: {:?}, remote_addr: {:?}, remote_window: {:?}, \
+             seq_num: {:?}, ack_num: {:?}, state: {:?} }}&quot;</span>,
+            <span class="self">self</span>.<span class="ident">context</span>,
+            <span class="self">self</span>.<span class="ident">remote_addr</span>,
+            <span class="self">self</span>.<span class="ident">remote_window</span>,
+            <span class="self">self</span>.<span class="ident">seq_num</span>,
+            <span class="self">self</span>.<span class="ident">ack_num</span>,
+            <span class="self">self</span>.<span class="ident">state</span>
+        )
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">TcpStream</span> {
+    <span class="doccomment">/// [https://www.ietf.org/mail-archive/web/tsvwg/current/msg04483.html]</span>
+    <span class="doccomment">/// (https://www.ietf.org/mail-archive/web/tsvwg/current/msg04483.html)</span>
+    <span class="kw">const</span> <span class="ident">DEFAULT_MSS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">536</span>;
+
     <span class="doccomment">/// Creates a new closed TCP stream.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
-        <span class="ident">binding</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">SocketAddrLease</span><span class="op">&gt;</span>,
-        <span class="ident">retransmit_timeout</span>: <span class="ident">Duration</span>,
-        <span class="ident">time_env</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">TimeEnv</span><span class="op">&gt;</span>,
-        <span class="ident">def_seq_num</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">TcpDefaultSeqNum</span><span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">TcpStream</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">context</span>: <span class="ident">TcpContext</span>) <span class="op">-&gt;</span> <span class="ident">TcpStream</span> {
         <span class="ident">TcpStream</span> {
-            <span class="ident">binding</span>,
-            <span class="ident">remote_addr</span>: <span class="prelude-val">None</span>,
-            <span class="ident">retransmit_timeout</span>,
-            <span class="ident">retransmit_at</span>: <span class="prelude-val">None</span>,
-            <span class="ident">seq_num</span>: <span class="number">0</span>,
+            <span class="ident">handle</span>: <span class="prelude-val">None</span>,
+            <span class="ident">context</span>: <span class="ident">context</span>.<span class="ident">clone</span>(),
+            <span class="ident">remote_addr</span>: <span class="ident">SocketAddr</span>::<span class="ident">default</span>(),
+            <span class="ident">remote_window</span>: <span class="number">0</span>,
+            <span class="ident">seq_num</span>: <span class="ident">TcpSeqNum</span>::<span class="ident">default</span>(),
             <span class="ident">ack_num</span>: <span class="prelude-val">None</span>,
+            <span class="ident">sent_seq_num</span>: <span class="ident">TcpSeqNum</span>::<span class="ident">default</span>(),
             <span class="ident">state</span>: <span class="ident">TcpState</span>::<span class="ident">Closed</span>,
-            <span class="ident">time_env</span>,
-            <span class="ident">def_seq_num</span>,
+            <span class="ident">timer</span>: <span class="ident">TcpTimer</span>::<span class="ident">new</span>(<span class="ident">context</span>.<span class="ident">retransmit_timeout</span>, <span class="ident">context</span>.<span class="ident">time_env</span>.<span class="ident">clone</span>()),
+            <span class="ident">send_buffer</span>: <span class="ident">Ring</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">context</span>.<span class="ident">send_queue_len</span>]),
+            <span class="ident">packet_buffer</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="self">Self</span>::<span class="ident">DEFAULT_MSS</span>],
         }
     }
 
+    <span class="doccomment">/// Creates a new syn-recv&#39;d TCP stream.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">with_syn_recv</span>(
+        <span class="ident">context</span>: <span class="ident">TcpContext</span>,
+        <span class="ident">remote_addr</span>: <span class="ident">SocketAddr</span>,
+        <span class="ident">ack_num</span>: <span class="ident">TcpSeqNum</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">TcpStream</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">new</span>(<span class="ident">context</span>);
+        <span class="kw">let</span> <span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">stream</span>.<span class="ident">context</span>.<span class="ident">def_seq_num</span>.<span class="ident">default</span>();
+        <span class="ident">stream</span>.<span class="ident">remote_addr</span> <span class="op">=</span> <span class="ident">remote_addr</span>;
+        <span class="ident">stream</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">seq_num</span>;
+        <span class="ident">stream</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">ack_num</span>);
+        <span class="ident">stream</span>.<span class="ident">set_state</span>(<span class="ident">TcpState</span>::<span class="ident">SynRecv</span>);
+        <span class="ident">stream</span>
+    }
+
     <span class="doccomment">/// Dispatches one (or no) egress TCP packets.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">send_dequeue</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">send_dequeue</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ipv4_packet_len_max</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>, <span class="kw-2">&amp;</span><span class="ident">TcpRepr</span>, <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
     {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">state</span> <span class="op">==</span> <span class="ident">TcpState</span>::<span class="ident">Closed</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Exhausted</span>);
-        }
-
-        <span class="comment">// Should we send a packet?</span>
-        <span class="kw">let</span> <span class="ident">now</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">time_env</span>.<span class="ident">now_instant</span>();
-        <span class="kw">let</span> <span class="ident">send_packet</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">retransmit_at</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">retransmit_at</span> {
-            <span class="ident">now</span> <span class="op">&gt;=</span> <span class="ident">retransmit_at</span>
-        } <span class="kw">else</span> {
-            <span class="bool-val">true</span>
+        <span class="comment">// What sequence number (if any) should we transmit?</span>
+        <span class="kw">let</span> <span class="ident">seq_num</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">seq_num_to_send</span>() {
+            <span class="prelude-val">Some</span>(<span class="ident">seq_num</span>) <span class="op">=&gt;</span> <span class="ident">seq_num</span>,
+            _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Exhausted</span>),
         };
 
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">send_packet</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Exhausted</span>);
-        }
+        <span class="comment">// Construct a TCP control block...</span>
+        <span class="kw">let</span> <span class="ident">control</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
+            <span class="ident">TcpState</span>::<span class="ident">Closed</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+            <span class="ident">TcpState</span>::<span class="ident">Established</span> <span class="op">=&gt;</span> <span class="ident">TcpControl</span>::<span class="prelude-val">None</span>,
+            <span class="ident">TcpState</span>::<span class="ident">SynRecv</span> <span class="op">|</span> <span class="ident">TcpState</span>::<span class="ident">SynSent</span> <span class="op">=&gt;</span> <span class="ident">TcpControl</span>::<span class="ident">Syn</span>,
+        };
 
-        <span class="kw">let</span> <span class="ident">remote_addr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">remote_addr</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;TCP stream does not have a remote address.&quot;</span>);
+        <span class="kw">let</span> <span class="ident">max_segment_size</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">control</span> <span class="op">==</span> <span class="ident">TcpControl</span>::<span class="ident">Syn</span> {
+            <span class="kw">let</span> <span class="ident">mss</span> <span class="op">=</span> <span class="ident">ipv4_packet_len_max</span> <span class="op">-</span> <span class="ident">Ipv4Packet</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>::<span class="ident">MIN_HEADER_LEN</span>
+                <span class="op">-</span> <span class="ident">TcpPacket</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>::<span class="ident">MIN_HEADER_LEN</span>;
+            <span class="kw">let</span> <span class="ident">mss</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">u16</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>, <span class="ident">mss</span>) <span class="kw">as</span> <span class="ident">u16</span>;
+            <span class="prelude-val">Some</span>(<span class="ident">mss</span>)
+        } <span class="kw">else</span> {
+            <span class="prelude-val">None</span>
+        };
 
-        <span class="comment">// Start with a bare minimum packet and build it up.</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TcpRepr</span> {
-            <span class="ident">src_port</span>: <span class="self">self</span>.<span class="ident">binding</span>.<span class="ident">port</span>,
-            <span class="ident">dst_port</span>: <span class="ident">remote_addr</span>.<span class="ident">port</span>,
-            <span class="ident">seq_num</span>: <span class="self">self</span>.<span class="ident">seq_num</span>,
-            <span class="ident">ack_num</span>: <span class="self">self</span>.<span class="ident">ack_num</span>.<span class="ident">unwrap_or</span>(<span class="number">0</span>),
-            <span class="ident">flags</span>: [<span class="bool-val">false</span>; <span class="number">9</span>],
-            <span class="comment">// TODO: Set this to the size of our receive buffer?</span>
-            <span class="ident">window_size</span>: <span class="number">128</span>,
+        <span class="comment">// Construct a TCP packet...</span>
+        <span class="kw">let</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TcpRepr</span> {
+            <span class="ident">src_port</span>: <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">binding</span>.<span class="ident">port</span>,
+            <span class="ident">dst_port</span>: <span class="self">self</span>.<span class="ident">remote_addr</span>.<span class="ident">port</span>,
+            <span class="ident">seq_num</span>,
+            <span class="ident">ack_num</span>: <span class="self">self</span>.<span class="ident">ack_num</span>,
+            <span class="ident">control</span>,
+            <span class="comment">// TODO: Set to size of receive window.</span>
+            <span class="ident">window_size</span>: <span class="number">0</span>,
             <span class="ident">urgent_pointer</span>: <span class="number">0</span>,
             <span class="comment">// TODO: Path MTU discovery to determine MSS.</span>
-            <span class="ident">max_segment_size</span>: <span class="prelude-val">Some</span>(<span class="number">536</span>),
+            <span class="ident">max_segment_size</span>,
         };
-
-        <span class="comment">// Are we setting up a connection?</span>
-        <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_SYN</span>] <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
-            <span class="ident">TcpState</span>::<span class="ident">SynRecv</span> <span class="op">|</span> <span class="ident">TcpState</span>::<span class="ident">SynSent</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
-        };
-
-        <span class="comment">// Do we have anything to ACK?</span>
-        <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_ACK</span>] <span class="op">=</span> <span class="self">self</span>.<span class="ident">ack_num</span>.<span class="ident">is_some</span>();
 
         <span class="kw">let</span> <span class="ident">ipv4_repr</span> <span class="op">=</span> <span class="ident">Ipv4Repr</span> {
-            <span class="ident">src_addr</span>: <span class="self">self</span>.<span class="ident">binding</span>.<span class="ident">addr</span>,
-            <span class="ident">dst_addr</span>: <span class="ident">remote_addr</span>.<span class="ident">addr</span>,
-            <span class="ident">protocol</span>: <span class="ident">Ipv4Protocol</span>::<span class="ident">TCP</span>,
+            <span class="ident">src_addr</span>: <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">binding</span>.<span class="ident">addr</span>,
+            <span class="ident">dst_addr</span>: <span class="self">self</span>.<span class="ident">remote_addr</span>.<span class="ident">addr</span>,
+            <span class="ident">protocol</span>: <span class="ident">Ipv4Protocol</span>::<span class="ident">Tcp</span>,
             <span class="ident">payload_len</span>: <span class="ident">tcp_repr</span>.<span class="ident">header_len</span>() <span class="kw">as</span> <span class="ident">u16</span>,
         };
 
-        <span class="comment">// Caution, consider send failures! This can happen if the destination IP is</span>
-        <span class="comment">// not in the ARP cache yet.</span>
-        <span class="kw">match</span> <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="kw-2">&amp;</span>[<span class="number">0</span>; <span class="number">0</span>]) {
-            <span class="prelude-val">Ok</span>(<span class="ident">res</span>) <span class="op">=&gt;</span> {
-                <span class="self">self</span>.<span class="ident">retransmit_at</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">now</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">retransmit_timeout</span>);
-                <span class="self">self</span>.<span class="ident">retransmit_timeout</span> <span class="op">*=</span> <span class="number">2</span>;
-                <span class="prelude-val">Ok</span>(<span class="ident">res</span>)
-            }
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
-                <span class="macro">debug</span><span class="macro">!</span>(
-                    <span class="string">&quot;TCP stream {:?} encountered {:?} when sending a packet.&quot;</span>,
-                    <span class="self">self</span>, <span class="ident">err</span>
-                );
-                <span class="prelude-val">Err</span>(<span class="ident">err</span>)
-            }
-        }
+        <span class="comment">// Consider send failures! This can happen if the destination IP is not in the</span>
+        <span class="comment">// ARP cache yet.</span>
+        <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="kw-2">&amp;</span>[])<span class="question-mark">?</span>;
+
+        <span class="comment">// The packet has made it onto the link so schedule a retransmission in case we</span>
+        <span class="comment">// don&#39;t get an ACK in time. In the established state we should only schedule</span>
+        <span class="comment">// retransmissions once the entire window has been sent.</span>
+        <span class="self">self</span>.<span class="ident">sent_seq_num</span> <span class="op">=</span> <span class="ident">seq_num</span> <span class="op">+</span> <span class="number">1</span>;
+        <span class="self">self</span>.<span class="ident">timer</span>.<span class="ident">schedule_delayed</span>();
+
+        <span class="prelude-val">Ok</span>(())
     }
 
     <span class="doccomment">/// Enqueues a packet.</span>
@@ -615,73 +778,108 @@
         <span class="ident">tcp_repr</span>: <span class="kw-2">&amp;</span><span class="ident">TcpRepr</span>,
         <span class="ident">_payload</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">src_socket_addr</span> <span class="op">=</span> <span class="ident">SocketAddr</span> {
-            <span class="ident">addr</span>: <span class="ident">ipv4_repr</span>.<span class="ident">src_addr</span>,
-            <span class="ident">port</span>: <span class="ident">tcp_repr</span>.<span class="ident">src_port</span>,
-        };
-        <span class="kw">let</span> <span class="ident">dst_socket_addr</span> <span class="op">=</span> <span class="ident">SocketAddr</span> {
-            <span class="ident">addr</span>: <span class="ident">ipv4_repr</span>.<span class="ident">dst_addr</span>,
-            <span class="ident">port</span>: <span class="ident">tcp_repr</span>.<span class="ident">dst_port</span>,
-        };
-
-        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">accepts</span>(<span class="kw-2">&amp;</span><span class="ident">src_socket_addr</span>, <span class="kw-2">&amp;</span><span class="ident">dst_socket_addr</span>) {
+        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">accepts</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>) {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ignored</span>);
         }
 
-        <span class="kw">if</span> <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_RST</span>] {
-            <span class="macro">debug</span><span class="macro">!</span>(
-                <span class="string">&quot;TCP stream {:?} received a RST, transition to CLOSED.&quot;</span>,
-                <span class="self">self</span>
-            );
-            <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">TcpState</span>::<span class="ident">Closed</span>;
-            <span class="self">self</span>.<span class="ident">remote_addr</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-            <span class="self">self</span>.<span class="ident">retransmit_at</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-            <span class="self">self</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
-        }
+        <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">state</span>, <span class="ident">tcp_repr</span>.<span class="ident">control</span>, <span class="ident">tcp_repr</span>.<span class="ident">ack_num</span>) {
+            (<span class="ident">TcpState</span>::<span class="ident">Closed</span>, _, _) <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+            <span class="comment">// In any case, a RST leads to immediate close.</span>
+            (_, <span class="ident">TcpControl</span>::<span class="ident">Rst</span>, _) <span class="op">=&gt;</span> {
+                <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;TCP stream {:?} got a RST, now CLOSED.&quot;</span>, <span class="self">self</span>.<span class="ident">handle</span>);
+                <span class="self">self</span>.<span class="ident">set_state</span>(<span class="ident">TcpState</span>::<span class="ident">Closed</span>);
+                <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
+            }
+            <span class="comment">// Active open...</span>
+            (<span class="ident">TcpState</span>::<span class="ident">SynSent</span>, <span class="ident">TcpControl</span>::<span class="ident">Syn</span>, <span class="prelude-val">Some</span>(<span class="ident">ack_num</span>)) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">ack_num</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">seq_num</span> <span class="op">+</span> <span class="number">1</span> {
+                    <span class="macro">debug</span><span class="macro">!</span>(
+                        <span class="string">&quot;TCP stream {:?} got a SYN with a bad ACK, ignoring.&quot;</span>,
+                        <span class="self">self</span>.<span class="ident">handle</span>
+                    );
+                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ignored</span>);
+                } <span class="kw">else</span> {
+                    <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;TCP stream {:?} got a SYN, now ESTABLISHED.&quot;</span>, <span class="self">self</span>.<span class="ident">handle</span>);
+                    <span class="self">self</span>.<span class="ident">seq_num</span> <span class="op">+=</span> <span class="number">1</span>;
+                    <span class="self">self</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">+</span> <span class="number">1</span>);
+                    <span class="self">self</span>.<span class="ident">sent_seq_num</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">seq_num</span>;
+                    <span class="self">self</span>.<span class="ident">set_state</span>(<span class="ident">TcpState</span>::<span class="ident">Established</span>);
+                }
+            }
+            <span class="comment">// Simultaneous open...</span>
+            (<span class="ident">TcpState</span>::<span class="ident">SynSent</span>, <span class="ident">TcpControl</span>::<span class="ident">Syn</span>, <span class="prelude-val">None</span>) <span class="op">=&gt;</span> {
+                <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;TCP stream {:?} got a SYN, now SYN_RECV.&quot;</span>, <span class="self">self</span>.<span class="ident">handle</span>);
+                <span class="self">self</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">+</span> <span class="number">1</span>);
+                <span class="self">self</span>.<span class="ident">set_state</span>(<span class="ident">TcpState</span>::<span class="ident">SynRecv</span>);
+            }
+            <span class="comment">// Needs a SYN flag...</span>
+            (<span class="ident">TcpState</span>::<span class="ident">SynSent</span>, _, _) <span class="op">=&gt;</span> {
+                <span class="macro">debug</span><span class="macro">!</span>(
+                    <span class="string">&quot;TCP stream {:?} expected a SYN but got something else.&quot;</span>,
+                    <span class="self">self</span>.<span class="ident">handle</span>
+                );
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ignored</span>);
+            }
+            <span class="comment">// Other states require an &quot;in bounds&quot; ACK.</span>
+            (<span class="ident">state</span>, _, <span class="prelude-val">Some</span>(<span class="ident">ack_num</span>)) <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">ack_window</span> <span class="op">=</span> <span class="ident">TcpSeqNumRange</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">seq_num</span>, <span class="self">self</span>.<span class="ident">sent_seq_num</span>);
+                <span class="kw">if</span> <span class="op">!</span><span class="ident">ack_window</span>.<span class="ident">contains</span>(<span class="ident">ack_num</span> <span class="op">-</span> <span class="number">1</span>) {
+                    <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;TCP stream {:?} got a bad ACK, ignoring.&quot;</span>, <span class="self">self</span>.<span class="ident">handle</span>);
+                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ignored</span>);
+                }
 
-        <span class="comment">// We don&#39;t need an ACK if the packet is a simultaneous open. Short circuit</span>
-        <span class="comment">// this special case.</span>
-        <span class="kw">let</span> <span class="ident">is_sim_open_syn</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span> <span class="op">==</span> <span class="ident">TcpState</span>::<span class="ident">SynSent</span> <span class="op">&amp;&amp;</span> <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_SYN</span>]
-            <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_ACK</span>];
-
-        <span class="kw">if</span> <span class="ident">is_sim_open_syn</span> {
-            <span class="self">self</span>.<span class="ident">retransmit_at</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-            <span class="self">self</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">+</span> <span class="number">1</span>);
-            <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">TcpState</span>::<span class="ident">SynRecv</span>;
-            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
-        }
-
-        <span class="comment">// All other cases (so far) require an ACK.</span>
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_ACK</span>] <span class="op">||</span> <span class="ident">tcp_repr</span>.<span class="ident">ack_num</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">seq_num</span> <span class="op">+</span> <span class="number">1</span> {
-            <span class="comment">// TODO: Sequence number logic may need to be fixed for ESTABLISHED state.</span>
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ignored</span>);
-        }
-
-        <span class="kw">let</span> <span class="ident">to_established</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
-            <span class="ident">TcpState</span>::<span class="ident">SynRecv</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            <span class="ident">TcpState</span>::<span class="ident">SynSent</span> <span class="kw">if</span> <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_SYN</span>] <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+                <span class="kw">if</span> <span class="ident">state</span> <span class="op">==</span> <span class="ident">TcpState</span>::<span class="ident">SynRecv</span> {
+                    <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;TCP stream {:?} got an ACK, now ESTABLISHED.&quot;</span>, <span class="self">self</span>.<span class="ident">handle</span>);
+                    <span class="self">self</span>.<span class="ident">seq_num</span> <span class="op">+=</span> <span class="number">1</span>;
+                    <span class="self">self</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">+</span> <span class="number">1</span>);
+                    <span class="self">self</span>.<span class="ident">sent_seq_num</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">seq_num</span>;
+                    <span class="self">self</span>.<span class="ident">set_state</span>(<span class="ident">TcpState</span>::<span class="ident">Established</span>);
+                }
+            }
+            (_, _, <span class="prelude-val">None</span>) <span class="op">=&gt;</span> {
+                <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;TCP stream {:?} missing an ACK, ignoring.&quot;</span>, <span class="self">self</span>.<span class="ident">handle</span>);
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ignored</span>);
+            }
         };
 
-        <span class="comment">// Are we transitioning to an established state.</span>
-        <span class="kw">if</span> <span class="ident">to_established</span> {
-            <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;TCP stream {:?} transitioning to ESTABLISHED.&quot;</span>, <span class="self">self</span>);
-            <span class="self">self</span>.<span class="ident">retransmit_at</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-            <span class="self">self</span>.<span class="ident">seq_num</span> <span class="op">+=</span> <span class="number">1</span>;
-            <span class="self">self</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">+</span> <span class="number">1</span>);
-            <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">TcpState</span>::<span class="ident">Established</span>;
+        <span class="self">self</span>.<span class="ident">remote_window</span> <span class="op">=</span> <span class="ident">tcp_repr</span>.<span class="ident">window_size</span>;
+
+        <span class="kw">if</span> <span class="kw">let</span> (<span class="ident">TcpControl</span>::<span class="ident">Syn</span>, <span class="prelude-val">Some</span>(<span class="ident">remote_mss</span>)) <span class="op">=</span> (<span class="ident">tcp_repr</span>.<span class="ident">control</span>, <span class="ident">tcp_repr</span>.<span class="ident">max_segment_size</span>) {
+            <span class="self">self</span>.<span class="ident">packet_buffer</span>.<span class="ident">resize</span>(<span class="ident">remote_mss</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="number">0</span>);
         }
 
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="doccomment">/// Checks if the stream is interested TCP packets with the specified</span>
-    <span class="doccomment">/// source and destination addresses.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">accepts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">src_addr</span>: <span class="kw-2">&amp;</span><span class="ident">SocketAddr</span>, <span class="ident">dst_addr</span>: <span class="kw-2">&amp;</span><span class="ident">SocketAddr</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">remote_addr</span> {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">remote_addr</span>) <span class="op">=&gt;</span> <span class="ident">remote_addr</span> <span class="op">==</span> <span class="ident">src_addr</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">binding</span>.<span class="ident">as_ref</span>() <span class="op">==</span> <span class="ident">dst_addr</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+    <span class="doccomment">/// Checks if the stream is interested in a TCP packet.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The packet may be rejected for reasons such as a full receive buffer,</span>
+    <span class="doccomment">/// bad sequence number, etc.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">accepts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ipv4_repr</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>, <span class="ident">tcp_repr</span>: <span class="kw-2">&amp;</span><span class="ident">TcpRepr</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        (<span class="self">self</span>.<span class="ident">state</span> <span class="op">!=</span> <span class="ident">TcpState</span>::<span class="ident">Closed</span>) <span class="op">&amp;&amp;</span> (<span class="self">self</span>.<span class="ident">remote_addr</span> <span class="op">==</span> <span class="ident">SocketAddr</span> {
+            <span class="ident">addr</span>: <span class="ident">ipv4_repr</span>.<span class="ident">src_addr</span>,
+            <span class="ident">port</span>: <span class="ident">tcp_repr</span>.<span class="ident">src_port</span>,
+        }) <span class="op">&amp;&amp;</span> (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">context</span>.<span class="ident">binding</span> <span class="op">==</span> <span class="ident">SocketAddr</span> {
+            <span class="ident">addr</span>: <span class="ident">ipv4_repr</span>.<span class="ident">dst_addr</span>,
+            <span class="ident">port</span>: <span class="ident">tcp_repr</span>.<span class="ident">dst_port</span>,
+        })
+    }
+
+    <span class="doccomment">/// Sets the handle for this stream.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_handle</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">handle</span> <span class="op">=</span> <span class="ident">handle</span>
+    }
+
+    <span class="doccomment">/// Copies the provided buffer into the outbound data stream for</span>
+    <span class="doccomment">/// transmission.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the number of bytes copied, which may be less than the provided</span>
+    <span class="doccomment">/// buffer is the stream&#39;s send buffer is at or near capacity. An error</span>
+    <span class="doccomment">/// is returned if the socket is closed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buffer</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
+            <span class="ident">TcpState</span>::<span class="ident">Closed</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Exhausted</span>),
+            _ <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">send_buffer</span>.<span class="ident">enqueue_slice</span>(<span class="ident">buffer</span>)),
         }
     }
 
@@ -693,9 +891,12 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">remote_addr</span>: <span class="ident">SocketAddr</span>) {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
             <span class="ident">TcpState</span>::<span class="ident">Closed</span> <span class="op">=&gt;</span> {
-                <span class="self">self</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">def_seq_num</span>.<span class="ident">default</span>();
-                <span class="self">self</span>.<span class="ident">remote_addr</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">remote_addr</span>);
-                <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">TcpState</span>::<span class="ident">SynSent</span>;
+                <span class="self">self</span>.<span class="ident">remote_addr</span> <span class="op">=</span> <span class="ident">remote_addr</span>;
+                <span class="self">self</span>.<span class="ident">remote_window</span> <span class="op">=</span> <span class="number">0</span>;
+                <span class="self">self</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">def_seq_num</span>.<span class="ident">default</span>();
+                <span class="self">self</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+                <span class="self">self</span>.<span class="ident">send_buffer</span>.<span class="ident">clear</span>();
+                <span class="self">self</span>.<span class="ident">set_state</span>(<span class="ident">TcpState</span>::<span class="ident">SynSent</span>);
             }
             _ <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Cannot call connect(...) on a TCP stream that is not closed!&quot;</span>),
         }
@@ -713,148 +914,221 @@
             _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
+
+    <span class="doccomment">/// Returns the next sequence number to send, if we should.</span>
+    <span class="kw">fn</span> <span class="ident">seq_num_to_send</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TcpSeqNum</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
+            <span class="ident">TcpState</span>::<span class="ident">Closed</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="ident">TcpState</span>::<span class="ident">SynRecv</span> <span class="op">|</span> <span class="ident">TcpState</span>::<span class="ident">SynSent</span> <span class="op">|</span> <span class="ident">TcpState</span>::<span class="ident">Established</span> <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">timer</span>.<span class="ident">should_transmit</span>() {
+                    <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">seq_num</span>)
+                } <span class="kw">else</span> {
+                    <span class="prelude-val">None</span>
+                }
+            }
+        }
+    }
+
+    <span class="doccomment">/// Updates the state of the stream and resets the transmission timer.</span>
+    <span class="kw">fn</span> <span class="ident">set_state</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">state</span>: <span class="ident">TcpState</span>) {
+        <span class="self">self</span>.<span class="ident">timer</span>.<span class="ident">schedule_now</span>();
+        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">state</span>;
+    }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
     <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::<span class="ident">tcp</span>::<span class="ident">tests</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::{
-        <span class="ident">Bindings</span>,
-        <span class="ident">TcpMockSeqNum</span>,
-    };
-    <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">SystemEnv</span>;
 
-    <span class="doccomment">/// Creates a closed TCP stream.</span>
-    <span class="kw">fn</span> <span class="ident">stream</span>() <span class="op">-&gt;</span> <span class="ident">TcpStream</span> {
-        <span class="kw">let</span> <span class="ident">bindings</span> <span class="op">=</span> <span class="ident">Bindings</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">new</span>(
-            <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">bindings</span>.<span class="ident">bind_tcp</span>(<span class="ident">LOCAL_SOCKET_ADDR</span>).<span class="ident">unwrap</span>()),
-            <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>),
-            <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">SystemEnv</span>::<span class="ident">new</span>()),
-            <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">TcpMockSeqNum</span>::<span class="ident">new</span>(<span class="number">0</span>)),
-        );
-
-        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">REMOTE_SOCKET_ADDR</span>.<span class="ident">len</span>() {
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">stream</span>.<span class="ident">accepts</span>(<span class="kw-2">&amp;</span><span class="ident">REMOTE_SOCKET_ADDR</span>[<span class="ident">i</span>], <span class="kw-2">&amp;</span><span class="ident">LOCAL_SOCKET_ADDR</span>));
-        }
-
-        <span class="ident">stream</span>
+    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">stream</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">time_env</span>:<span class="ident">ident</span>) <span class="op">=&gt;</span> {
+            <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">time_env</span>) <span class="op">=</span> {
+                <span class="kw">let</span> (<span class="ident">context</span>, <span class="ident">time_env</span>) <span class="op">=</span> <span class="ident">context</span>();
+                <span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">new</span>(<span class="ident">context</span>);
+                (<span class="ident">stream</span>, <span class="ident">time_env</span>)
+            };
+        };
     }
 
-    <span class="doccomment">/// Creates a TCP stream in with a connection to REMOTE_SOCKET_ADDR[0].</span>
-    <span class="kw">fn</span> <span class="ident">stream_with_connection</span>(<span class="ident">state</span>: <span class="ident">TcpState</span>, <span class="ident">seq_num</span>: <span class="ident">u32</span>, <span class="ident">ack_num</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">TcpStream</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">stream</span>();
-        <span class="ident">stream</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">state</span>;
-        <span class="ident">stream</span>.<span class="ident">remote_addr</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">REMOTE_SOCKET_ADDR</span>[<span class="number">0</span>]);
-        <span class="ident">stream</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">seq_num</span>;
-        <span class="ident">stream</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="ident">ack_num</span>;
-
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">accepts</span>(<span class="kw-2">&amp;</span><span class="ident">REMOTE_SOCKET_ADDR</span>[<span class="number">0</span>], <span class="kw-2">&amp;</span><span class="ident">LOCAL_SOCKET_ADDR</span>));
-        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">1</span> .. <span class="ident">REMOTE_SOCKET_ADDR</span>.<span class="ident">len</span>() {
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">stream</span>.<span class="ident">accepts</span>(<span class="kw-2">&amp;</span><span class="ident">REMOTE_SOCKET_ADDR</span>[<span class="ident">i</span>], <span class="kw-2">&amp;</span><span class="ident">LOCAL_SOCKET_ADDR</span>));
-        }
-
-        <span class="ident">stream</span>
+    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">with_syn_recv</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>:<span class="ident">ident</span>) <span class="op">=&gt;</span> {{
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">remote_addr</span> <span class="op">=</span> <span class="ident">REMOTE_SOCKET_ADDR</span>[<span class="number">0</span>];
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>);
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">sent_seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">set_state</span>(<span class="ident">TcpState</span>::<span class="ident">SynRecv</span>);
+        }};
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_recv_reset</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TCP_RECV</span>[<span class="number">0</span>];
-        <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_RST</span>] <span class="op">=</span> <span class="bool-val">true</span>;
+    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">with_syn_sent</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>:<span class="ident">ident</span>) <span class="op">=&gt;</span> {{
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">remote_addr</span> <span class="op">=</span> <span class="ident">REMOTE_SOCKET_ADDR</span>[<span class="number">0</span>];
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">sent_seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">set_state</span>(<span class="ident">TcpState</span>::<span class="ident">SynSent</span>);
+        }};
+    }
 
-        <span class="kw">for</span> <span class="ident">state</span> <span class="kw">in</span> [<span class="ident">TcpState</span>::<span class="ident">SynRecv</span>, <span class="ident">TcpState</span>::<span class="ident">SynSent</span>, <span class="ident">TcpState</span>::<span class="ident">Established</span>].<span class="ident">iter</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">stream_with_connection</span>(<span class="kw-2">*</span><span class="ident">state</span>, <span class="number">0</span>, <span class="prelude-val">None</span>);
+    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">with_established</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>:<span class="ident">ident</span>) <span class="op">=&gt;</span> {{
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">remote_addr</span> <span class="op">=</span> <span class="ident">REMOTE_SOCKET_ADDR</span>[<span class="number">0</span>];
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>);
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">sent_seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">set_state</span>(<span class="ident">TcpState</span>::<span class="ident">Established</span>);
+        }};
+    }
+
+    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">receives</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ipv4</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tcp</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {{
+            <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">recv_enqueue</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ipv4</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tcp</span>, <span class="kw-2">&amp;</span>[<span class="number">0</span>; <span class="number">0</span>]), <span class="prelude-val">Ok</span>(_));
+        }};
+    }
+
+    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">sends</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ipv4</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tcp</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {{
             <span class="macro">assert_matches</span><span class="macro">!</span>(
-                <span class="ident">stream</span>.<span class="ident">recv_enqueue</span>(<span class="kw-2">&amp;</span><span class="ident">IPV4_RECV</span>[<span class="number">0</span>], <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="kw-2">&amp;</span>[<span class="number">0</span>; <span class="number">0</span>]),
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">send_dequeue</span>(<span class="number">576</span>, <span class="op">|</span><span class="ident">ipv4_repr</span>, <span class="ident">tcp_repr</span>, <span class="ident">payload</span><span class="op">|</span> {
+                    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ipv4_repr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ipv4</span>);
+                    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">tcp_repr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tcp</span>);
+                    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">payload</span>.<span class="ident">len</span>(), <span class="number">0</span>);
+                    <span class="prelude-val">Ok</span>(())
+                }),
                 <span class="prelude-val">Ok</span>(_)
             );
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">state</span>(), <span class="ident">TcpState</span>::<span class="ident">Closed</span>);
-        }
+        }};
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_recv_bad_seq_num</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TCP_RECV</span>[<span class="number">0</span>];
-        <span class="ident">tcp_repr</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="number">99</span>;
-        <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_ACK</span>] <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_SYN</span>] <span class="op">=</span> <span class="bool-val">true</span>;
-
-        <span class="kw">for</span> <span class="ident">state</span> <span class="kw">in</span> [<span class="ident">TcpState</span>::<span class="ident">SynRecv</span>, <span class="ident">TcpState</span>::<span class="ident">SynSent</span>, <span class="ident">TcpState</span>::<span class="ident">Established</span>].<span class="ident">iter</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">stream_with_connection</span>(<span class="kw-2">*</span><span class="ident">state</span>, <span class="number">99</span>, <span class="prelude-val">None</span>);
-            <span class="macro">assert_matches</span><span class="macro">!</span>(
-                <span class="ident">stream</span>.<span class="ident">recv_enqueue</span>(<span class="kw-2">&amp;</span><span class="ident">IPV4_RECV</span>[<span class="number">0</span>], <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="kw-2">&amp;</span>[<span class="number">0</span>; <span class="number">0</span>]),
-                <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ignored</span>)
-            );
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">state</span>(), <span class="kw-2">*</span><span class="ident">state</span>);
-        }
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_to_established</span>() {
-        <span class="kw">for</span> <span class="ident">state</span> <span class="kw">in</span> [<span class="ident">TcpState</span>::<span class="ident">SynRecv</span>, <span class="ident">TcpState</span>::<span class="ident">SynSent</span>].<span class="ident">iter</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">stream_with_connection</span>(<span class="kw-2">*</span><span class="ident">state</span>, <span class="number">99</span>, <span class="prelude-val">None</span>);
-
+    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">resets</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>:<span class="ident">ident</span>) <span class="op">=&gt;</span> {{
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TCP_RECV</span>[<span class="number">0</span>];
-            <span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="number">9</span>;
-            <span class="ident">tcp_repr</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="number">100</span>;
-            <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_ACK</span>] <span class="op">=</span> <span class="bool-val">true</span>;
-            <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_SYN</span>] <span class="op">=</span> <span class="bool-val">true</span>;
-
-            <span class="macro">assert_matches</span><span class="macro">!</span>(
-                <span class="ident">stream</span>.<span class="ident">recv_enqueue</span>(<span class="kw-2">&amp;</span><span class="ident">IPV4_RECV</span>[<span class="number">0</span>], <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="kw-2">&amp;</span>[<span class="number">0</span>; <span class="number">0</span>]),
-                <span class="prelude-val">Ok</span>(_)
-            );
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">state</span>(), <span class="ident">TcpState</span>::<span class="ident">Established</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">ack_num</span>, <span class="prelude-val">Some</span>(<span class="number">10</span>))
-        }
+            <span class="ident">tcp_repr</span>.<span class="ident">control</span> <span class="op">=</span> <span class="ident">TcpControl</span>::<span class="ident">Rst</span>;
+            <span class="macro">receives</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>, <span class="kw-2">&amp;</span><span class="ident">IPV4_RECV</span>[<span class="number">0</span>], <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stream</span>.<span class="ident">state</span>(), <span class="ident">TcpState</span>::<span class="ident">Closed</span>);
+        }};
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_syn_sent_send</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">stream_with_connection</span>(<span class="ident">TcpState</span>::<span class="ident">SynSent</span>, <span class="number">99</span>, <span class="prelude-val">None</span>);
+    <span class="kw">fn</span> <span class="ident">test_reset</span>() {
+        <span class="macro">stream</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="ident">_time_env</span>);
+        <span class="macro">with_syn_recv</span><span class="macro">!</span>(<span class="ident">stream</span>);
+        <span class="macro">resets</span><span class="macro">!</span>(<span class="ident">stream</span>);
 
+        <span class="macro">stream</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="ident">_time_env</span>);
+        <span class="macro">with_syn_sent</span><span class="macro">!</span>(<span class="ident">stream</span>);
+        <span class="macro">resets</span><span class="macro">!</span>(<span class="ident">stream</span>);
+
+        <span class="macro">stream</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="ident">_time_env</span>);
+        <span class="macro">with_established</span><span class="macro">!</span>(<span class="ident">stream</span>);
+        <span class="macro">resets</span><span class="macro">!</span>(<span class="ident">stream</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_syn_recv_to_established</span>() {
+        <span class="macro">stream</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="ident">_time_env</span>);
+        <span class="macro">with_syn_recv</span><span class="macro">!</span>(<span class="ident">stream</span>);
+
+        <span class="comment">// Send out a SYN packet in response...</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TCP_SEND</span>[<span class="number">0</span>];
-        <span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="number">99</span>;
-        <span class="ident">tcp_repr</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_SYN</span>] <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>);
+        <span class="ident">tcp_repr</span>.<span class="ident">control</span> <span class="op">=</span> <span class="ident">TcpControl</span>::<span class="ident">Syn</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">max_segment_size</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="number">536</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ipv4_repr</span> <span class="op">=</span> <span class="ident">IPV4_SEND</span>[<span class="number">0</span>];
         <span class="ident">ipv4_repr</span>.<span class="ident">payload_len</span> <span class="op">=</span> <span class="ident">tcp_repr</span>.<span class="ident">header_len</span>() <span class="kw">as</span> <span class="ident">u16</span>;
 
-        <span class="macro">assert_matches</span><span class="macro">!</span>(
-            <span class="ident">stream</span>.<span class="ident">send_dequeue</span>(<span class="op">|</span><span class="ident">_ipv4_repr</span>, <span class="ident">_tcp_repr</span>, <span class="ident">payload</span><span class="op">|</span> {
-                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">_ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>);
-                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">_tcp_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>);
-                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">payload</span>.<span class="ident">len</span>(), <span class="number">0</span>);
-                <span class="prelude-val">Ok</span>(())
-            }),
-            <span class="prelude-val">Ok</span>(_)
-        );
+        <span class="macro">sends</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>);
+
+        <span class="comment">// Wait for an ACK before transitioning to established state...</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TCP_RECV</span>[<span class="number">0</span>];
+        <span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>);
+        <span class="ident">tcp_repr</span>.<span class="ident">control</span> <span class="op">=</span> <span class="ident">TcpControl</span>::<span class="prelude-val">None</span>;
+
+        <span class="macro">receives</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="kw-2">&amp;</span><span class="ident">IPV4_RECV</span>[<span class="number">0</span>], <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">state</span>(), <span class="ident">TcpState</span>::<span class="ident">Established</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">seq_num</span>, <span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">ack_num</span>, <span class="prelude-val">Some</span>(<span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">2</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">sent_seq_num</span>, <span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_syn_recv_send</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">stream_with_connection</span>(<span class="ident">TcpState</span>::<span class="ident">SynRecv</span>, <span class="number">99</span>, <span class="prelude-val">Some</span>(<span class="number">9</span>));
+    <span class="kw">fn</span> <span class="ident">test_syn_sent_to_syn_recv</span>() {
+        <span class="macro">stream</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="ident">_time_env</span>);
+        <span class="macro">with_syn_sent</span><span class="macro">!</span>(<span class="ident">stream</span>);
 
+        <span class="comment">// Send out a SYN packet ...</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TCP_SEND</span>[<span class="number">0</span>];
-        <span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="number">99</span>;
-        <span class="ident">tcp_repr</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="number">9</span>;
-        <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_ACK</span>] <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">tcp_repr</span>.<span class="ident">flags</span>[<span class="ident">TcpRepr</span>::<span class="ident">FLAG_SYN</span>] <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">control</span> <span class="op">=</span> <span class="ident">TcpControl</span>::<span class="ident">Syn</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">max_segment_size</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="number">536</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ipv4_repr</span> <span class="op">=</span> <span class="ident">IPV4_SEND</span>[<span class="number">0</span>];
         <span class="ident">ipv4_repr</span>.<span class="ident">payload_len</span> <span class="op">=</span> <span class="ident">tcp_repr</span>.<span class="ident">header_len</span>() <span class="kw">as</span> <span class="ident">u16</span>;
 
-        <span class="macro">assert_matches</span><span class="macro">!</span>(
-            <span class="ident">stream</span>.<span class="ident">send_dequeue</span>(<span class="op">|</span><span class="ident">_ipv4_repr</span>, <span class="ident">_tcp_repr</span>, <span class="ident">payload</span><span class="op">|</span> {
-                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">_ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>);
-                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">_tcp_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>);
-                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">payload</span>.<span class="ident">len</span>(), <span class="number">0</span>);
-                <span class="prelude-val">Ok</span>(())
-            }),
-            <span class="prelude-val">Ok</span>(_)
-        );
+        <span class="macro">sends</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>);
+
+        <span class="comment">// Get a simultaneous open SYN...</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TCP_RECV</span>[<span class="number">0</span>];
+        <span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">control</span> <span class="op">=</span> <span class="ident">TcpControl</span>::<span class="ident">Syn</span>;
+
+        <span class="macro">receives</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="kw-2">&amp;</span><span class="ident">IPV4_RECV</span>[<span class="number">0</span>], <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">state</span>(), <span class="ident">TcpState</span>::<span class="ident">SynRecv</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">seq_num</span>, <span class="ident">TCP_INITIAL_SEQ_NUM</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">ack_num</span>, <span class="prelude-val">Some</span>(<span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">sent_seq_num</span>, <span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_syn_sent_to_established</span>() {
+        <span class="macro">stream</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="ident">_time_env</span>);
+        <span class="macro">with_syn_sent</span><span class="macro">!</span>(<span class="ident">stream</span>);
+
+        <span class="comment">// Send out a SYN packet ...</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TCP_SEND</span>[<span class="number">0</span>];
+        <span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">control</span> <span class="op">=</span> <span class="ident">TcpControl</span>::<span class="ident">Syn</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">max_segment_size</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="number">536</span>);
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ipv4_repr</span> <span class="op">=</span> <span class="ident">IPV4_SEND</span>[<span class="number">0</span>];
+        <span class="ident">ipv4_repr</span>.<span class="ident">payload_len</span> <span class="op">=</span> <span class="ident">tcp_repr</span>.<span class="ident">header_len</span>() <span class="kw">as</span> <span class="ident">u16</span>;
+
+        <span class="macro">sends</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>);
+
+        <span class="comment">// Wait for a SYN/ACK before transitioning to established state...</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TCP_RECV</span>[<span class="number">0</span>];
+        <span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>);
+        <span class="ident">tcp_repr</span>.<span class="ident">control</span> <span class="op">=</span> <span class="ident">TcpControl</span>::<span class="ident">Syn</span>;
+
+        <span class="macro">receives</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="kw-2">&amp;</span><span class="ident">IPV4_RECV</span>[<span class="number">0</span>], <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">state</span>(), <span class="ident">TcpState</span>::<span class="ident">Established</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">seq_num</span>, <span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">ack_num</span>, <span class="prelude-val">Some</span>(<span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">sent_seq_num</span>, <span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_established</span>() {
+        <span class="macro">stream</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="ident">_time_env</span>);
+        <span class="macro">with_established</span><span class="macro">!</span>(<span class="ident">stream</span>);
+
+        <span class="comment">// Sends ACKs...</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TCP_SEND</span>[<span class="number">0</span>];
+        <span class="ident">tcp_repr</span>.<span class="ident">seq_num</span> <span class="op">=</span> <span class="ident">TCP_INITIAL_SEQ_NUM</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">ack_num</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">TCP_INITIAL_SEQ_NUM</span> <span class="op">+</span> <span class="number">1</span>);
+        <span class="ident">tcp_repr</span>.<span class="ident">control</span> <span class="op">=</span> <span class="ident">TcpControl</span>::<span class="prelude-val">None</span>;
+        <span class="ident">tcp_repr</span>.<span class="ident">max_segment_size</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ipv4_repr</span> <span class="op">=</span> <span class="ident">IPV4_SEND</span>[<span class="number">0</span>];
+        <span class="ident">ipv4_repr</span>.<span class="ident">payload_len</span> <span class="op">=</span> <span class="ident">tcp_repr</span>.<span class="ident">header_len</span>() <span class="kw">as</span> <span class="ident">u16</span>;
+
+        <span class="macro">sends</span><span class="macro">!</span>(<span class="ident">stream</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>);
     }
 }
 </pre>

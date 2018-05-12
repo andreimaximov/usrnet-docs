@@ -174,7 +174,7 @@
     <span class="ident">eth_frame</span>.<span class="ident">set_src_addr</span>(<span class="ident">interface</span>.<span class="ident">ethernet_addr</span>);
 
     <span class="kw">if</span> <span class="ident">eth_frame</span>.<span class="ident">dst_addr</span>() <span class="op">==</span> <span class="ident">interface</span>.<span class="ident">ethernet_addr</span> <span class="op">||</span> <span class="ident">eth_frame</span>.<span class="ident">dst_addr</span>().<span class="ident">is_broadcast</span>() {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">interface</span>.<span class="ident">loopback</span>.<span class="ident">copy_from_slice</span>(<span class="ident">eth_frame</span>.<span class="ident">as_ref</span>()) {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">interface</span>.<span class="ident">loopback</span>.<span class="ident">copy_from_slice</span>(<span class="ident">eth_frame</span>.<span class="ident">as_ref</span>(), ()) {
             <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Error enqueueing frame for loopback with {:?}.&quot;</span>, <span class="ident">err</span>);
         }
     }

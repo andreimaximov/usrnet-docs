@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Slice","Owned slice which acts a resizable view over a non-resizable buffer."]]});

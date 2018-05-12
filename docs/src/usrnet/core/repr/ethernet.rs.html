@@ -286,6 +286,12 @@
 <span id="230">230</span>
 <span id="231">231</span>
 <span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{
     <span class="ident">Display</span>,
@@ -354,6 +360,12 @@
     <span class="doccomment">/// Checks if this is a locally assigned address or OUI assigned by IEEE.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_local</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         (<span class="self">self</span>.<span class="number">0</span>[<span class="number">0</span>] <span class="op">&amp;</span> <span class="number">0b00000010</span>) <span class="op">&gt;</span> <span class="number">0</span>
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Address</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Address</span> {
+        <span class="ident">Address</span>([<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>])
     }
 }
 

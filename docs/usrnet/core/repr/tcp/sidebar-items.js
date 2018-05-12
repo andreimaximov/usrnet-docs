@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["TcpOption","A TCP option."]],"struct":[["Packet","View of a byte buffer as a TCP packet."],["Repr","A TCP header."],["TcpOptionIter","An iterator that produces TcpOptions from a buffer."]]});
+initSidebarItems({"enum":[["Control","A simplified set of TCP control flags."],["TcpOption","A TCP option."]],"struct":[["Packet","View of a byte buffer as a TCP packet."],["Repr","A TCP header."],["SeqNum","A TCP sequence number with support for wrapping arithmetic."],["TcpOptionIter","An iterator that produces TcpOptions from a buffer."]]});

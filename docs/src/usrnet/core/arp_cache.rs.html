@@ -226,16 +226,6 @@
 <span id="170">170</span>
 <span id="171">171</span>
 <span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
-<span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Management and caching of Ethernet/IP address mappings.</span>
 
@@ -249,10 +239,7 @@
     <span class="ident">EthernetAddress</span>,
     <span class="ident">Ipv4Address</span>,
 };
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::{
-    <span class="ident">Env</span>,
-    <span class="ident">SystemEnv</span>,
-};
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">Env</span> <span class="kw">as</span> <span class="ident">TimeEnv</span>;
 
 <span class="kw">struct</span> <span class="ident">Entry</span> {
     <span class="ident">eth_addr</span>: <span class="ident">EthernetAddress</span>,
@@ -260,25 +247,22 @@
 }
 
 <span class="doccomment">/// Maintains an expiring set of IPv4 -&gt; ethernet address mappings.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ArpCache</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">SystemEnv</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Env</span>,
-{
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ArpCache</span> {
     <span class="ident">entries</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Ipv4Address</span>, <span class="ident">Entry</span><span class="op">&gt;</span>,
     <span class="ident">expiration</span>: <span class="ident">Duration</span>,
     <span class="ident">in_cache_since_min</span>: <span class="ident">Instant</span>,
-    <span class="ident">time_env</span>: <span class="ident">T</span>,
+    <span class="ident">time_env</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">TimeEnv</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Env</span><span class="op">&gt;</span> <span class="ident">ArpCache</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">ArpCache</span> {
     <span class="doccomment">/// Creates an ARP cache where ethernet address mappings expire after</span>
     <span class="doccomment">/// expiration_in_secs seconds.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">expiration_in_secs</span>: <span class="ident">u64</span>, <span class="ident">time_env</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">ArpCache</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TimeEnv</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">expiration_in_secs</span>: <span class="ident">u64</span>, <span class="ident">time_env</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">ArpCache</span> {
         <span class="ident">ArpCache</span> {
             <span class="ident">entries</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
             <span class="ident">expiration</span>: <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="ident">expiration_in_secs</span>),
             <span class="ident">in_cache_since_min</span>: <span class="ident">Instant</span>::<span class="ident">now</span>(),
-            <span class="ident">time_env</span>: <span class="ident">time_env</span>,
+            <span class="ident">time_env</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">time_env</span>),
         }
     }
 
@@ -329,11 +313,6 @@
             }
         }
     }
-
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">time_env</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span> {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">time_env</span>
-    }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
@@ -341,8 +320,9 @@
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
     <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">MockEnv</span>;
 
-    <span class="kw">fn</span> <span class="ident">arp_cache</span>() <span class="op">-&gt;</span> <span class="ident">ArpCache</span><span class="op">&lt;</span><span class="ident">MockEnv</span><span class="op">&gt;</span> {
-        <span class="ident">ArpCache</span>::<span class="ident">new</span>(<span class="number">60</span>, <span class="ident">MockEnv</span>::<span class="ident">new</span>())
+    <span class="kw">fn</span> <span class="ident">arp_cache</span>() <span class="op">-&gt;</span> (<span class="ident">ArpCache</span>, <span class="ident">MockEnv</span>) {
+        <span class="kw">let</span> <span class="ident">time_env</span> <span class="op">=</span> <span class="ident">MockEnv</span>::<span class="ident">new</span>();
+        (<span class="ident">ArpCache</span>::<span class="ident">new</span>(<span class="number">60</span>, <span class="ident">time_env</span>.<span class="ident">clone</span>()), <span class="ident">time_env</span>)
     }
 
     <span class="kw">fn</span> <span class="ident">ipv4</span>(<span class="ident">i</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">Ipv4Address</span> {
@@ -355,66 +335,66 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_lookup_ip_with_no_mapping</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arp_cache</span> <span class="op">=</span> <span class="ident">arp_cache</span>();
+        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">arp_cache</span>, _) <span class="op">=</span> <span class="ident">arp_cache</span>();
         <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)), <span class="prelude-val">None</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_lookup_ip_with_mapping</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arp_cache</span> <span class="op">=</span> <span class="ident">arp_cache</span>();
+        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">arp_cache</span>, <span class="kw-2">mut</span> <span class="ident">time_env</span>) <span class="op">=</span> <span class="ident">arp_cache</span>();
 
         <span class="ident">arp_cache</span>.<span class="ident">set_eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>), <span class="ident">eth</span>(<span class="number">0</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)).<span class="ident">unwrap</span>(), <span class="ident">eth</span>(<span class="number">0</span>));
 
-        <span class="ident">arp_cache</span>.<span class="ident">time_env</span>().<span class="ident">now</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">60</span>);
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">60</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)).<span class="ident">unwrap</span>(), <span class="ident">eth</span>(<span class="number">0</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_lookup_ip_after_expiring</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arp_cache</span> <span class="op">=</span> <span class="ident">arp_cache</span>();
+        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">arp_cache</span>, <span class="kw-2">mut</span> <span class="ident">time_env</span>) <span class="op">=</span> <span class="ident">arp_cache</span>();
 
         <span class="ident">arp_cache</span>.<span class="ident">set_eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>), <span class="ident">eth</span>(<span class="number">0</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)).<span class="ident">unwrap</span>(), <span class="ident">eth</span>(<span class="number">0</span>));
 
-        <span class="ident">arp_cache</span>.<span class="ident">time_env</span>().<span class="ident">now</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">61</span>);
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">61</span>);
         <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)), <span class="prelude-val">None</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_push_back_expiration</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arp_cache</span> <span class="op">=</span> <span class="ident">arp_cache</span>();
+        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">arp_cache</span>, <span class="kw-2">mut</span> <span class="ident">time_env</span>) <span class="op">=</span> <span class="ident">arp_cache</span>();
 
         <span class="ident">arp_cache</span>.<span class="ident">set_eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>), <span class="ident">eth</span>(<span class="number">0</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)).<span class="ident">unwrap</span>(), <span class="ident">eth</span>(<span class="number">0</span>));
 
-        <span class="ident">arp_cache</span>.<span class="ident">time_env</span>().<span class="ident">now</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">60</span>);
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">60</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)).<span class="ident">unwrap</span>(), <span class="ident">eth</span>(<span class="number">0</span>));
 
         <span class="ident">arp_cache</span>.<span class="ident">set_eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>), <span class="ident">eth</span>(<span class="number">0</span>));
-        <span class="ident">arp_cache</span>.<span class="ident">time_env</span>().<span class="ident">now</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">60</span>);
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">60</span>);
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)).<span class="ident">unwrap</span>(), <span class="ident">eth</span>(<span class="number">0</span>));
 
-        <span class="ident">arp_cache</span>.<span class="ident">time_env</span>().<span class="ident">now</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>);
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>);
         <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)), <span class="prelude-val">None</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_chained_expiration</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arp_cache</span> <span class="op">=</span> <span class="ident">arp_cache</span>();
+        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">arp_cache</span>, <span class="kw-2">mut</span> <span class="ident">time_env</span>) <span class="op">=</span> <span class="ident">arp_cache</span>();
 
         <span class="ident">arp_cache</span>.<span class="ident">set_eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>), <span class="ident">eth</span>(<span class="number">0</span>));
-        <span class="ident">arp_cache</span>.<span class="ident">time_env</span>().<span class="ident">now</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">30</span>);
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">30</span>);
         <span class="ident">arp_cache</span>.<span class="ident">set_eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">1</span>), <span class="ident">eth</span>(<span class="number">1</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)).<span class="ident">unwrap</span>(), <span class="ident">eth</span>(<span class="number">0</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">1</span>)).<span class="ident">unwrap</span>(), <span class="ident">eth</span>(<span class="number">1</span>));
 
-        <span class="ident">arp_cache</span>.<span class="ident">time_env</span>().<span class="ident">now</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">31</span>);
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">31</span>);
         <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)), <span class="prelude-val">None</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">1</span>)).<span class="ident">unwrap</span>(), <span class="ident">eth</span>(<span class="number">1</span>));
 
-        <span class="ident">arp_cache</span>.<span class="ident">time_env</span>().<span class="ident">now</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">30</span>);
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">30</span>);
         <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">0</span>)), <span class="prelude-val">None</span>);
         <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="ident">arp_cache</span>.<span class="ident">eth_addr_for_ip</span>(<span class="ident">ipv4</span>(<span class="number">1</span>)), <span class="prelude-val">None</span>);
     }

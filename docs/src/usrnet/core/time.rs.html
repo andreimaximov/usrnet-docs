@@ -100,11 +100,29 @@
 <span id="44">44</span>
 <span id="45">45</span>
 <span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Abstractions for providing the current time.</span>
 
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Debug</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Instant</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">AddAssign</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::{
+    <span class="ident">Duration</span>,
+    <span class="ident">Instant</span>,
+};
 
 <span class="doccomment">/// An environment that provides the current time.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Env</span>: <span class="ident">Debug</span> {
@@ -131,20 +149,26 @@
 <span class="doccomment">/// An environment that provides a configurable time.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MockEnv</span> {
-    <span class="kw">pub</span> <span class="ident">now</span>: <span class="ident">Instant</span>,
+    <span class="ident">now</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Instant</span><span class="op">&gt;&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">MockEnv</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">MockEnv</span> {
         <span class="ident">MockEnv</span> {
-            <span class="ident">now</span>: <span class="ident">Instant</span>::<span class="ident">now</span>(),
+            <span class="ident">now</span>: <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">Instant</span>::<span class="ident">now</span>())),
         }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MockEnv</span> {
+    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dur</span>: <span class="ident">Duration</span>) {
+        <span class="self">self</span>.<span class="ident">now</span>.<span class="ident">borrow_mut</span>().<span class="ident">add_assign</span>(<span class="ident">dur</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Env</span> <span class="kw">for</span> <span class="ident">MockEnv</span> {
     <span class="kw">fn</span> <span class="ident">now_instant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Instant</span> {
-        <span class="self">self</span>.<span class="ident">now</span>
+        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">now</span>.<span class="ident">borrow</span>()
     }
 }
 </pre>

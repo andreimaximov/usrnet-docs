@@ -133,6 +133,12 @@
 <span id="77">77</span>
 <span id="78">78</span>
 <span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">slice</span>::<span class="ident">IterMut</span> <span class="kw">as</span> <span class="ident">SliceIterMut</span>;
 
@@ -154,12 +160,18 @@
     }
 
     <span class="doccomment">/// Adds a socket and returns a stable handle.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_socket</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">socket</span>: <span class="ident">TaggedSocket</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_socket</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">socket</span>: <span class="ident">TaggedSocket</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> {
             (<span class="number">0</span> .. <span class="self">self</span>.<span class="ident">sockets</span>.<span class="ident">len</span>())
                 .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">sockets</span>[<span class="kw-2">*</span><span class="ident">i</span>].<span class="ident">is_none</span>())
                 .<span class="ident">next</span>()
         };
+
+        <span class="kw">match</span> <span class="ident">socket</span> {
+            <span class="ident">TaggedSocket</span>::<span class="ident">TcpListener</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">listener</span>) <span class="op">=&gt;</span> <span class="ident">listener</span>.<span class="ident">set_handle</span>(<span class="ident">handle</span>),
+            <span class="ident">TaggedSocket</span>::<span class="ident">TcpStream</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=&gt;</span> <span class="ident">stream</span>.<span class="ident">set_handle</span>(<span class="ident">handle</span>),
+            _ <span class="op">=&gt;</span> {}
+        }
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="ident">handle</span> {
             <span class="self">self</span>.<span class="ident">sockets</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">socket</span>);

@@ -59,14 +59,22 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../../src/usrnet/core/socket/tcp/mod.rs.html#1-127' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../../src/usrnet/core/socket/tcp/mod.rs.html#1-163' title='goto source code'>[src]</a></span></h1>
 <h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpContext.html"
+                                  title='struct usrnet::core::socket::tcp::TcpContext'>TcpContext</a></td>
+                           <td class='docblock-short'>
+                                <p>An execution context for TCP streams and listeners.</p>
+
+                           </td>
+                       </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.TcpListener.html"
                                   title='struct usrnet::core::socket::tcp::TcpListener'>TcpListener</a></td>
                            <td class='docblock-short'>
-                                <p>A TCP socket server, listening for connections.</p>
+                                <p>A TCP server, listening for connections.</p>
 
                            </td>
                        </tr>
@@ -87,11 +95,28 @@
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpSeqNumRange.html"
+                                  title='struct usrnet::core::socket::tcp::TcpSeqNumRange'>TcpSeqNumRange</a></td>
+                           <td class='docblock-short'>
+                                <p>A sequence number range [lower, upper) where the upper bound can overflow
+and be &quot;less&quot; than the lower bound.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.TcpStream.html"
                                   title='struct usrnet::core::socket::tcp::TcpStream'>TcpStream</a></td>
                            <td class='docblock-short'>
                                 <p>A TCP stream for reliable sequential transfers created by establishing new
 client side connections or accepting connections through a listener.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpTimer.html"
+                                  title='struct usrnet::core::socket::tcp::TcpTimer'>TcpTimer</a></td>
+                           <td class='docblock-short'>
+                                <p>A timer for scheduling the transmission of TCP packets.</p>
 
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>

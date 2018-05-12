@@ -129,7 +129,7 @@
     <span class="doccomment">/// should be on the same subnet as ipv4_addr!</span>
     <span class="kw">pub</span> <span class="ident">default_gateway</span>: <span class="ident">Ipv4Address</span>,
     <span class="doccomment">/// A set of of Ethernet frames captured for sending back up the stack.</span>
-    <span class="kw">pub</span> <span class="ident">loopback</span>: <span class="ident">SliceBuf</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">loopback</span>: <span class="ident">SliceBuf</span><span class="op">&lt;</span><span class="ident">u8</span>, ()<span class="op">&gt;</span>,
 }
 </pre>
 </section>

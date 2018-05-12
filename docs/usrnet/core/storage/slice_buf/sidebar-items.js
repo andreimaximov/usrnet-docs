@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["SliceBuf","A FIFO ordered sequence of slice buffers."]]});
+initSidebarItems({"struct":[["SliceBuf","A FIFO ordered sequence of T slices from a shared buffer, each with an associated piece of metadata M."]]});

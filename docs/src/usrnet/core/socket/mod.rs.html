@@ -89,6 +89,9 @@
 <span id="33">33</span>
 <span id="34">34</span>
 <span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Communication between endpoints.</span>
 <span class="doccomment">//!</span>
@@ -117,12 +120,15 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">set</span>::<span class="ident">SocketSet</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">tagged</span>::<span class="ident">TaggedSocket</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">tcp</span>::{
+    <span class="ident">TcpContext</span>,
     <span class="ident">TcpDefaultSeqNum</span>,
     <span class="ident">TcpListener</span>,
     <span class="ident">TcpMockSeqNum</span>,
     <span class="ident">TcpRngSeqNum</span>,
+    <span class="ident">TcpSeqNumRange</span>,
     <span class="ident">TcpState</span>,
     <span class="ident">TcpStream</span>,
+    <span class="ident">TcpTimer</span>,
 };
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">udp</span>::<span class="ident">UdpSocket</span>;
 </pre>

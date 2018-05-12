@@ -196,6 +196,17 @@
 <span id="140">140</span>
 <span id="141">141</span>
 <span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
     <span class="ident">eth_types</span>,
@@ -338,6 +349,17 @@
         <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;{} will be routed through default gateway.&quot;</span>, <span class="ident">address</span>);
         <span class="ident">interface</span>.<span class="ident">default_gateway</span>
     }
+}
+
+<span class="doccomment">/// Returns the maximum length of an IPv4 over Ethernet packet the interface</span>
+<span class="doccomment">/// can transmit.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ipv4_packet_len_max</span>(<span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="ident">Interface</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">let</span> <span class="ident">eth_frame_len</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">min</span>(
+        <span class="ident">EthernetFrame</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>::<span class="ident">MAX_FRAME_LEN</span>,
+        <span class="ident">interface</span>.<span class="ident">dev</span>.<span class="ident">max_transmission_unit</span>(),
+    );
+
+    <span class="ident">eth_frame_len</span>.<span class="ident">saturating_sub</span>(<span class="ident">EthernetFrame</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>::<span class="ident">HEADER_LEN</span>)
 }
 </pre>
 </section>

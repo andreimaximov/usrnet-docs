@@ -101,6 +101,8 @@
 <span id="45">45</span>
 <span id="46">46</span>
 <span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Serialization and deserialization of network packets.</span>
 <span class="doccomment">//!</span>
@@ -142,8 +144,10 @@
     <span class="ident">Repr</span> <span class="kw">as</span> <span class="ident">Ipv4Repr</span>,
 };
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">tcp</span>::{
+    <span class="ident">Control</span> <span class="kw">as</span> <span class="ident">TcpControl</span>,
     <span class="ident">Packet</span> <span class="kw">as</span> <span class="ident">TcpPacket</span>,
     <span class="ident">Repr</span> <span class="kw">as</span> <span class="ident">TcpRepr</span>,
+    <span class="ident">SeqNum</span> <span class="kw">as</span> <span class="ident">TcpSeqNum</span>,
 };
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">udp</span>::{
     <span class="ident">Packet</span> <span class="kw">as</span> <span class="ident">UdpPacket</span>,

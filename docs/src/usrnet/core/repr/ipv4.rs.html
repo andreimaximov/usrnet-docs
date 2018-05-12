@@ -752,6 +752,12 @@
 <span id="696">696</span>
 <span id="697">697</span>
 <span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
+<span id="702">702</span>
+<span id="703">703</span>
+<span id="704">704</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{
     <span class="ident">Display</span>,
@@ -823,6 +829,12 @@
     <span class="comment">// Checks if this is a reserved address.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_reserved</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         (<span class="self">self</span>.<span class="number">0</span>[<span class="number">0</span>] <span class="op">&amp;</span> <span class="number">0b11110000</span>) <span class="op">==</span> <span class="number">0b11110000</span>
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Address</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Address</span> {
+        <span class="ident">Address</span>([<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>])
     }
 }
 
@@ -932,9 +944,9 @@
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u8</span>)]</span>
 <span class="doccomment">/// A set of supported protocols over IPv4.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Protocol</span> {
-    <span class="ident">ICMP</span> <span class="op">=</span> <span class="ident">protocols</span>::<span class="ident">ICMP</span>,
-    <span class="ident">UDP</span> <span class="op">=</span> <span class="ident">protocols</span>::<span class="ident">UDP</span>,
-    <span class="ident">TCP</span> <span class="op">=</span> <span class="ident">protocols</span>::<span class="ident">TCP</span>,
+    <span class="ident">Icmp</span> <span class="op">=</span> <span class="ident">protocols</span>::<span class="ident">ICMP</span>,
+    <span class="ident">Udp</span> <span class="op">=</span> <span class="ident">protocols</span>::<span class="ident">UDP</span>,
+    <span class="ident">Tcp</span> <span class="op">=</span> <span class="ident">protocols</span>::<span class="ident">TCP</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Nonexhaustive</span>,
 }
@@ -964,9 +976,9 @@
             <span class="ident">src_addr</span>: <span class="ident">packet</span>.<span class="ident">src_addr</span>(),
             <span class="ident">dst_addr</span>: <span class="ident">packet</span>.<span class="ident">dst_addr</span>(),
             <span class="ident">protocol</span>: <span class="kw">match</span> <span class="ident">packet</span>.<span class="ident">protocol</span>() {
-                <span class="ident">protocols</span>::<span class="ident">ICMP</span> <span class="op">=&gt;</span> <span class="ident">Protocol</span>::<span class="ident">ICMP</span>,
-                <span class="ident">protocols</span>::<span class="ident">TCP</span> <span class="op">=&gt;</span> <span class="ident">Protocol</span>::<span class="ident">TCP</span>,
-                <span class="ident">protocols</span>::<span class="ident">UDP</span> <span class="op">=&gt;</span> <span class="ident">Protocol</span>::<span class="ident">UDP</span>,
+                <span class="ident">protocols</span>::<span class="ident">ICMP</span> <span class="op">=&gt;</span> <span class="ident">Protocol</span>::<span class="ident">Icmp</span>,
+                <span class="ident">protocols</span>::<span class="ident">TCP</span> <span class="op">=&gt;</span> <span class="ident">Protocol</span>::<span class="ident">Tcp</span>,
+                <span class="ident">protocols</span>::<span class="ident">UDP</span> <span class="op">=&gt;</span> <span class="ident">Protocol</span>::<span class="ident">Udp</span>,
                 _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Malformed</span>),
             },
             <span class="ident">payload_len</span>: <span class="ident">packet</span>.<span class="ident">payload</span>().<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u16</span>,

@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["ring",""],["slice",""],["slice_buf",""]]});
+initSidebarItems({"mod":[["ring",""],["slice_buf",""]]});
