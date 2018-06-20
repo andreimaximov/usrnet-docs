@@ -10,10 +10,11 @@
     <title>dev.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle">
     <script src="../../../storage.js"></script>
     
 
@@ -74,7 +75,7 @@
 <span id="18">18</span>
 <span id="19">19</span>
 </pre><pre class="rust ">
-<span class="doccomment">//! Sending/receiving raw Ethernet frames.</span>
+<span class="doccomment">//! Sending/receiving raw ethernet frames.</span>
 
 <span class="kw">use</span> <span class="prelude-ty">Result</span>;
 
@@ -91,7 +92,7 @@
 
     <span class="doccomment">/// Returns the [MTU](https://en.wikipedia.org/wiki/Maximum_transmission_unit)</span>
     <span class="doccomment">/// of the link.</span>
-    <span class="kw">fn</span> <span class="ident">max_transmission_unit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>;
+    <span class="kw">fn</span> <span class="ident">mtu</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>;
 }
 </pre>
 </section>

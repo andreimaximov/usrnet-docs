@@ -10,10 +10,11 @@
     <title>udp.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle">
     <script src="../../../../storage.js"></script>
     
 
@@ -157,11 +158,6 @@
 <span id="101">101</span>
 <span id="102">102</span>
 <span id="103">103</span>
-<span id="104">104</span>
-<span id="105">105</span>
-<span id="106">106</span>
-<span id="107">107</span>
-<span id="108">108</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">repr</span>::{
     <span class="ident">Icmpv4DestinationUnreachable</span>,
@@ -189,16 +185,11 @@
 <span class="doccomment">/// This function takes care of serializing a header, calculating a checksum,</span>
 <span class="doccomment">/// etc. so the caller needs to fill in **only** the payload in the provided</span>
 <span class="doccomment">/// buffer.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send_packet</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
-    <span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>,
-    <span class="ident">ipv4_repr</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>,
-    <span class="ident">udp_repr</span>: <span class="kw-2">&amp;</span><span class="ident">UdpRepr</span>,
-    <span class="ident">f</span>: <span class="ident">F</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">ifr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>, <span class="ident">ipv4_repr</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>, <span class="ident">udp_repr</span>: <span class="kw-2">&amp;</span><span class="ident">UdpRepr</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]),
 {
-    <span class="ident">ipv4</span>::<span class="ident">send_packet_with_repr</span>(<span class="ident">interface</span>, <span class="ident">ipv4_repr</span>, <span class="op">|</span><span class="ident">ipv4_payload</span><span class="op">|</span> {
+    <span class="ident">ipv4</span>::<span class="ident">send_with_repr</span>(<span class="ident">ifr</span>, <span class="ident">ipv4_repr</span>, <span class="op">|</span><span class="ident">ipv4_payload</span><span class="op">|</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">udp_packet</span> <span class="op">=</span> <span class="ident">UdpPacket</span>::<span class="ident">try_new</span>(<span class="ident">ipv4_payload</span>).<span class="ident">unwrap</span>();
         <span class="ident">f</span>(<span class="ident">udp_packet</span>.<span class="ident">payload_mut</span>());
         <span class="comment">// NOTE: It&#39;s important that the UDP serialization happens after the payload</span>
@@ -207,23 +198,23 @@
     })
 }
 
-<span class="doccomment">/// Receives a UDP packet from an interface.</span>
+<span class="doccomment">/// Processes a UDP packet from an interface.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The UDP packet is parsed, forwarded to any socket, and any necessary ICMP</span>
+<span class="doccomment">/// The UDP packet is parsed, forwarded to any sockets, and any necessary ICMPv4</span>
 <span class="doccomment">/// messages sent.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">recv_packet</span>(
-    <span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>,
-    <span class="ident">ipv4_repr</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>,
-    <span class="ident">ipv4_packet</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Packet</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">recv</span>(
+    <span class="ident">ifr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>,
     <span class="ident">socket_set</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">SocketSet</span>,
+    <span class="ident">ipv4_packet</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Packet</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
 ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">ipv4_repr</span> <span class="op">=</span> <span class="ident">Ipv4Repr</span>::<span class="ident">deserialize</span>(<span class="ident">ipv4_packet</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">udp_packet</span> <span class="op">=</span> <span class="ident">UdpPacket</span>::<span class="ident">try_new</span>(<span class="ident">ipv4_packet</span>.<span class="ident">payload</span>())<span class="question-mark">?</span>;
-    <span class="ident">udp_packet</span>.<span class="ident">check_encoding</span>(<span class="ident">ipv4_repr</span>)<span class="question-mark">?</span>;
-
+    <span class="ident">udp_packet</span>.<span class="ident">check_encoding</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">udp_repr</span> <span class="op">=</span> <span class="ident">UdpRepr</span>::<span class="ident">deserialize</span>(<span class="kw-2">&amp;</span><span class="ident">udp_packet</span>);
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">unreachable</span> <span class="op">=</span> <span class="bool-val">true</span>;
 
+    <span class="comment">// Forward to any UDP sockets...</span>
     <span class="ident">socket_set</span>
         .<span class="ident">iter_mut</span>()
         .<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">socket</span><span class="op">|</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">socket</span> {
@@ -232,13 +223,13 @@
             } <span class="kw">else</span> {
                 <span class="prelude-val">None</span>
             },
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         })
         .<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">socket</span><span class="op">|</span> {
             <span class="ident">unreachable</span> <span class="op">=</span> <span class="bool-val">false</span>;
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">socket</span>.<span class="ident">recv_enqueue</span>(<span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">udp_repr</span>, <span class="ident">udp_packet</span>.<span class="ident">payload</span>()) {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">socket</span>.<span class="ident">recv_enqueue</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">udp_repr</span>, <span class="ident">udp_packet</span>.<span class="ident">payload</span>()) {
                 <span class="macro">debug</span><span class="macro">!</span>(
-                    <span class="string">&quot;Error enqueueing UDP packet for receiving via socket with {:?}.&quot;</span>,
+                    <span class="string">&quot;Encountered {:?} when enqueueing UDP packet on socket.&quot;</span>,
                     <span class="ident">err</span>
                 );
             }
@@ -254,7 +245,7 @@
             <span class="ident">payload_len</span>: <span class="number">28</span>, <span class="comment">// IP header (20 bytes) + UDP header (8 bytes)</span>
         };
         <span class="kw">let</span> <span class="ident">ipv4_repr</span> <span class="op">=</span> <span class="ident">Ipv4Repr</span> {
-            <span class="ident">src_addr</span>: <span class="kw-2">*</span><span class="ident">interface</span>.<span class="ident">ipv4_addr</span>,
+            <span class="ident">src_addr</span>: <span class="kw-2">*</span><span class="ident">ifr</span>.<span class="ident">ipv4_addr</span>,
             <span class="ident">dst_addr</span>: <span class="ident">ipv4_repr</span>.<span class="ident">src_addr</span>,
             <span class="ident">protocol</span>: <span class="ident">Ipv4Protocol</span>::<span class="ident">Icmp</span>,
             <span class="ident">payload_len</span>: <span class="ident">icmp_repr</span>.<span class="ident">buffer_len</span>() <span class="kw">as</span> <span class="ident">u16</span>,
@@ -263,7 +254,7 @@
             <span class="string">&quot;Sending ICMP {:?} in response to a UDP {:?}.&quot;</span>,
             <span class="ident">icmp_repr</span>, <span class="ident">udp_repr</span>
         );
-        <span class="ident">icmpv4</span>::<span class="ident">send_packet</span>(<span class="ident">interface</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">icmp_repr</span>, <span class="op">|</span><span class="ident">payload</span><span class="op">|</span> {
+        <span class="ident">icmpv4</span>::<span class="ident">send</span>(<span class="ident">ifr</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">icmp_repr</span>, <span class="op">|</span><span class="ident">payload</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">copy_len</span> <span class="op">=</span> <span class="ident">payload</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">usize</span>;
             <span class="ident">payload</span>.<span class="ident">copy_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_packet</span>.<span class="ident">as_ref</span>()[.. <span class="ident">copy_len</span>]);
         })

@@ -10,10 +10,11 @@
     <title>bindings.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle">
     <script src="../../../../storage.js"></script>
     
 
@@ -380,7 +381,7 @@
                 <span class="ident">socket_addrs</span>: <span class="self">self</span>.<span class="ident">socket_addrs</span>.<span class="ident">clone</span>(),
             })
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">BindingInUse</span>(<span class="kw">match</span> <span class="ident">socket_addr</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">SocketBinding</span>(<span class="kw">match</span> <span class="ident">socket_addr</span> {
                 <span class="ident">TaggedSocketAddr</span>::<span class="ident">Udp</span>(<span class="ident">addr</span>) <span class="op">=&gt;</span> <span class="ident">addr</span>,
                 <span class="ident">TaggedSocketAddr</span>::<span class="ident">Tcp</span>(<span class="ident">addr</span>) <span class="op">=&gt;</span> <span class="ident">addr</span>,
             }))
@@ -412,7 +413,7 @@
             <span class="ident">port</span>: <span class="number">1024</span>,
         };
         <span class="kw">let</span> <span class="ident">_addr_lease</span> <span class="op">=</span> <span class="ident">bindings</span>.<span class="ident">bind_udp</span>(<span class="ident">socket_addr</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="ident">bindings</span>.<span class="ident">bind_udp</span>(<span class="ident">socket_addr</span>), <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">BindingInUse</span>(_)));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="ident">bindings</span>.<span class="ident">bind_udp</span>(<span class="ident">socket_addr</span>), <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">SocketBinding</span>(<span class="kw">_</span>)));
     }
 }
 </pre>

@@ -10,10 +10,11 @@
     <title>icmpv4.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle">
     <script src="../../../../storage.js"></script>
     
 
@@ -122,9 +123,6 @@
 <span id="66">66</span>
 <span id="67">67</span>
 <span id="68">68</span>
-<span id="69">69</span>
-<span id="70">70</span>
-<span id="71">71</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">swap</span>;
 
@@ -132,6 +130,7 @@
     <span class="ident">Icmpv4Message</span>,
     <span class="ident">Icmpv4Packet</span>,
     <span class="ident">Icmpv4Repr</span>,
+    <span class="ident">Ipv4Packet</span>,
     <span class="ident">Ipv4Repr</span>,
 };
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">service</span>::{
@@ -144,8 +143,8 @@
 };
 
 <span class="doccomment">/// Send an ICMP packet via the interface.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send_packet</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
-    <span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
+    <span class="ident">ifr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>,
     <span class="ident">ipv4_repr</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>,
     <span class="ident">icmp_repr</span>: <span class="kw-2">&amp;</span><span class="ident">Icmpv4Repr</span>,
     <span class="ident">f</span>: <span class="ident">F</span>,
@@ -153,7 +152,7 @@
 <span class="kw">where</span>
     <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]),
 {
-    <span class="ident">ipv4</span>::<span class="ident">send_packet_with_repr</span>(<span class="ident">interface</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="op">|</span><span class="ident">ipv4_payload</span><span class="op">|</span> {
+    <span class="ident">ipv4</span>::<span class="ident">send_with_repr</span>(<span class="ident">ifr</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="op">|</span><span class="ident">ipv4_payload</span><span class="op">|</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">icmp_packet</span> <span class="op">=</span> <span class="ident">Icmpv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">ipv4_payload</span>).<span class="ident">unwrap</span>();
         <span class="ident">icmp_repr</span>.<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">icmp_packet</span>).<span class="ident">unwrap</span>();
         <span class="ident">f</span>(<span class="ident">icmp_packet</span>.<span class="ident">payload_mut</span>());
@@ -161,26 +160,22 @@
     })
 }
 
-<span class="doccomment">/// Receives an ICMP packet from an interface.</span>
+<span class="doccomment">/// Processes an ICMPv4 packet from an interface.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This may result in a response to ICMP echo requests, etc.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">recv_packet</span>(
-    <span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>,
-    <span class="ident">ipv4_repr</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>,
-    <span class="ident">icmp_buffer</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">icmp_recv_packet</span> <span class="op">=</span> <span class="ident">Icmpv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">icmp_buffer</span>)<span class="question-mark">?</span>;
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">recv</span>(<span class="ident">ifr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>, <span class="ident">ipv4_packet</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Packet</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">ipv4_recv_repr</span> <span class="op">=</span> <span class="ident">Ipv4Repr</span>::<span class="ident">deserialize</span>(<span class="ident">ipv4_packet</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">icmp_recv_packet</span> <span class="op">=</span> <span class="ident">Icmpv4Packet</span>::<span class="ident">try_new</span>(<span class="ident">ipv4_packet</span>.<span class="ident">payload</span>())<span class="question-mark">?</span>;
     <span class="ident">icmp_recv_packet</span>.<span class="ident">check_encoding</span>()<span class="question-mark">?</span>;
-
     <span class="kw">let</span> <span class="ident">icmp_recv_repr</span> <span class="op">=</span> <span class="ident">Icmpv4Repr</span>::<span class="ident">deserialize</span>(<span class="kw-2">&amp;</span><span class="ident">icmp_recv_packet</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> (<span class="ident">ipv4_send_repr</span>, <span class="ident">icmp_send_repr</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">icmp_recv_repr</span>.<span class="ident">message</span> {
         <span class="ident">Icmpv4Message</span>::<span class="ident">EchoRequest</span> { <span class="ident">id</span>, <span class="ident">seq</span> } <span class="op">=&gt;</span> {
             <span class="macro">debug</span><span class="macro">!</span>(
                 <span class="string">&quot;Got a ping from {}; Sending response...&quot;</span>,
-                <span class="ident">ipv4_repr</span>.<span class="ident">src_addr</span>
+                <span class="ident">ipv4_recv_repr</span>.<span class="ident">src_addr</span>
             );
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ipv4_send_repr</span> <span class="op">=</span> <span class="ident">ipv4_repr</span>.<span class="ident">clone</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ipv4_send_repr</span> <span class="op">=</span> <span class="ident">ipv4_recv_repr</span>;
             <span class="ident">swap</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ipv4_send_repr</span>.<span class="ident">src_addr</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ipv4_send_repr</span>.<span class="ident">dst_addr</span>);
             (
                 <span class="ident">ipv4_send_repr</span>,
@@ -190,10 +185,10 @@
                 },
             )
         }
-        _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ignored</span>),
+        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Dropped</span>),
     };
 
-    <span class="ident">send_packet</span>(<span class="ident">interface</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_send_repr</span>, <span class="kw-2">&amp;</span><span class="ident">icmp_send_repr</span>, <span class="op">|</span><span class="ident">payload</span><span class="op">|</span> {
+    <span class="ident">send</span>(<span class="ident">ifr</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_send_repr</span>, <span class="kw-2">&amp;</span><span class="ident">icmp_send_repr</span>, <span class="op">|</span><span class="ident">payload</span><span class="op">|</span> {
         <span class="ident">payload</span>.<span class="ident">copy_from_slice</span>(<span class="ident">icmp_recv_packet</span>.<span class="ident">payload</span>());
     })
 }

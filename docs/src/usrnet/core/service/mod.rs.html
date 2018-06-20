@@ -10,10 +10,11 @@
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle">
     <script src="../../../../storage.js"></script>
     
 
@@ -117,7 +118,7 @@
 
 <span class="doccomment">/// An interface for sending and receiving network packets.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Interface</span> {
-    <span class="doccomment">/// Device for sending and receiving raw Ethernet frames.</span>
+    <span class="doccomment">/// Device for sending and receiving ethernet frames.</span>
     <span class="kw">pub</span> <span class="ident">dev</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Device</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Cache for IPv4/Ethernet address translations.</span>
     <span class="kw">pub</span> <span class="ident">arp_cache</span>: <span class="ident">ArpCache</span>,
@@ -128,7 +129,7 @@
     <span class="doccomment">/// Default gateway for IPv4 packets not on the interface subnet. This</span>
     <span class="doccomment">/// should be on the same subnet as ipv4_addr!</span>
     <span class="kw">pub</span> <span class="ident">default_gateway</span>: <span class="ident">Ipv4Address</span>,
-    <span class="doccomment">/// A set of of Ethernet frames captured for sending back up the stack.</span>
+    <span class="doccomment">/// A set of of ethernet frames captured for sending back up the stack.</span>
     <span class="kw">pub</span> <span class="ident">loopback</span>: <span class="ident">SliceBuf</span><span class="op">&lt;</span><span class="ident">u8</span>, ()<span class="op">&gt;</span>,
 }
 </pre>

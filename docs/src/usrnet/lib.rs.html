@@ -10,10 +10,11 @@
     <title>lib.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -101,6 +102,12 @@
 <span id="45">45</span>
 <span id="46">46</span>
 <span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
 </pre><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
@@ -128,24 +135,30 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
-    <span class="doccomment">/// Indicates an error where a MAC address could not be resolved for an IPV4</span>
-    <span class="doccomment">/// address.</span>
-    <span class="ident">MacResolution</span>(<span class="ident">Ipv4Address</span>),
-    <span class="doccomment">/// Indicates an error where a socket binding has already been assigned.</span>
-    <span class="ident">BindingInUse</span>(<span class="ident">SocketAddr</span>),
-    <span class="doccomment">/// Indicates an error where a socket buffer is full or empty, depending on</span>
+    <span class="doccomment">/// Indicates an error where a device buffer is full or empty, depending</span>
+    <span class="doccomment">/// on the operation being performed.</span>
+    <span class="ident">DevExhausted</span>,
+    <span class="doccomment">/// Indicates an unexpected device error.</span>
+    <span class="ident">DevIo</span>(<span class="ident">IOError</span>),
+    <span class="doccomment">/// Indicates an error where a frame or packet buffer is on an invalid size.</span>
+    <span class="ident">ReprBufSize</span>,
+    <span class="doccomment">/// Indicates an error where a frame or packet is malformed.</span>
+    <span class="ident">ReprMalformed</span>,
+    <span class="doccomment">/// Indicates an error where a frame or packet has an invalid checksum.</span>
+    <span class="ident">ReprChecksum</span>,
+    <span class="doccomment">/// Indicates an error where an IPv4 address could not be resolved to a</span>
+    <span class="doccomment">/// MAC address when sending a frame or packet.</span>
+    <span class="ident">MacAddr</span>(<span class="ident">Ipv4Address</span>),
+    <span class="doccomment">/// Indicates an error where a socket buffer is full or empty, depending</span>
+    <span class="doccomment">/// on the operation being performed.</span>
+    <span class="ident">SocketExhausted</span>,
+    <span class="doccomment">/// Indicates an error where a socket binding is already in use.</span>
+    <span class="ident">SocketBinding</span>(<span class="ident">SocketAddr</span>),
+    <span class="doccomment">/// Indicates an error where a container is full or empty, depending on</span>
     <span class="doccomment">/// the operation being performed.</span>
-    <span class="ident">Exhausted</span>,
-    <span class="doccomment">/// Indicates an error where a an incoming packet was ignored.</span>
-    <span class="ident">Ignored</span>,
-    <span class="doccomment">/// Indicates an error with a device/interface. This includes situations</span>
-    <span class="doccomment">/// such as writes to a busy device or attempting reads on a device</span>
-    <span class="doccomment">/// with no Ethernet frames.</span>
-    <span class="ident">Device</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">IOError</span><span class="op">&gt;</span>),
-    <span class="doccomment">/// Indicates an error where a packet or frame is malformed.</span>
-    <span class="ident">Malformed</span>,
-    <span class="doccomment">/// Indicates an error where a checksum is invalid.</span>
-    <span class="ident">Checksum</span>,
+    <span class="ident">StorageExhausted</span>,
+    <span class="doccomment">/// Indicates an error where a frame or packet was dropped.</span>
+    <span class="ident">Dropped</span>,
 }
 
 <span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">StdResult</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;

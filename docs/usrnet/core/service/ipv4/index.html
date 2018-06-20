@@ -10,10 +10,11 @@
     <title>usrnet::core::service::ipv4 - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle">
     <script src="../../../../storage.js"></script>
     
 
@@ -54,13 +55,11 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>service</a>::<wbr><a class="mod" href=''>ipv4</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Module <a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>service</a>::<wbr><a class="mod" href=''>ipv4</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../../src/usrnet/core/service/ipv4.rs.html#1-153' title='goto source code'>[src]</a></span></h1>
-<h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+               </span><a class='srclink' href='../../../../src/usrnet/core/service/ipv4.rs.html#1-145' title='goto source code'>[src]</a></span></h1><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class="fn" href="fn.ipv4_addr_route.html"
@@ -74,30 +73,30 @@
                            <td><a class="fn" href="fn.ipv4_packet_len_max.html"
                                   title='fn usrnet::core::service::ipv4::ipv4_packet_len_max'>ipv4_packet_len_max</a></td>
                            <td class='docblock-short'>
-                                <p>Returns the maximum length of an IPv4 over Ethernet packet the interface
-can transmit.</p>
+                                <p>Returns the maximum length of an IPv4 packet encapsulated within an
+ethernet frame which the interface can transmit.</p>
 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="fn" href="fn.recv_packet.html"
-                                  title='fn usrnet::core::service::ipv4::recv_packet'>recv_packet</a></td>
+                           <td><a class="fn" href="fn.recv.html"
+                                  title='fn usrnet::core::service::ipv4::recv'>recv</a></td>
                            <td class='docblock-short'>
-                                <p>Receives an ICMP packet from an interface.</p>
+                                <p>Processes an IPv4 packet from an interface.</p>
 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="fn" href="fn.send_packet_raw.html"
-                                  title='fn usrnet::core::service::ipv4::send_packet_raw'>send_packet_raw</a></td>
+                           <td><a class="fn" href="fn.send_raw.html"
+                                  title='fn usrnet::core::service::ipv4::send_raw'>send_raw</a></td>
                            <td class='docblock-short'>
                                 <p>Send a raw IPv4 packet via the interface.</p>
 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="fn" href="fn.send_packet_with_repr.html"
-                                  title='fn usrnet::core::service::ipv4::send_packet_with_repr'>send_packet_with_repr</a></td>
+                           <td><a class="fn" href="fn.send_with_repr.html"
+                                  title='fn usrnet::core::service::ipv4::send_with_repr'>send_with_repr</a></td>
                            <td class='docblock-short'>
                                 <p>Sends an IPv4 packet via ther interface.</p>
 

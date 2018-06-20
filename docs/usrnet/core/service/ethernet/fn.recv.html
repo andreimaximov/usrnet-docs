@@ -4,16 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `send_packet` fn in crate `usrnet`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, send_packet">
+    <meta name="description" content="API documentation for the Rust `recv` fn in crate `usrnet`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, recv">
 
-    <title>usrnet::core::service::icmpv4::send_packet - Rust</title>
+    <title>usrnet::core::service::ethernet::recv - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle">
     <script src="../../../../storage.js"></script>
     
 
@@ -33,7 +34,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>service</a>::<wbr><a href='index.html'>icmpv4</a></p><script>window.sidebarCurrent = {name: 'send_packet', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <div class="sidebar-elems"><p class='location'><a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>service</a>::<wbr><a href='index.html'>ethernet</a></p><script>window.sidebarCurrent = {name: 'recv', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -54,13 +55,12 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Function <a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>service</a>::<wbr><a href='index.html'>icmpv4</a>::<wbr><a class="fn" href=''>send_packet</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Function <a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>service</a>::<wbr><a href='index.html'>ethernet</a>::<wbr><a class="fn" href=''>recv</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../../src/usrnet/core/service/icmpv4.rs.html#19-34' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn send_packet&lt;F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;interface: &amp;mut <a class="struct" href="../../../../usrnet/core/service/struct.Interface.html" title="struct usrnet::core::service::Interface">Interface</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;ipv4_repr: &amp;<a class="struct" href="../../../../usrnet/core/repr/ipv4/struct.Repr.html" title="struct usrnet::core::repr::ipv4::Repr">Ipv4Repr</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;icmp_repr: &amp;<a class="struct" href="../../../../usrnet/core/repr/icmpv4/struct.Repr.html" title="struct usrnet::core::repr::icmpv4::Repr">Icmpv4Repr</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;f: F<br>) -&gt; <a class="type" href="../../../../usrnet/type.Result.html" title="type usrnet::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>),&nbsp;</span></pre><div class='docblock'><p>Send an ICMP packet via the interface.</p>
+               </span><a class='srclink' href='../../../../src/usrnet/core/service/ethernet.rs.html#46-79' title='goto source code'>[src]</a></span></h1><pre class='rust fn'>pub fn recv(ifr: &amp;mut <a class="struct" href="../../../../usrnet/core/service/struct.Interface.html" title="struct usrnet::core::service::Interface">Interface</a>, socket_set: &amp;mut <a class="struct" href="../../../../usrnet/core/socket/set/struct.SocketSet.html" title="struct usrnet::core::socket::set::SocketSet">SocketSet</a>) -&gt; <a class="type" href="../../../../usrnet/type.Result.html" title="type usrnet::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</pre><div class='docblock'><p>Processes all ethernet frames from an interface.</p>
+<p>The ethernet frames are forwarded up the network stack as needed.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 

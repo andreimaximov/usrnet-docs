@@ -10,10 +10,11 @@
     <title>tcp.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle">
     <script src="../../../../storage.js"></script>
     
 
@@ -162,11 +163,6 @@
 <span id="106">106</span>
 <span id="107">107</span>
 <span id="108">108</span>
-<span id="109">109</span>
-<span id="110">110</span>
-<span id="111">111</span>
-<span id="112">112</span>
-<span id="113">113</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">rand</span>;
 
@@ -194,16 +190,11 @@
 <span class="doccomment">/// This function takes care of serializing a header, calculating a checksum,</span>
 <span class="doccomment">/// etc. so the caller needs to fill in **only** the payload in the provided</span>
 <span class="doccomment">/// buffer.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send_packet</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
-    <span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>,
-    <span class="ident">ipv4_repr</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>,
-    <span class="ident">tcp_repr</span>: <span class="kw-2">&amp;</span><span class="ident">TcpRepr</span>,
-    <span class="ident">f</span>: <span class="ident">F</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">ifr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>, <span class="ident">ipv4_repr</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>, <span class="ident">tcp_repr</span>: <span class="kw-2">&amp;</span><span class="ident">TcpRepr</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]),
 {
-    <span class="ident">ipv4</span>::<span class="ident">send_packet_with_repr</span>(<span class="ident">interface</span>, <span class="ident">ipv4_repr</span>, <span class="op">|</span><span class="ident">ipv4_payload</span><span class="op">|</span> {
+    <span class="ident">ipv4</span>::<span class="ident">send_with_repr</span>(<span class="ident">ifr</span>, <span class="ident">ipv4_repr</span>, <span class="op">|</span><span class="ident">ipv4_payload</span><span class="op">|</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tcp_packet</span> <span class="op">=</span> <span class="ident">TcpPacket</span>::<span class="ident">try_new</span>(<span class="ident">ipv4_payload</span>).<span class="ident">unwrap</span>();
         <span class="ident">tcp_repr</span>.<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">tcp_packet</span>).<span class="ident">unwrap</span>();
         <span class="ident">f</span>(<span class="ident">tcp_packet</span>.<span class="ident">payload_mut</span>());
@@ -211,41 +202,41 @@
     })
 }
 
-<span class="doccomment">/// Receives a TCP packet from an interface.</span>
+<span class="doccomment">/// Processes a TCP packet from an interface.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The TCP packet is parsed, forwarded to any socket, and any necessary TCP</span>
-<span class="doccomment">/// reset messages sent.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">recv_packet</span>(
-    <span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>,
-    <span class="ident">ipv4_repr</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>,
-    <span class="ident">ipv4_packet</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Packet</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+<span class="doccomment">/// The TCP packet is parsed, forwarded to any sockets, and any necessary ICMPv4</span>
+<span class="doccomment">/// messages sent.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">recv</span>(
+    <span class="ident">ifr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Interface</span>,
     <span class="ident">socket_set</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">SocketSet</span>,
+    <span class="ident">ipv4_packet</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Packet</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
 ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">ipv4_repr</span> <span class="op">=</span> <span class="ident">Ipv4Repr</span>::<span class="ident">deserialize</span>(<span class="ident">ipv4_packet</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">tcp_packet</span> <span class="op">=</span> <span class="ident">TcpPacket</span>::<span class="ident">try_new</span>(<span class="ident">ipv4_packet</span>.<span class="ident">payload</span>())<span class="question-mark">?</span>;
-    <span class="ident">tcp_packet</span>.<span class="ident">check_encoding</span>(<span class="ident">ipv4_repr</span>)<span class="question-mark">?</span>;
-
+    <span class="ident">tcp_packet</span>.<span class="ident">check_encoding</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">tcp_repr</span> <span class="op">=</span> <span class="ident">TcpRepr</span>::<span class="ident">deserialize</span>(<span class="kw-2">&amp;</span><span class="ident">tcp_packet</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">unreachable</span> <span class="op">=</span> <span class="bool-val">true</span>;
 
+    <span class="comment">// Forward to any TCP sockets...</span>
     <span class="ident">socket_set</span>.<span class="ident">iter_mut</span>().<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">socket</span><span class="op">|</span> {
         <span class="kw">let</span> <span class="ident">err_or_ok</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">socket</span> {
             <span class="ident">TaggedSocket</span>::<span class="ident">TcpListener</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">listener</span>)
                 <span class="kw">if</span> <span class="ident">listener</span>.<span class="ident">accepts</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>) <span class="op">=&gt;</span>
             {
                 <span class="ident">unreachable</span> <span class="op">=</span> <span class="bool-val">false</span>;
-                <span class="ident">listener</span>.<span class="ident">recv_enqueue</span>(<span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="ident">tcp_packet</span>.<span class="ident">payload</span>())
+                <span class="ident">listener</span>.<span class="ident">recv_enqueue</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="ident">tcp_packet</span>.<span class="ident">payload</span>())
             }
             <span class="ident">TaggedSocket</span>::<span class="ident">TcpStream</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="kw">if</span> <span class="ident">stream</span>.<span class="ident">accepts</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>) <span class="op">=&gt;</span> {
                 <span class="ident">unreachable</span> <span class="op">=</span> <span class="bool-val">false</span>;
-                <span class="ident">stream</span>.<span class="ident">recv_enqueue</span>(<span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="ident">tcp_packet</span>.<span class="ident">payload</span>())
+                <span class="ident">stream</span>.<span class="ident">recv_enqueue</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="ident">tcp_packet</span>.<span class="ident">payload</span>())
             }
-            _ <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
         };
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">err_or_ok</span> {
             <span class="macro">debug</span><span class="macro">!</span>(
-                <span class="string">&quot;Error enqueueing TCP packet for receiving via socket with {:?}.&quot;</span>,
+                <span class="string">&quot;Encountered {:?} when enqueueing TCP packet on socket.&quot;</span>,
                 <span class="ident">err</span>
             );
         }
@@ -270,13 +261,13 @@
         };
 
         <span class="kw">let</span> <span class="ident">ipv4_repr</span> <span class="op">=</span> <span class="ident">Ipv4Repr</span> {
-            <span class="ident">src_addr</span>: <span class="kw-2">*</span><span class="ident">interface</span>.<span class="ident">ipv4_addr</span>,
+            <span class="ident">src_addr</span>: <span class="kw-2">*</span><span class="ident">ifr</span>.<span class="ident">ipv4_addr</span>,
             <span class="ident">dst_addr</span>: <span class="ident">ipv4_repr</span>.<span class="ident">src_addr</span>,
             <span class="ident">protocol</span>: <span class="ident">Ipv4Protocol</span>::<span class="ident">Tcp</span>,
             <span class="ident">payload_len</span>: <span class="ident">tcp_repr</span>.<span class="ident">header_len</span>() <span class="kw">as</span> <span class="ident">u16</span>,
         };
 
-        <span class="ident">send_packet</span>(<span class="ident">interface</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="op">|</span>_<span class="op">|</span> {})
+        <span class="ident">send</span>(<span class="ident">ifr</span>, <span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>, <span class="op">|</span><span class="kw">_</span><span class="op">|</span> {})
     } <span class="kw">else</span> {
         <span class="prelude-val">Ok</span>(())
     }

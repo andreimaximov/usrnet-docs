@@ -10,10 +10,11 @@
     <title>usrnet::examples::traceroute::traceroute - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle">
     <script src="../../../storage.js"></script>
     
 
@@ -33,7 +34,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>examples</a>::<wbr><a href='index.html'>traceroute</a></p><script>window.sidebarCurrent = {name: 'traceroute', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <div class="sidebar-elems"><p class='location'><a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>examples</a>::<wbr><a href='index.html'>traceroute</a></p><script>window.sidebarCurrent = {name: 'traceroute', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -54,13 +55,11 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>examples</a>::<wbr><a href='index.html'>traceroute</a>::<wbr><a class="fn" href=''>traceroute</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>usrnet</a>::<wbr><a href='../index.html'>examples</a>::<wbr><a href='index.html'>traceroute</a>::<wbr><a class="fn" href=''>traceroute</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/usrnet/examples/traceroute.rs.html#43-79' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn traceroute&lt;F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;interface: &amp;mut <a class="struct" href="../../../usrnet/core/service/struct.Interface.html" title="struct usrnet::core::service::Interface">Interface</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;socket_set: &amp;mut <a class="struct" href="../../../usrnet/core/socket/set/struct.SocketSet.html" title="struct usrnet::core::socket::set::SocketSet">SocketSet</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;raw_handle: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;addr: <a class="struct" href="../../../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;payload_len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;max_ttl: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;timeout: <a class="struct" href="https://doc.rust-lang.org/nightly/core/time/struct.Duration.html" title="struct core::time::Duration">Duration</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;f: F<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnMut.html" title="trait core::ops::function::FnMut">FnMut</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="struct" href="https://doc.rust-lang.org/nightly/core/time/struct.Duration.html" title="struct core::time::Duration">Duration</a>, <a class="struct" href="../../../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>&gt;),&nbsp;</span></pre><div class='docblock'><p>Performs a traceroute via UDP packets.</p>
+               </span><a class='srclink' href='../../../src/usrnet/examples/traceroute.rs.html#43-72' title='goto source code'>[src]</a></span></h1><pre class='rust fn'>pub fn traceroute&lt;F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;ifr: &amp;mut <a class="struct" href="../../../usrnet/core/service/struct.Interface.html" title="struct usrnet::core::service::Interface">Interface</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;socket_set: &amp;mut <a class="struct" href="../../../usrnet/core/socket/set/struct.SocketSet.html" title="struct usrnet::core::socket::set::SocketSet">SocketSet</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;raw_handle: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;addr: <a class="struct" href="../../../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;payload_len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;max_ttl: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;timeout: <a class="struct" href="https://doc.rust-lang.org/nightly/core/time/struct.Duration.html" title="struct core::time::Duration">Duration</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;f: F<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnMut.html" title="trait core::ops::function::FnMut">FnMut</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="struct" href="https://doc.rust-lang.org/nightly/core/time/struct.Duration.html" title="struct core::time::Duration">Duration</a>, <a class="struct" href="../../../usrnet/core/repr/ipv4/struct.Address.html" title="struct usrnet::core::repr::ipv4::Address">Ipv4Address</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>&gt;),&nbsp;</span></pre><div class='docblock'><p>Performs a traceroute via UDP packets.</p>
 <p>Up until the max TTL is reached (starting at 1) or we receive a reply from
 the specified address, the following loop is performed.</p>
 <ol>

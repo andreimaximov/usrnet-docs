@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["SocketIter","An iterator over the sockets in a SocketSet."],["SocketSet","A set of sockets with stable integral handles."]]});
+initSidebarItems({"struct":[["SocketSet","A set of sockets with stable integral handles."]]});

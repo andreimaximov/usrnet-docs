@@ -10,10 +10,11 @@
     <title>usrnet::core::service::ipv4::ipv4_packet_len_max - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle">
     <script src="../../../../storage.js"></script>
     
 
@@ -33,7 +34,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>service</a>::<wbr><a href='index.html'>ipv4</a></p><script>window.sidebarCurrent = {name: 'ipv4_packet_len_max', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <div class="sidebar-elems"><p class='location'><a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>service</a>::<wbr><a href='index.html'>ipv4</a></p><script>window.sidebarCurrent = {name: 'ipv4_packet_len_max', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -54,14 +55,12 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Function <a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>service</a>::<wbr><a href='index.html'>ipv4</a>::<wbr><a class="fn" href=''>ipv4_packet_len_max</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Function <a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>service</a>::<wbr><a href='index.html'>ipv4</a>::<wbr><a class="fn" href=''>ipv4_packet_len_max</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../../src/usrnet/core/service/ipv4.rs.html#146-153' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn ipv4_packet_len_max(interface: &amp;<a class="struct" href="../../../../usrnet/core/service/struct.Interface.html" title="struct usrnet::core::service::Interface">Interface</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></pre><div class='docblock'><p>Returns the maximum length of an IPv4 over Ethernet packet the interface
-can transmit.</p>
+               </span><a class='srclink' href='../../../../src/usrnet/core/service/ipv4.rs.html#142-145' title='goto source code'>[src]</a></span></h1><pre class='rust fn'>pub fn ipv4_packet_len_max(ifr: &amp;<a class="struct" href="../../../../usrnet/core/service/struct.Interface.html" title="struct usrnet::core::service::Interface">Interface</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></pre><div class='docblock'><p>Returns the maximum length of an IPv4 packet encapsulated within an
+ethernet frame which the interface can transmit.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 

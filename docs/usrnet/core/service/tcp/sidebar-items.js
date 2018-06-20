@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["recv_packet","Receives a TCP packet from an interface."],["send_packet","Sends a TCP packet via the interface."]]});
+initSidebarItems({"fn":[["recv","Processes a TCP packet from an interface."],["send","Sends a TCP packet via the interface."]]});

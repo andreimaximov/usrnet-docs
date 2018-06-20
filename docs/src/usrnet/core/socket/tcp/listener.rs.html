@@ -10,10 +10,11 @@
     <title>listener.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../../../light.css" id="themeStyle">
     <script src="../../../../../storage.js"></script>
     
 
@@ -380,7 +381,7 @@
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="ident">Ipv4Repr</span>, <span class="kw-2">&amp;</span><span class="ident">TcpRepr</span>, <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
     {
-        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> (<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>, _) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">streams</span>.<span class="ident">iter_mut</span>() {
+        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> (<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>, <span class="kw">_</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">streams</span>.<span class="ident">iter_mut</span>() {
             <span class="ident">stream</span>.<span class="ident">send_dequeue</span>(<span class="ident">ipv4_packet_len_max</span>, <span class="op">|</span><span class="ident">ipv4_repr</span>, <span class="ident">tcp_repr</span>, <span class="ident">payload</span><span class="op">|</span> {
                 <span class="ident">f</span>(<span class="ident">ipv4_repr</span>, <span class="ident">tcp_repr</span>, <span class="ident">payload</span>)
             });
@@ -397,11 +398,11 @@
         <span class="self">self</span>.<span class="ident">drain</span>();
 
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">accepts</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>) {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ignored</span>);
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Dropped</span>);
         }
 
         <span class="comment">// Check if any streams are interested in receiving this packet first.</span>
-        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> (<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>, _) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">streams</span>.<span class="ident">iter_mut</span>() {
+        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> (<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>, <span class="kw">_</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">streams</span>.<span class="ident">iter_mut</span>() {
             <span class="kw">if</span> <span class="ident">stream</span>.<span class="ident">accepts</span>(<span class="kw-2">&amp;</span><span class="ident">ipv4_repr</span>, <span class="kw-2">&amp;</span><span class="ident">tcp_repr</span>) {
                 <span class="macro">debug</span><span class="macro">!</span>(
                     <span class="string">&quot;TCP listener {:?} ignoring packet, accepted by an enqueued stream.&quot;</span>,
@@ -414,7 +415,7 @@
         <span class="comment">// Packet has not been accepted, we can try to begin establishing a new</span>
         <span class="comment">// connection.</span>
         <span class="kw">if</span> <span class="ident">tcp_repr</span>.<span class="ident">control</span> <span class="op">!=</span> <span class="ident">TcpControl</span>::<span class="ident">Syn</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ignored</span>);
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Dropped</span>);
         }
 
         <span class="comment">// Check if we have space on our SYN_RECV/ESTABLISHED queue.</span>
@@ -423,7 +424,7 @@
                 <span class="string">&quot;TCP listener {:?} ignoring packet, no capacity in SYN_RECV/ESTABLISHED queue.&quot;</span>,
                 <span class="self">self</span>.<span class="ident">handle</span>
             );
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Exhausted</span>);
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">SocketExhausted</span>);
         }
 
         <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;TCP listener {:?} enqueueing SYN_RECV stream.&quot;</span>, <span class="self">self</span>.<span class="ident">handle</span>);
@@ -459,7 +460,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TcpStream</span><span class="op">&gt;</span> {
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="self">self</span>.<span class="ident">streams</span>.<span class="ident">len</span>() {
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">streams</span>[<span class="ident">i</span>].<span class="number">0</span>.<span class="ident">state</span>() <span class="op">==</span> <span class="ident">TcpState</span>::<span class="ident">Established</span> {
-                <span class="kw">return</span> <span class="self">self</span>.<span class="ident">streams</span>.<span class="ident">remove</span>(<span class="ident">i</span>).<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">stream</span>, _)<span class="op">|</span> <span class="ident">stream</span>);
+                <span class="kw">return</span> <span class="self">self</span>.<span class="ident">streams</span>.<span class="ident">remove</span>(<span class="ident">i</span>).<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">stream</span>, <span class="kw">_</span>)<span class="op">|</span> <span class="ident">stream</span>);
             }
         }
 
@@ -475,7 +476,7 @@
             .<span class="ident">retain</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">stream</span>, <span class="ident">enqueued_at</span>)<span class="op">|</span> <span class="kw">match</span> <span class="ident">stream</span>.<span class="ident">state</span>() {
                 <span class="ident">TcpState</span>::<span class="ident">Established</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
                 <span class="ident">TcpState</span>::<span class="ident">SynRecv</span> <span class="op">=&gt;</span> <span class="ident">now</span>.<span class="ident">duration_since</span>(<span class="ident">enqueued_at</span>) <span class="op">&lt;</span> <span class="ident">syn_recv_timeout</span>,
-                _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
             });
     }
 }
@@ -554,9 +555,9 @@
     <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">handshake</span> {
         (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">listener</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">remote</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {{
             <span class="prelude-val">Ok</span>(())
-                .<span class="ident">and_then</span>(<span class="op">|</span>_<span class="op">|</span> <span class="macro">recv_syn</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">listener</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">remote</span>))
-                .<span class="ident">and_then</span>(<span class="op">|</span>_<span class="op">|</span> <span class="macro">send_syn_ack</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">listener</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">remote</span>))
-                .<span class="ident">and_then</span>(<span class="op">|</span>_<span class="op">|</span> <span class="macro">recv_ack</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">listener</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">remote</span>))
+                .<span class="ident">and_then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro">recv_syn</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">listener</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">remote</span>))
+                .<span class="ident">and_then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro">send_syn_ack</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">listener</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">remote</span>))
+                .<span class="ident">and_then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro">recv_ack</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">listener</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">remote</span>))
         }};
     }
 
@@ -582,32 +583,32 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_passive_open</span>() {
         <span class="macro">listener</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="ident">_time_env</span>);
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">0</span>), <span class="prelude-val">Ok</span>(_));
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Err</span>(_));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">0</span>), <span class="prelude-val">Ok</span>(<span class="kw">_</span>));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Err</span>(<span class="kw">_</span>));
         <span class="macro">accepts</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">0</span>);
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Ok</span>(_));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Ok</span>(<span class="kw">_</span>));
         <span class="macro">accepts</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_reset</span>() {
         <span class="macro">listener</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="ident">_time_env</span>);
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">0</span>), <span class="prelude-val">Ok</span>(_));
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Err</span>(_));
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">recv_reset</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">0</span>), <span class="prelude-val">Ok</span>(_));
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Ok</span>(_));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">0</span>), <span class="prelude-val">Ok</span>(<span class="kw">_</span>));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Err</span>(<span class="kw">_</span>));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">recv_reset</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">0</span>), <span class="prelude-val">Ok</span>(<span class="kw">_</span>));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Ok</span>(<span class="kw">_</span>));
         <span class="macro">accepts</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_timeout</span>() {
         <span class="macro">listener</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="ident">time_env</span>);
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">recv_syn</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">0</span>), <span class="prelude-val">Ok</span>(_));
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">recv_syn</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Err</span>(_));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">recv_syn</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">0</span>), <span class="prelude-val">Ok</span>(<span class="kw">_</span>));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">recv_syn</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Err</span>(<span class="kw">_</span>));
         <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">59</span>);
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">recv_syn</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Err</span>(_));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">recv_syn</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Err</span>(<span class="kw">_</span>));
         <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>);
-        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Ok</span>(_));
+        <span class="macro">assert_matches</span><span class="macro">!</span>(<span class="macro">handshake</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>), <span class="prelude-val">Ok</span>(<span class="kw">_</span>));
         <span class="macro">accepts</span><span class="macro">!</span>(<span class="ident">listener</span>, <span class="number">1</span>);
     }
 }

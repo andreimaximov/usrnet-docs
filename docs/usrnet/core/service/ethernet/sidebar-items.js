@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["recv_frame","Receives an Ethernet frame from an interface."],["send_frame","Send an Ethernet frame via an interface."]]});
+initSidebarItems({"fn":[["recv","Processes all ethernet frames from an interface."],["send","Send an ethernet frame via an interface."]]});
