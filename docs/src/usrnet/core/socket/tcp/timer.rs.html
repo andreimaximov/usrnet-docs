@@ -177,11 +177,7 @@
 <span id="120">120</span>
 <span id="121">121</span>
 <span id="122">122</span>
-<span id="123">123</span>
-<span id="124">124</span>
-<span id="125">125</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::{
     <span class="ident">Duration</span>,
     <span class="ident">Instant</span>,
@@ -189,66 +185,69 @@
 
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">Env</span> <span class="kw">as</span> <span class="ident">TimeEnv</span>;
 
-<span class="doccomment">/// A timer for scheduling the transmission of TCP packets.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="doccomment">/// A timer with exponential backoff.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpTimer</span> {
-    <span class="ident">transmit_at</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Instant</span><span class="op">&gt;</span>,
+    <span class="ident">trigger</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Instant</span><span class="op">&gt;</span>,
     <span class="ident">delay</span>: <span class="ident">Duration</span>,
     <span class="ident">backoff</span>: <span class="ident">u32</span>,
-    <span class="ident">time_env</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">TimeEnv</span><span class="op">&gt;</span>,
+    <span class="ident">time_env</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">TimeEnv</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">TcpTimer</span> {
     <span class="doccomment">/// Creates a TcpTimer.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// The retransmit_timeout specifies the delay interval upon which</span>
-    <span class="doccomment">/// exponential backoff is applied.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">delay</span>: <span class="ident">Duration</span>, <span class="ident">time_env</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">TimeEnv</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">TcpTimer</span> {
+    <span class="doccomment">/// The delay specified the time between retries. This delay is compounded</span>
+    <span class="doccomment">/// with an exponential backoff factor.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">delay</span>: <span class="ident">Duration</span>, <span class="ident">time_env</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">TimeEnv</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">TcpTimer</span> {
         <span class="ident">TcpTimer</span> {
-            <span class="ident">transmit_at</span>: <span class="prelude-val">None</span>,
+            <span class="ident">trigger</span>: <span class="prelude-val">None</span>,
             <span class="ident">delay</span>,
             <span class="ident">backoff</span>: <span class="number">1</span>,
             <span class="ident">time_env</span>,
         }
     }
 
-    <span class="doccomment">/// Checks if the timer suggests a transmission.</span>
+    <span class="doccomment">/// Checks if the timer has triggered.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that this function schedules a retransmission and will return</span>
-    <span class="doccomment">/// false until the subsequent timeout expires.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">should_transmit</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">transmit_at</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">transmit_at</span>) <span class="op">=&gt;</span> {
-                <span class="kw">let</span> <span class="ident">now</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">time_env</span>.<span class="ident">now_instant</span>();
-                <span class="kw">let</span> <span class="ident">should_transmit</span> <span class="op">=</span> <span class="ident">transmit_at</span> <span class="op">&lt;=</span> <span class="ident">now</span>;
-                <span class="kw">if</span> <span class="ident">should_transmit</span> {
-                    <span class="self">self</span>.<span class="ident">transmit_at</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">now</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">delay</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">backoff</span>);
-                    <span class="self">self</span>.<span class="ident">backoff</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">backoff</span>.<span class="ident">saturating_mul</span>(<span class="number">2</span>);
-                }
-                <span class="ident">should_transmit</span>
+    <span class="doccomment">/// **WARNING:** This function increases the backoff factor and will</span>
+    <span class="doccomment">/// trigger again once the timeout runs out. In other words, you need to</span>
+    <span class="doccomment">/// manually cancel the timer when using this.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">triggered</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">let</span> <span class="ident">now</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">time_env</span>.<span class="ident">now</span>();
+
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">trigger</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">trigger</span>) <span class="kw">if</span> <span class="ident">trigger</span> <span class="op">&lt;=</span> <span class="ident">now</span> <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">trigger</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">now</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">delay</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">backoff</span>);
+                <span class="self">self</span>.<span class="ident">backoff</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">backoff</span>.<span class="ident">saturating_mul</span>(<span class="number">2</span>);
+                <span class="bool-val">true</span>
             }
             <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 
-    <span class="doccomment">/// Cancels an existing transmission, schedules delayed a transmission, and</span>
-    <span class="doccomment">/// resets the backoff factor.</span>
+    <span class="doccomment">/// Cancels an existing timer, schedules a delayed trigger of the timer,</span>
+    <span class="doccomment">/// and resets the backoff factor.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">schedule_delayed</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="self">self</span>.<span class="ident">transmit_at</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">time_env</span>.<span class="ident">now_instant</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">delay</span>);
-        <span class="self">self</span>.<span class="ident">backoff</span> <span class="op">=</span> <span class="number">1</span>;
+        <span class="self">self</span>.<span class="ident">trigger</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">time_env</span>.<span class="ident">now</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">delay</span>);
+        <span class="self">self</span>.<span class="ident">backoff</span> <span class="op">=</span> <span class="number">2</span>;
     }
 
-    <span class="doccomment">/// Schedules an immediate transmission and resets the backoff factor.</span>
+    <span class="doccomment">/// Schedules an immediate trigger of the timer and resets the backoff</span>
+    <span class="doccomment">/// factor.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">schedule_now</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="self">self</span>.<span class="ident">transmit_at</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">time_env</span>.<span class="ident">now_instant</span>());
+        <span class="self">self</span>.<span class="ident">trigger</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">time_env</span>.<span class="ident">now</span>());
         <span class="self">self</span>.<span class="ident">backoff</span> <span class="op">=</span> <span class="number">1</span>;
     }
 
-    <span class="doccomment">/// Resets the timer, cancelling any scheduled transmissions and resetting</span>
-    <span class="doccomment">/// the backoff factor.</span>
+    <span class="doccomment">/// Cancels an existing timer and resets the backoff factor.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reset</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="self">self</span>.<span class="ident">transmit_at</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+        <span class="self">self</span>.<span class="ident">trigger</span> <span class="op">=</span> <span class="prelude-val">None</span>;
         <span class="self">self</span>.<span class="ident">backoff</span> <span class="op">=</span> <span class="number">1</span>;
+    }
+
+    <span class="doccomment">/// Returns the current time.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">now</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Instant</span> {
+        <span class="self">self</span>.<span class="ident">time_env</span>.<span class="ident">now</span>()
     }
 }
 
@@ -257,53 +256,48 @@
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
     <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">MockEnv</span>;
 
-    <span class="kw">fn</span> <span class="ident">timer</span>() <span class="op">-&gt;</span> (<span class="ident">TcpTimer</span>, <span class="ident">MockEnv</span>) {
-        <span class="kw">let</span> <span class="ident">time_env</span> <span class="op">=</span> <span class="ident">MockEnv</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">timer</span> <span class="op">=</span> <span class="ident">TcpTimer</span>::<span class="ident">new</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>), <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">time_env</span>.<span class="ident">clone</span>()));
-        (<span class="ident">timer</span>, <span class="ident">time_env</span>)
+    <span class="kw">fn</span> <span class="ident">timer</span>() <span class="op">-&gt;</span> <span class="ident">TcpTimer</span> {
+        <span class="kw">let</span> <span class="ident">delay</span> <span class="op">=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">2</span>);
+        <span class="kw">let</span> <span class="ident">time_env</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">MockEnv</span>::<span class="ident">current</span>());
+        <span class="ident">TcpTimer</span>::<span class="ident">new</span>(<span class="ident">delay</span>, <span class="ident">time_env</span>)
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_new_should_not_transmit</span>() {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">timer</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">timer</span>();
-
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">should_transmit</span>());
+    <span class="kw">fn</span> <span class="ident">test_new</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">timer</span> <span class="op">=</span> <span class="ident">timer</span>();
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">triggered</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_schedule_now_backoff</span>() {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">timer</span>, <span class="kw-2">mut</span> <span class="ident">time_env</span>) <span class="op">=</span> <span class="ident">timer</span>();
+    <span class="kw">fn</span> <span class="ident">test_schedule_now</span>() {
+        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">timer</span>, <span class="kw-2">mut</span> <span class="ident">time_env</span>) <span class="op">=</span> (<span class="ident">timer</span>(), <span class="ident">MockEnv</span>::<span class="ident">current</span>());
 
         <span class="ident">timer</span>.<span class="ident">schedule_now</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">timer</span>.<span class="ident">should_transmit</span>());
-        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">999</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">should_transmit</span>());
-        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">1</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">timer</span>.<span class="ident">should_transmit</span>());
-        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">1999</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">should_transmit</span>());
-        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">1</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">timer</span>.<span class="ident">should_transmit</span>());
-        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">3999</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">should_transmit</span>());
-        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">1</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">timer</span>.<span class="ident">should_transmit</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">timer</span>.<span class="ident">triggered</span>());
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">triggered</span>());
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">timer</span>.<span class="ident">triggered</span>());
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">2</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">triggered</span>());
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">2</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">timer</span>.<span class="ident">triggered</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_schedule_delayed</span>() {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">timer</span>, <span class="kw-2">mut</span> <span class="ident">time_env</span>) <span class="op">=</span> <span class="ident">timer</span>();
+        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">timer</span>, <span class="kw-2">mut</span> <span class="ident">time_env</span>) <span class="op">=</span> (<span class="ident">timer</span>(), <span class="ident">MockEnv</span>::<span class="ident">current</span>());
 
         <span class="ident">timer</span>.<span class="ident">schedule_delayed</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">should_transmit</span>());
-        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">999</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">should_transmit</span>());
-        <span class="ident">timer</span>.<span class="ident">schedule_delayed</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">should_transmit</span>());
-        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">999</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">should_transmit</span>());
-        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">1</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">timer</span>.<span class="ident">should_transmit</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">triggered</span>());
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">triggered</span>());
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">timer</span>.<span class="ident">triggered</span>());
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">2</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">timer</span>.<span class="ident">triggered</span>());
+        <span class="ident">time_env</span> <span class="op">+=</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">2</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">timer</span>.<span class="ident">triggered</span>());
     }
 }
 </pre>

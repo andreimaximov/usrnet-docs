@@ -334,6 +334,11 @@
 <span id="277">277</span>
 <span id="278">278</span>
 <span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> {
     <span class="ident">Error</span>,
@@ -446,9 +451,14 @@
         <span class="self">self</span>.<span class="ident">len</span> <span class="op">=</span> <span class="number">0</span>;
     }
 
-    <span class="doccomment">/// Returns the current number of items in the ring.</span>
+    <span class="doccomment">/// The current number of items in the ring.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">len</span>
+    }
+
+    <span class="doccomment">/// The number of slots available for items in the ring.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">avail</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">len</span>
     }
 }
 

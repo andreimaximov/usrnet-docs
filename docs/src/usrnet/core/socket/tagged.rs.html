@@ -108,25 +108,10 @@
 <span id="51">51</span>
 <span id="52">52</span>
 <span id="53">53</span>
-<span id="54">54</span>
-<span id="55">55</span>
-<span id="56">56</span>
-<span id="57">57</span>
-<span id="58">58</span>
-<span id="59">59</span>
-<span id="60">60</span>
-<span id="61">61</span>
-<span id="62">62</span>
-<span id="63">63</span>
-<span id="64">64</span>
-<span id="65">65</span>
-<span id="66">66</span>
-<span id="67">67</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">socket</span>::{
     <span class="ident">RawSocket</span>,
-    <span class="ident">TcpListener</span>,
-    <span class="ident">TcpStream</span>,
+    <span class="ident">TcpSocket</span>,
     <span class="ident">UdpSocket</span>,
 };
 
@@ -135,8 +120,7 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TaggedSocket</span> {
     <span class="ident">Raw</span>(<span class="ident">RawSocket</span>),
     <span class="ident">Udp</span>(<span class="ident">UdpSocket</span>),
-    <span class="ident">TcpListener</span>(<span class="ident">TcpListener</span>),
-    <span class="ident">TcpStream</span>(<span class="ident">TcpStream</span>),
+    <span class="ident">Tcp</span>(<span class="ident">TcpSocket</span>),
     <span class="doccomment">/// Just-a-Handle, used for testing.</span>
     <span class="ident">JaH</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>),
 }
@@ -154,27 +138,15 @@
         }
     }
 
-    <span class="doccomment">/// Returns a reference to the underlying TCP listener.</span>
+    <span class="doccomment">/// Returns a reference to the underlying TCP socket.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Panics if the underlying socket is not a TCP listener.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_tcp_listener</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">TcpListener</span> {
+    <span class="doccomment">/// Panics if the underlying socket is not a TCP socket.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_tcp_socket</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">TcpSocket</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">TaggedSocket</span>::<span class="ident">TcpListener</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">listener</span>) <span class="op">=&gt;</span> <span class="ident">listener</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Not a TCP listener!&quot;</span>),
-        }
-    }
-
-    <span class="doccomment">/// Returns a reference to the underlying TCP stream.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Panics if the underlying socket is not a TCP stream.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_tcp_stream</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">TcpStream</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">TaggedSocket</span>::<span class="ident">TcpStream</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=&gt;</span> <span class="ident">stream</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Not a TCP stream!&quot;</span>),
+            <span class="ident">TaggedSocket</span>::<span class="ident">Tcp</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">socket</span>) <span class="op">=&gt;</span> <span class="ident">socket</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Not a TCP socket!&quot;</span>),
         }
     }
 

@@ -112,10 +112,6 @@
 <span id="55">55</span>
 <span id="56">56</span>
 <span id="57">57</span>
-<span id="58">58</span>
-<span id="59">59</span>
-<span id="60">60</span>
-<span id="61">61</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">storage</span>::<span class="ident">SliceBuf</span>;
 <span class="kw">use</span> <span class="prelude-ty">Result</span>;
@@ -136,15 +132,11 @@
 
 <span class="kw">impl</span> <span class="ident">RawSocket</span> {
     <span class="doccomment">/// Creates a socket with the provided send and receive buffers.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
-        <span class="ident">raw_type</span>: <span class="ident">RawType</span>,
-        <span class="ident">send_buffer</span>: <span class="ident">SliceBuf</span><span class="op">&lt;</span><span class="ident">u8</span>, ()<span class="op">&gt;</span>,
-        <span class="ident">recv_buffer</span>: <span class="ident">SliceBuf</span><span class="op">&lt;</span><span class="ident">u8</span>, ()<span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">RawSocket</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">raw_type</span>: <span class="ident">RawType</span>, <span class="ident">capacity_bytes</span>: <span class="ident">usize</span>, <span class="ident">capacity_packets</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">RawSocket</span> {
         <span class="ident">RawSocket</span> {
             <span class="ident">raw_type</span>,
-            <span class="ident">send_buffer</span>,
-            <span class="ident">recv_buffer</span>,
+            <span class="ident">send_buffer</span>: <span class="ident">SliceBuf</span>::<span class="ident">new</span>(<span class="ident">capacity_bytes</span>, <span class="ident">capacity_packets</span>),
+            <span class="ident">recv_buffer</span>: <span class="ident">SliceBuf</span>::<span class="ident">new</span>(<span class="ident">capacity_bytes</span>, <span class="ident">capacity_packets</span>),
         }
     }
 

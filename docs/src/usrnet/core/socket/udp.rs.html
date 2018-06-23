@@ -190,13 +190,13 @@
     <span class="doccomment">/// Creates a new UDP socket.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
         <span class="ident">binding</span>: <span class="ident">SocketAddrLease</span>,
-        <span class="ident">send_buffer</span>: <span class="ident">SliceBuf</span><span class="op">&lt;</span><span class="ident">u8</span>, <span class="ident">SocketAddr</span><span class="op">&gt;</span>,
-        <span class="ident">recv_buffer</span>: <span class="ident">SliceBuf</span><span class="op">&lt;</span><span class="ident">u8</span>, <span class="ident">SocketAddr</span><span class="op">&gt;</span>,
+        <span class="ident">capacity_bytes</span>: <span class="ident">usize</span>,
+        <span class="ident">capacity_packets</span>: <span class="ident">usize</span>,
     ) <span class="op">-&gt;</span> <span class="ident">UdpSocket</span> {
         <span class="ident">UdpSocket</span> {
             <span class="ident">binding</span>,
-            <span class="ident">send_buffer</span>,
-            <span class="ident">recv_buffer</span>,
+            <span class="ident">send_buffer</span>: <span class="ident">SliceBuf</span>::<span class="ident">new</span>(<span class="ident">capacity_bytes</span>, <span class="ident">capacity_packets</span>),
+            <span class="ident">recv_buffer</span>: <span class="ident">SliceBuf</span>::<span class="ident">new</span>(<span class="ident">capacity_bytes</span>, <span class="ident">capacity_packets</span>),
         }
     }
 

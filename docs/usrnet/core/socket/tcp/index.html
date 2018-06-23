@@ -34,7 +34,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module tcp</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>socket</a></p><script>window.sidebarCurrent = {name: 'tcp', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+        <p class='location'>Module tcp</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'><a href='../../../index.html'>usrnet</a>::<wbr><a href='../../index.html'>core</a>::<wbr><a href='../index.html'>socket</a></p><script>window.sidebarCurrent = {name: 'tcp', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -59,52 +59,19 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../../src/usrnet/core/socket/tcp/mod.rs.html#1-163' title='goto source code'>[src]</a></span></h1><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+               </span><a class='srclink' href='../../../../src/usrnet/core/socket/tcp/mod.rs.html#1-11' title='goto source code'>[src]</a></span></h1><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpContext.html"
-                                  title='struct usrnet::core::socket::tcp::TcpContext'>TcpContext</a></td>
+                           <td><a class="struct" href="struct.TcpConfig.html"
+                                  title='struct usrnet::core::socket::tcp::TcpConfig'>TcpConfig</a></td>
                            <td class='docblock-short'>
-                                <p>An execution context for TCP streams and listeners.</p>
+                                <p>A set of configuration options for TCP sockets.</p>
 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpListener.html"
-                                  title='struct usrnet::core::socket::tcp::TcpListener'>TcpListener</a></td>
-                           <td class='docblock-short'>
-                                <p>A TCP server, listening for connections.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpMockSeqNum.html"
-                                  title='struct usrnet::core::socket::tcp::TcpMockSeqNum'>TcpMockSeqNum</a></td>
-                           <td class='docblock-short'>
-                                <p>A TCP sequence number generator for testing, returns a specified value.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpRngSeqNum.html"
-                                  title='struct usrnet::core::socket::tcp::TcpRngSeqNum'>TcpRngSeqNum</a></td>
-                           <td class='docblock-short'>
-                                <p>A random TCP sequence number generator.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpSeqNumRange.html"
-                                  title='struct usrnet::core::socket::tcp::TcpSeqNumRange'>TcpSeqNumRange</a></td>
-                           <td class='docblock-short'>
-                                <p>A sequence number range [lower, upper) where the upper bound can overflow
-and be &quot;less&quot; than the lower bound.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.TcpStream.html"
-                                  title='struct usrnet::core::socket::tcp::TcpStream'>TcpStream</a></td>
+                           <td><a class="struct" href="struct.TcpSocket.html"
+                                  title='struct usrnet::core::socket::tcp::TcpSocket'>TcpSocket</a></td>
                            <td class='docblock-short'>
                                 <p>A TCP stream for reliable sequential transfers created by establishing new
 client side connections or accepting connections through a listener.</p>
@@ -115,7 +82,15 @@ client side connections or accepting connections through a listener.</p>
                            <td><a class="struct" href="struct.TcpTimer.html"
                                   title='struct usrnet::core::socket::tcp::TcpTimer'>TcpTimer</a></td>
                            <td class='docblock-short'>
-                                <p>A timer for scheduling the transmission of TCP packets.</p>
+                                <p>A timer with exponential backoff.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TcpWindow.html"
+                                  title='struct usrnet::core::socket::tcp::TcpWindow'>TcpWindow</a></td>
+                           <td class='docblock-short'>
+                                <p>A window of sequence number containing the range [begin, end).</p>
 
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
@@ -125,15 +100,6 @@ client side connections or accepting connections through a listener.</p>
                                   title='enum usrnet::core::socket::tcp::TcpState'>TcpState</a></td>
                            <td class='docblock-short'>
                                 <p>One of several TCP states.</p>
-
-                           </td>
-                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.TcpDefaultSeqNum.html"
-                                  title='trait usrnet::core::socket::tcp::TcpDefaultSeqNum'>TcpDefaultSeqNum</a></td>
-                           <td class='docblock-short'>
-                                <p>A trait for generating sequence numbers for new TCP connections.</p>
 
                            </td>
                        </tr></table></section>
