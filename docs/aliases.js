@@ -1,0 +1,10 @@
+var ALIASES = {};
+ALIASES['byteorder'] = {};
+ALIASES['c_linked_list'] = {};
+ALIASES['cfg_if'] = {};
+ALIASES['get_if_addrs'] = {};
+ALIASES['lazy_static'] = {};
+ALIASES['libc'] = {};
+ALIASES['log'] = {};
+ALIASES['rand'] = {};
+ALIASES['usrnet'] = {};

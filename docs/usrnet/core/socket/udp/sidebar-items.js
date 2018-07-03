@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["UdpSocket","A UDP socket."]]});
+initSidebarItems({"enum":[["UdpEvent","A set of level-triggered UDP socket IO events."]],"struct":[["UdpSocket","A UDP socket."]]});

@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Error",""]],"mod":[["core","Core, platform independent networking code."],["examples","Sample programs."],["linux","Linux specific features."]],"type":[["Result",""]]});
+initSidebarItems({"enum":[["Error",""]],"mod":[["core","Core, platform independent networking code."],["examples","Utilities to create interfaces, sockets, etc. for writing example programs."],["linux","Linux specific features."]],"type":[["Result",""]]});

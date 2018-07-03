@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["RawType",""]],"struct":[["RawSocket","Socket for sending and receiving raw ethernet or IP packets."]]});
+initSidebarItems({"enum":[["RawEvent","A set of level-triggered raw socket IO events."],["RawType",""]],"struct":[["RawSocket","Socket for sending and receiving raw ethernet or IP packets."]]});
