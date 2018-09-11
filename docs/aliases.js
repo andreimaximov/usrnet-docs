@@ -1,4 +1,5 @@
 var ALIASES = {};
+ALIASES['bit_vec'] = {};
 ALIASES['byteorder'] = {};
 ALIASES['c_linked_list'] = {};
 ALIASES['cfg_if'] = {};
@@ -7,4 +8,5 @@ ALIASES['lazy_static'] = {};
 ALIASES['libc'] = {};
 ALIASES['log'] = {};
 ALIASES['rand'] = {};
+ALIASES['usrnet'] = {};
 ALIASES['usrnet'] = {};

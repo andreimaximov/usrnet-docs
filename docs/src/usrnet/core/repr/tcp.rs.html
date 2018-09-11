@@ -704,6 +704,14 @@
 <span id="704">704</span>
 <span id="705">705</span>
 <span id="706">706</span>
+<span id="707">707</span>
+<span id="708">708</span>
+<span id="709">709</span>
+<span id="710">710</span>
+<span id="711">711</span>
+<span id="712">712</span>
+<span id="713">713</span>
+<span id="714">714</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{
     <span class="ident">Add</span>,
@@ -1273,6 +1281,14 @@
             <span class="ident">protocol</span>: <span class="ident">Ipv4Protocol</span>::<span class="ident">Tcp</span>,
             <span class="ident">payload_len</span>: <span class="ident">payload_len</span> <span class="kw">as</span> <span class="ident">u16</span>,
         }
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_seq_num_add_sub</span>() {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">SeqNum</span>(<span class="number">0</span>) <span class="op">+</span> <span class="ident">SeqNum</span>(<span class="number">1</span>), <span class="ident">SeqNum</span>(<span class="number">1</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">SeqNum</span>(::<span class="ident">std</span>::<span class="ident">u32</span>::<span class="ident">MAX</span>) <span class="op">+</span> <span class="ident">SeqNum</span>(<span class="number">1</span>), <span class="ident">SeqNum</span>(<span class="number">0</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">SeqNum</span>(<span class="number">1</span>) <span class="op">-</span> <span class="ident">SeqNum</span>(<span class="number">0</span>), <span class="ident">SeqNum</span>(<span class="number">1</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">SeqNum</span>(<span class="number">0</span>) <span class="op">-</span> <span class="ident">SeqNum</span>(::<span class="ident">std</span>::<span class="ident">u32</span>::<span class="ident">MAX</span>), <span class="ident">SeqNum</span>(<span class="number">1</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
